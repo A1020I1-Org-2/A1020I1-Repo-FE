@@ -6,6 +6,7 @@ import { ListTop10ContractComponent } from './list-top10-contract/list-top10-con
 import { ListContractComponent } from './list-contract/list-contract.component';
 import { DeleteContractComponent } from './delete-contract/delete-contract.component';
 import { DetailContractComponent } from './detail-contract/detail-contract.component';
+import { CreateLiquidationContractComponentComponent } from './create-liquidation-contract-component/create-liquidation-contract-component.component';
 
 
 
@@ -16,7 +17,8 @@ import { DetailContractComponent } from './detail-contract/detail-contract.compo
     ListTop10ContractComponent,
     ListContractComponent,
     DeleteContractComponent,
-    DetailContractComponent
+    DetailContractComponent,
+    CreateLiquidationContractComponentComponent
   ],
   imports: [
     CommonModule
