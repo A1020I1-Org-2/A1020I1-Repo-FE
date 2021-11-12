@@ -4,6 +4,11 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
+import {CustomerRoutingModule} from "./customer-routing.module";
+import {HttpClientModule} from "@angular/common/http";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
@@ -15,7 +20,11 @@ import { DeleteCustomerComponent } from './delete-customer/delete-customer.compo
     DeleteCustomerComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CustomerRoutingModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
   ]
 })
 export class CustomerModule { }
