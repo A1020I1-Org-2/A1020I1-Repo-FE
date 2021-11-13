@@ -1,0 +1,135 @@
+<div class="container-fluid" style="height: 100vh">
+  <h2 class="text-center mt-3" style="color: darkblue; font-size: 35px">10 HỢP ĐỒNG MỚI NHẤT</h2>
+  <div class="row mt-5 px-0 mx-0" style="height: 80%;">
+    <div class="col-lg-2">
+      <div class="list-group border border-primary rounded h-100">
+        <a href="#" class="list-group-item list-group-item-action">Thông tin cửa hàng</a>
+        <a href="#" class="list-group-item list-group-item-action ">Tài chính</a>
+        <a href="#" class="list-group-item list-group-item-action">Danh sách đồ cầm</a>
+        <a routerLink="/listTop10Contract" class="list-group-item list-group-item-action active">10 hợp đồng mới
+          nhất</a>
+        <a href="#" class="list-group-item list-group-item-action">Thống kê lợi nhuận</a>
+        <a href="#" class="list-group-item list-group-item-action">Lịch sử giao dịch</a>
+      </div>
+    </div>
+    <div class="col-lg-10 col-sm-12">
+      <form [formGroup]="searchListTop10" (ngSubmit)="searchContractListTop10()">
+        <div class="row mb-2">
+          <div class="col-2 col-xl-2 col-sm-2 col-lg-2"></div>
+          <div class="col-3 col-xl-3 col-sm-3 col-lg-3">
+            <h5></h5>
+          </div>
+          <div class="col-lg-3 col-xl-3 col-sm-3">
+            <input type="text" class="form-control border-dark " placeholder="10 Hợp đồng mới nhất" formControlName="key">
+          </div>
+          <div class="col-lg-1 col-xl-1 col-sm-1">
+            <button type="submit" class="btn btn-success"><i class="fas fa-search-plus"></i></button>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <table id="tableComputer" class="table table-striped table-bordered " style="width: 100%">
+          <thead class="table-primary text-center">
+          <tr>
+            <th class="text-center ">Mã HD</th>
+            <th class="text-center ">Tên Đồ</th>
+            <th class="text-center ">Tên KH</th>
+            <th class="text-center ">Ngày Làm Hợp Đồng</th>
+            <th class="text-center ">Loại Hợp Đồng</th>
+            <th class="text-center ">Trạng Thái</th>
+            <th class="text-center ">Chức Năng</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let listContract of listTop10Contract">
+            <th scope="row">{{listContract.contractId}}</th>
+            <td>{{listContract.productName}}</td>
+            <td>{{listContract.customer.name}}</td>
+            <td>{{listContract.startDate | date: 'dd/MM/yyyy'}}</td>
+            <td>{{listContract.typeContract.name}}</td>
+            <td>{{listContract.statusContract.name}}</td>
+            <td>
+
+              <button type="button" class="  border-0  btn btn-outline-warning " data-bs-toggle="modal"
+                      data-bs-target="#exampleModal" (click)="getId(listContract.contractId)">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="  border-0 btn  btn-outline-info" ><i class="fas fa-pencil-alt"></i></button>
+              <button type="button" class=" border-0 btn btn-outline-danger" data-bs-toggle="modal"
+                      data-bs-target="#exampleModalDelete" (click)="getIdDelete(listContract.contractId)"
+              ><i class="fas fa-trash-alt"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal view contract-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title " id="exampleModalLabel">CHI TIẾT HỢP ĐỒNG</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-1"></div>
+            <div class="col-11">
+              <div class="row">
+                <label class="col-lg-6 col-sm-6 col-xl-6">Mã hợp đồng</label>
+                <label class="col-lg-6 col-sm-6 col-xl-6">{{getInforList?.contractId}}</label>
+              </div>
+              <div class="row mt-2">
+                <label class="col-lg-6 col-sm-6 col-xl-6">Tên đồ:</label>
+                <label class="col-lg-6 col-sm-6 col-xl-66">{{getInforList?.productName}}</label>
+              </div>
+              <div class="row mt-2">
+                <label class="col-lg-6 col-sm-6 col-xl-6">Tên khách hàng:</label>
+                <label class="col-lg-6 col-sm-6 col-xl-66">{{getInforList?.customer?.name}}</label>
+              </div>
+              <div class="row mt-2">
+                <label class="col-lg-6 col-sm-6 col-xl-6-6">Ngày làm hợp đồng:</label>
+                <label class="col-lg-6 col-sm-6 col-xl-6">{{getInforList?.startDate| date: 'dd/MM/yyyy'}}</label>
+              </div>
+              <div class="row mt-2">
+                <label class="col-lg-6 col-sm-6 col-xl-6">Loại hợp đồng:</label>
+                <label class="col-lg-6 col-sm-6 col-xl-6">{{getInforList?.typeContract?.name}}</label>
+              </div>
+              <div class="row mt-2">
+                <label class="col-lg-6 col-sm-6 col-xl-6">Trạng thái:</label>
+                <label class="col-lg-6 col-sm-6 col-xl-6">{{getInforList?.statusContract?.name}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title " id="exampleModalLabeDelete">XÁC NHẬN XÓA DỊCH VỤ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="my-3">Bạn có chắc chắn muốn xoá dịch vụ
+          <span class="text-danger font-weight-bold">{{getInforList?.contractId}} </span>không?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="deleteContract()">Xóa</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
