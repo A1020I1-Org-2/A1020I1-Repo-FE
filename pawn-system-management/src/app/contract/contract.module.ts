@@ -7,6 +7,7 @@ import { ListContractComponent } from './list-contract/list-contract.component';
 import { DeleteContractComponent } from './delete-contract/delete-contract.component';
 import { DetailContractComponent } from './detail-contract/detail-contract.component';
 import { CreateLiquidationContractComponentComponent } from './create-liquidation-contract-component/create-liquidation-contract-component.component';
+import {ContractRoutingModule} from "./contract-routing.module";
 
 
 
@@ -20,8 +21,12 @@ import { CreateLiquidationContractComponentComponent } from './create-liquidatio
     DetailContractComponent,
     CreateLiquidationContractComponentComponent
   ],
+  exports: [
+    CreateLiquidationContractComponentComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    ContractRoutingModule
   ]
 })
 export class ContractModule { }

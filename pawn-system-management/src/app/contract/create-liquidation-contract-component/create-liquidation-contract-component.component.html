@@ -1,1 +1,376 @@
-<p>create-liquidation-contract-component works!</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hệ thống quản lý tiệm cầm đồ</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg" style="background-color:#74BBB8">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="#" style="color: white">Cầm đồ<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: white">Thanh lý</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: white">Trả đồ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: white">Thông tin cửa hàng</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: white">Quản lý khách hàng</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: white">Thông tin cá nhân</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: white">Nhắn tin</a>
+        </li>
+      </ul>
+      <form class="d-flex ms-auto me-1 ">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<!--content-->
+<div>
+  <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">TẠO HỢP ĐỒNG THANH LÝ</h2>
+  <!-- form create -->
+  <div class="row container ms-auto">
+    <div class="col-3">
+      <button type="button" class=" btn" style="background-color:#89E7F0;" data-bs-toggle="modal"
+              data-bs-target="#exampleModalCustomerList"><span style="color: red">(*)</span>
+        <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+             class="bi bi-arrow-return-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+                d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z"/>
+        </svg>
+        Chọn đồ khách hàng
+      </button>
+    </div>
+    <div class="col-3">
+      <button class=" btn btn-primary ">Thêm mới khách hàng</button>
+    </div>
+    <div class="col-3">
+      <button type="button" class=" btn" style="background-color:#89E7F0;" data-bs-toggle="modal"
+              data-bs-target="#exampleModalEmployeeList"><span style="color: red">(*)</span>
+        Chọn đồ nhân viên
+      </button>
+    </div>
+    <div class="col-3">
+      <button type="button" class=" btn" style="background-color:#89E7F0;" data-bs-toggle="modal"
+              data-bs-target="#exampleModal"><span style="color: red">(*)</span>
+        Chọn đồ thanh lý
+      </button>
+    </div>
+  </div>
+  <div class="row container ms-auto mt-3">
+    <div class="col-6"><h5>Tên khách hàng:<span style="color: red">(*)</span></h5></div>
+    <div class="col-6"><h5>Tên nhân viên:<span style="color: red">(*)</span></h5></div>
+  </div>
+  <div class="row container ms-auto mt-3">
+    <div class="col-6"><h5>Tên đồ:<span style="color: red">(*)</span></h5></div>
+    <div class="col-6"><h5>Loại đồ:<span style="color: red">(*)</span></h5></div>
+  </div>
+  <div class="row container ms-auto mt-3">
+    <div class="col-6"><h5>Số lượng:<span style="color: red">(*)</span></h5></div>
+    <div class="col-6"><h5>Tổng tiền:<span style="color: red">(*)</span></h5></div>
+  </div>
+  <div class="row container ms-auto">
+    <div class="col-3 was-validated">
+      <h5>Ngày thanh lý:<span style="color: red">(*)</span></h5>
+      <input class="col-5 form-control border-secondary" type="date">
+      <div class="invalid-feedback">Ngày thanh lý không được để trống!</div>
+    </div>
+  </div>
+</div>
+<div class="mt-5 row d-flex justify-content-center">
+  <button class="col-1 btn btn-primary me-5">Thêm mới</button>
+  <button class="col-1 btn btn-secondary ">Huỷ</button>
+</div>
+
+<!-- modal liquidation product-->
+<div class="modal fade" id="exampleModal" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class=" text-center">
+        <h5 class="text-center mt-3" id="exampleModalLabel" style="color: darkblue;font-size: 35px">CHỌN ĐỒ
+          THANH LÝ</h5>
+      </div>
+      <div class="modal-body">
+        <div class=" container">
+          <div class="row">
+            <table class="ms-5">
+              <tr class="row">
+                <th class="col-3">Tên đồ:</th>
+                <th class="col-3">Loại đồ:</th>
+                <th class="col-3">Giá:</th>
+                <th class="col-3"></th>
+              </tr>
+              <tr class="row">
+                <td class="col-3">
+                  <input type="text" class="form-control border-success">
+                </td>
+                <td class="col-3">
+                  <select class="form-control border-success">
+                    <option>Đồ gia dụng</option>
+                    <option>Điện thoại</option>
+                    <option>Nữ trang</option>
+                    <option>Máy tính</option>
+                    <option>Xe máy</option>
+                  </select>
+                </td>
+                <td class="col-3">
+                  <input type="text" class="form-control border-success">
+                </td>
+                <td class="col-1">
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-search-plus mr-2 "></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <div class="mt-2 container-fluid">
+            <table class="table table-striped  col table-bordered ">
+              <thead class="table-primary text-center">
+              <tr>
+                <th>Tên đồ</th>
+                <th>Loại đồ</th>
+                <th>Số lượng</th>
+                <th>Giá (VNĐ)</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let list of liquidationProductList ">
+                <td>{{list.productName}}</td>
+                <td>{{list.typeProduct.name}}</td>
+                <td class="text-center">{{list.quantity}}</td>
+                <td class="text-center">{{list.receiveMoney}}</td>
+                <td class="text-center ">
+                  <button class="text-center btn btn-outline-info">Chọn</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="col-1"></div>
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination  justify-content-end">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&lsaquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&rsaquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal customer list-->
+<div class="modal fade" id="exampleModalCustomerList" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class=" text-center">
+        <h5 class="text-center mt-3" id="exampleModalLabelCustomerList" style="color: darkblue;font-size: 35px">CHỌN
+          KHÁCH HÀNG</h5>
+      </div>
+      <div class="modal-body">
+        <div class=" container">
+          <div class="row ms-1">
+            <div class="col-5 me-5">
+              <button class="col-8 btn btn-primary ">Thêm mới khách hàng</button>
+            </div>
+            <div class="col-4 d-flex justify-content-end ms-5">
+              <input type="text" class="form-control border-success">
+            </div>
+            <button type="submit" class="col-1 btn btn-success justify-content-end">
+              <i class="fas fa-search-plus mr-2 "></i>
+            </button>
+          </div>
+          <div class="mt-2 container-fluid">
+            <table class="table table-striped  col table-bordered ">
+              <thead class="table-primary text-center">
+              <tr>
+                <th>Mã khách hàng</th>
+                <th>Tên khách hàng</th>
+                <th>CMND/CCCD</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let listCS of customerList ">
+                <td>{{listCS.customerId}}</td>
+                <td>{{listCS.name}}</td>
+                <td class="text-center">{{listCS.idCard}}</td>
+                <td class="text-center ">
+                  <button class="text-center btn btn-outline-info">Chọn</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="col-1"></div>
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination  justify-content-end">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&lsaquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&rsaquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modal employee list-->
+<div class="modal fade" id="exampleModalEmployeeList" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class=" text-center">
+        <h5 class="text-center mt-3" id="exampleModalLabelEmployeeList" style="color: darkblue;font-size: 35px">CHỌN
+          NHÂN VIÊN</h5>
+      </div>
+      <div class="modal-body">
+        <div class=" container">
+          <div class="row ms-1">
+            <div class="col-5 me-5">
+            </div>
+            <div class="col-4 d-flex justify-content-end ms-5">
+              <input type="text" class="form-control border-success">
+            </div>
+            <button type="submit" class="col-1 btn btn-success justify-content-end">
+              <i class="fas fa-search-plus mr-2 "></i>
+            </button>
+          </div>
+          <div class="mt-2 container-fluid">
+            <table class="table table-striped  col table-bordered ">
+              <thead class="table-primary text-center">
+              <tr>
+                <th>Mã nhân viên</th>
+                <th>Tên nhân viên</th>
+                <th>CMND/CCCD</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let listEM of employeeList ">
+                <td>{{listEM.employeeId}}</td>
+                <td>{{listEM.fullName}}</td>
+                <td class="text-center">{{listEM.idCard}}</td>
+                <td class="text-center ">
+                  <button class="text-center btn btn-outline-info">Chọn</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="col-1"></div>
+          </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination  justify-content-end">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&lsaquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&rsaquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+
