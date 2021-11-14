@@ -8,6 +8,8 @@ import { DeleteContractComponent } from './delete-contract/delete-contract.compo
 import { DetailContractComponent } from './detail-contract/detail-contract.component';
 import {ContractRoutingModule} from "./contract-routing.module";
 import {ReactiveFormsModule} from "@angular/forms";
+import { DeleteListTop10ContractComponent } from './delete-list-top10-contract/delete-list-top10-contract.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 
@@ -20,13 +22,15 @@ import {ReactiveFormsModule} from "@angular/forms";
     ListContractComponent,
     DeleteContractComponent,
     DetailContractComponent,
+    DeleteListTop10ContractComponent,
 
 
   ],
     imports: [
         CommonModule,
         ContractRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MatDialogModule
     ]
 })
 export class ContractModule { }

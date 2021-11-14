@@ -4,6 +4,8 @@ import {ContractService} from "../../services/contract.service";
 
 import {FormControl, FormGroup} from "@angular/forms";
 import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {DeleteListTop10ContractComponent} from "../delete-list-top10-contract/delete-list-top10-contract.component";
 
 @Component({
   selector: 'app-list-top10-contract',
@@ -16,7 +18,7 @@ export class ListTop10ContractComponent implements OnInit {
   searchListTop10!: FormGroup;
 
 
-  constructor(private contractService: ContractService,private router: Router) {
+  constructor(private contractService: ContractService,private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -60,16 +62,27 @@ export class ListTop10ContractComponent implements OnInit {
     )
   }
 
-  getIdDelete(contractId: string) {
-    this.contractService.getInfo(contractId).subscribe((data) => {
-      this.getInforList = data;
-      console.log(data)
-    })
-  }
+
 
   deleteContract() {
     this.contractService.deleteListTop10(this.getInforList.contractId).subscribe(() => {
       this.ngOnInit();
     })
+  }
+
+  openDialog(contractId: string) {
+    this.contractService.getInfo(contractId).subscribe((data)=>{
+      const dialog = this.dialog.open(DeleteListTop10ContractComponent,{
+          width: '500px',
+          data: data,
+          disableClose: true,
+          autoFocus: false
+        }
+      );
+      dialog.afterClosed().subscribe(result => {
+        this.ngOnInit();
+      });
+    })
+
   }
 }
