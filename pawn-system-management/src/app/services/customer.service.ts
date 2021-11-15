@@ -20,13 +20,21 @@ export class CustomerService {
 
 
   deleteCustomer(id: number | undefined): Observable<any> {
-    return this.httpClient.delete<any>(this.API_URL +'/deleteCustomer/'+id,this.httpOptions);
+    return this.httpClient.delete<any>(this.API_URL +'/deleteCustomer/'+ id, this.httpOptions);
   }
 
-  searchCustomer(page: number, user_name: string,status: number, address: string, dateBirthFrom: string, dateBirthTo: string): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/searchCustomer' + '?page=' + page + '&username=' + user_name+ '&status=' + status + '&address=' + address
-      + '&dateBirthFrom=' + dateBirthFrom + '&dateBirthTo=' + dateBirthTo ,this.httpOptions);
+  getCustomerById(id: number): Observable<any>{
+    return this.httpClient.get<any>(this.API_URL + '/getCustomer/' + id, this.httpOptions);
   }
 
+  searchCustomer(customerId: string, dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string): Observable<any> {
+    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?' + 'customerId=' + customerId + '&dateOfBirthForm=' +
+      dateOfBirthFrom + '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name, this.httpOptions);
+  }
+
+  searchPageCustomer(customerId: string, dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string, page: number): Observable<any> {
+    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?' + 'customerId=' + customerId + '&dateOfBirthForm=' +
+      dateOfBirthFrom + '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=' + page, this.httpOptions);
+  }
 
 }

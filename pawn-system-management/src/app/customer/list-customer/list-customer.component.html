@@ -7,15 +7,15 @@
 </div>
 <div class="container-fluid mb-4">
   <div>
-    <form class="form-group">
+    <form class="form-group" [formGroup]="searchCustomer" (ngSubmit)="search()" (keydown)="searchEnter($event)">
       <div class="row justify-content-center">
         <div class="col-2">
           <label class="col-form-label" for="ngaySinhTu">Ngày sinh từ </label>
-          <input type="date" class="form-control border-dark" id="ngaySinhTu"/>
+          <input type="date" class="form-control border-dark" id="ngaySinhTu" formControlName="dateOfBirthFrom"/>
         </div>
         <div class="col-2">
           <label class="col-form-label" for="ngaySinhDen">Ngày sinh đến</label>
-          <input type="date" class="form-control border-dark" id="ngaySinhDen"/>
+          <input type="date" class="form-control border-dark" id="ngaySinhDen" formControlName="dateOfBirthTo"/>
         </div>
         <div class="col-2">
           <label class="col-form-label" for="soLuongHD">Số lượng HD</label>
@@ -33,12 +33,12 @@
           </select>
         </div>
         <div class="col-2">
-          <label class="col-form-label" for="tuKhoa">Từ khóa</label><br>
+          <label class="col-form-label" for="tuKhoa">Tên khách hàng</label><br>
           <input class="form-control border-dark" id="tuKhoa" type="text" placeholder="Tìm kiếm theo tên khách hàng" aria-label="Search">
         </div>
         <div class="col-1 align-items-end">
           <label class="col-form-label">&nbsp;</label><br>
-          <button class="btn border btn-success h-50"><i class="fas fa-search"></i></button>
+          <button class="btn border btn-success h-50" (click)="pageRefresh()"><i class="fas fa-search"></i></button>
         </div>
       </div>
     </form>
@@ -78,15 +78,15 @@
               <td><p class="d-flex justify-content-center">{{customer.phone}}</p></td>
               <td>{{customer.email}}</td>
               <td>
-                <a *ngIf="!customer.gender">Nam</a>
-                <a *ngIf="customer.gender">Nữ</a>
+                <span *ngIf="!customer.gender">Nam</span>
+                <span *ngIf="customer.gender">Nữ</span>
               </td>
               <td>{{customer.address}}</td>
               <td><p class="d-flex justify-content-center">{{customer.idCard}}</p></td>
-              <td><p class="d-flex justify-content-center">{{customer.contract}}</p></td>
+              <td><p class="d-flex justify-content-center">{{customer.contracts.length}}</p></td>
               <td class="text-center"><span class="d-inline-flex">
-                                  <button class="btn btn-outline-info h-auto border-0"><i class="fas fa-pencil-alt"></i></button> &nbsp;
-                                  <button class="btn btn-outline-danger border-0"  data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i></button></span>
+                <button class="btn btn-outline-info h-auto border-0"><i class="fas fa-pencil-alt"></i></button> &nbsp;
+                <button class="btn btn-outline-danger border-0" (click)="openDialog(customer.customerId, customer.name)"><i class="fas fa-trash-alt"></i></button></span>
               </td>
             </tr>
           </tbody>
@@ -138,20 +138,20 @@
   </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Xóa khách hàng</h5>
-      </div>
-      <div class="modal-body">
-        Bạn Có Muốn Xóa Khách Hàng <span style="color: red">Hoàng Ngọc Cường</span> Không ?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-danger">Xoá</button>
-      </div>
+<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--  <div class="modal-dialog" role="document">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 class="modal-title" id="exampleModalLabel">Xóa khách hàng</h5>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        Bạn Có Muốn Xóa Khách Hàng <span style="color: red">Hoàng Ngọc Cường</span> Không ?-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>-->
+<!--        <button type="button" class="btn btn-danger">Xoá</button>-->
+<!--      </div>-->
 
-    </div>
-  </div>
-</div>
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

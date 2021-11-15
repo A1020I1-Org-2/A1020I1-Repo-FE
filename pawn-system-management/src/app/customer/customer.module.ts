@@ -9,6 +9,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
+import {RouterModule} from "@angular/router";
 
 
 
@@ -25,6 +26,9 @@ import {MatDialogModule} from "@angular/material/dialog";
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-  ]
+    RouterModule,
+    MatDialogModule,
+  ],
+  entryComponents:[DeleteCustomerComponent]
 })
 export class CustomerModule { }
