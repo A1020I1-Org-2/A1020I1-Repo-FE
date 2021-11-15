@@ -1,1 +1,10 @@
-<p>delete-contract works!</p>
+<h5>XÓA GIAO DỊCH</h5>
+<hr>
+<p class="my-3">Bạn có chắc chắn muốn xóa <span class="text-danger font-weight-bold">{{id}}</span>
+  không? <br> Lưu ý: Thao tác không hoàn tác ! </p>
+
+<div class="row d-flex justify-content-end">
+  <button mat-dialog-close class="btn btn-secondary mr-3" style="width: 80px;">Hủy bỏ</button>
+  <button class="btn btn-danger mr-3" style="width: 80px;" (click)="delete()">Xóa</button>
+</div>
+

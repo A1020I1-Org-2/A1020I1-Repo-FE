@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {ContractService} from "../../services/contract.service";
 
 @Component({
   selector: 'app-delete-contract',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeleteContractComponent implements OnInit {
 
-  constructor() { }
+  // @ts-ignore
+  id: string;
+  name = '';
+  constructor(public dialog: MatDialogRef<DeleteContractComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              public contractService: ContractService,
+              ) { }
 
   ngOnInit(): void {
+    this.id = this.data.contractId;
+  }
+
+  delete() {
+    this.contractService.deleteContract(this.id).subscribe(()=>{
+      this.dialog.close();
+      // this.alertService.showAlertSuccess("Xóa thành công.")
+
+    });
+
   }
 
 }

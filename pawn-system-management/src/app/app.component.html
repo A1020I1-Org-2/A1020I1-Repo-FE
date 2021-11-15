@@ -1,0 +1,41 @@
+<div class="container-fluid px-0" style="height: 100vh">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 10%; background-color: rgb(96, 105, 107); justify-content: center">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['']">Cầm đồ | </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['']">Thanh lý | </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['']">Trả đồ | </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['']">Thông tin cửa hàng | </a>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['']">Quản lý cửa hàng | </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['']">Thông tin cá nhân | </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['']">Nhắn tin</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="row px-0 mx-0" style="height: 80%;">
+    <div class="col-lg-2 col-xl-2">
+      <div class="list-group border border-primary rounded h-100">
+        <a routerLink="/showFinance" class="list-group-item list-group-item-action">Tài chính</a>
+        <a routerLink="/pawnList" class="list-group-item list-group-item-action active">Danh sách đồ cầm</a>
+        <a href="#" class="list-group-item list-group-item-action">10 hợp đồng mới nhất</a>
+        <a href="#" class="list-group-item list-group-item-action">Thống kê lợi nhuận</a>
+        <a routerLink="/listContract" class="list-group-item list-group-item-action">Lịch sử giao dịch</a>
+      </div>
+    </div>
+    <div class="col-10 p-5">
+      <app-list-contract></app-list-contract>
+    </div>
+  </div>
+</div>

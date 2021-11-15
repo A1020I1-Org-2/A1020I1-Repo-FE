@@ -7,21 +7,42 @@ import { ListContractComponent } from './list-contract/list-contract.component';
 import { DeleteContractComponent } from './delete-contract/delete-contract.component';
 import { DetailContractComponent } from './detail-contract/detail-contract.component';
 import { CreateLiquidationContractComponentComponent } from './create-liquidation-contract-component/create-liquidation-contract-component.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
+import {MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatButtonModule} from "@angular/material/button";
+import {MatDividerModule} from "@angular/material/divider";
+import {ContractRoutingModule} from "./contract-routing.module";
 
 
 
 @NgModule({
-  declarations: [
-    CreatePawnContractComponent,
-    UpdateContractComponent,
-    ListTop10ContractComponent,
-    ListContractComponent,
-    DeleteContractComponent,
-    DetailContractComponent,
-    CreateLiquidationContractComponentComponent
-  ],
+    declarations: [
+        CreatePawnContractComponent,
+        UpdateContractComponent,
+        ListTop10ContractComponent,
+        ListContractComponent,
+        DeleteContractComponent,
+        DetailContractComponent,
+        CreateLiquidationContractComponentComponent
+    ],
+    exports: [
+      ListContractComponent,
+      DeleteContractComponent,
+      ReactiveFormsModule,
+      RouterModule,
+      MatDialogModule,
+      ContractRoutingModule,
+      BrowserAnimationsModule,
+      MatDividerModule,
+      MatButtonModule,
+    ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
   ]
 })
 export class ContractModule { }
