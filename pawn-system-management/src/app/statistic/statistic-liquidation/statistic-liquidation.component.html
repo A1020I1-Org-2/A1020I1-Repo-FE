@@ -31,25 +31,35 @@
       </section>
       <section>
         <div class="">
-          <form class="was-validated">
+          <form [formGroup]="checkDateForm" novalidate>
             <div class="form-row">
               <div class="form-group col-sm-1">
               </div>
               <div class="form-group col-sm-4">
-                <label for="dateDen">Từ ngày<span aria-hidden="true" class="required" style="color: red">*</span></label>
-                <input type="date" class="form-control is-valid"
-                       id="dateDen validationTextarea" placeholder="Email" required>
+                <label for="dateDen">Ngày bắt đầu hợp đồng<span aria-hidden="true" class="required" style="color: red">*</span></label>
+                <input type="date" class="form-control "
+                       id="dateDen" placeholder=""
+                       formControlName="checkStartDate"  >
                 <div class="invalid-feedback">Ngày bắt đầu không được trống.</div>
+                <p style="color: #dc3545;font-size: 80%" class="mt-1" *ngIf="checkDateForm.controls.checkStartDate.hasError('required')  &&
+                            checkDateForm.controls.checkStartDate.touched">Ngày bắt đầu không được trống
+                  !!!</p>
+                <p style="color: #dc3545;font-size: 80%" class="mt-1"
+                   *ngIf="checkDateForm.errors?.errorDateTo && checkDateForm.controls.checkStartDate.dirty">
+                  Ngày bắt đầu phải nhỏ hơn ngày đến!!!</p>
               </div>
               <div class="form-group col-sm-4">
-                <label for="dateDen">Đến ngày<span aria-hidden="true" class="required" style="color: red">*</span></label>
-                <input type="date" class="form-control is-valid"
-                       id="dateDen validationTextarea" placeholder="Email" required>
-                <div class="invalid-feedback">Ngày kết thúc không được trống.</div>
+                <label for="dateEnd">Đến ngày<span aria-hidden="true" class="required" style="color: red">*</span></label>
+                <input type="date" class="form-control "
+                       id="dateEnd" placeholder="Email"
+                       formControlName="checkEndDate">
+                <p style="color: #dc3545;font-size: 80%" class="mt-1" *ngIf="checkDateForm.controls.checkEndDate.hasError('required')   &&
+                            checkDateForm.controls.checkEndDate.touched" >Ngày kết thúc không được trống
+                  !!!</p>
               </div>
               <div class="form-group col-sm-2">
                 <input type="submit" class="form-control btn btn-success"
-                       value="Thống kê" style="margin-top: 31px">
+                       value="Thống kê" (click)="getStatistic()"  [disabled]="checkDateForm.invalid" style="margin-top: 30px">
               </div>
             </div>
           </form>
@@ -57,106 +67,25 @@
             <div class="form-group col-sm-4">
             </div>
             <div class="form-group col-sm-4">
-              <label for="kq">Tổng lợi nhuận</label>
-              <input type="text" class="form-control border-dark"
-                     id="kq" placeholder="1.000.000đ">
+              <h4 class="label-text" style="color: red"> Tổng lợi nhuận: {{this.totalMoney | number}} VND</h4>
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="table-wrap">
-              <button class="btn btn-outline-success mb-3"
-                      onclick="exportTableToExcel('tblData','ThongKe')">Xuất
-                excel
-              </button>
+        <div id="chart">
+          <apx-chart *ngIf="check"
+            [series]="chartOptions.series"
+            [chart]="chartOptions.chart"
+            [xaxis]="chartOptions.xaxis"
+            [markers]="chartOptions.markers"
+            [stroke]="chartOptions.stroke"
+            [yaxis]="chartOptions.yaxis"
+            [dataLabels]="chartOptions.dataLabels"
+            [title]="chartOptions.title"
+            [fill]="chartOptions.fill"
+            [tooltip]="chartOptions.tooltip"
+            [legend]="chartOptions.legend"
 
-              <table class="table table-striped" id="tblData">
-                <thead>
-                <tr class="table-primary">
-                  <th style="font-weight: bold">Mã hợp đồng</th>
-                  <th style="font-weight: bold">Tiền mua</th>
-                  <th style="font-weight: bold">Tiền bán</th>
-                  <th style="font-weight: bold">Lợi nhuận</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr>
-                  <th scope="row">1001</th>
-                  <td>3.000.000đ</td>
-                  <td>5.000.000đ</td>
-                  <td>2.000.000đ</td>
-                </tr>  <tr>
-                  <th scope="row">1001</th>
-                  <td>3.000.000đ</td>
-                  <td>5.000.000đ</td>
-                  <td>2.000.000đ</td>
-                </tr>  <tr>
-                  <th scope="row">1001</th>
-                  <td>3.000.000đ</td>
-                  <td>5.000.000đ</td>
-                  <td>2.000.000đ</td>
-                </tr>  <tr>
-                  <th scope="row">1001</th>
-                  <td>3.000.000đ</td>
-                  <td>5.000.000đ</td>
-                  <td>2.000.000đ</td>
-                </tr>  <tr>
-                  <th scope="row">1001</th>
-                  <td>3.000.000đ</td>
-                  <td>5.000.000đ</td>
-                  <td>2.000.000đ</td>
-                </tr>  <tr>
-                  <th scope="row">1001</th>
-                  <td>3.000.000đ</td>
-                  <td>5.000.000đ</td>
-                  <td>2.000.000đ</td>
-                </tr>  <tr>
-                  <th scope="row">1001</th>
-                  <td>3.000.000đ</td>
-                  <td>5.000.000đ</td>
-                  <td>2.000.000đ</td>
-                </tr>
-
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="col-md-9"></div>
-          <div class="col-md-3 mt-3">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination  justify-content-end">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&lsaquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&rsaquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
+          ></apx-chart>
         </div>
       </section>
       <section>
