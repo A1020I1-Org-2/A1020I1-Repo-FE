@@ -1,31 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   ChartComponent,
   ApexAxisChartSeries,
   ApexChart,
   ApexFill,
+  ApexYAxis,
   ApexTooltip,
+  ApexMarkers,
   ApexXAxis,
-  ApexLegend,
-  ApexDataLabels,
-  ApexTitleSubtitle,
-  ApexYAxis
-} from "ng-apexcharts";
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+  ApexPlotOptions,
+  ApexTitleSubtitle
+} from 'ng-apexcharts';
+import {FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
+import {Title} from '@angular/platform-browser';
+import {DatePipe} from '@angular/common';
 import {Statistic} from "../../interface/statistic";
 import {StatisticService} from "../../services/statistic.service";
-import {Title} from "@angular/platform-browser";
-import {DatePipe} from "@angular/common";
+
 export type ChartOptions = {
   series: ApexAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
-  markers: any; //ApexMarkers;
-  stroke: any; //ApexStroke;
   yaxis: ApexYAxis | ApexYAxis[];
-  dataLabels: ApexDataLabels;
-  title: ApexTitleSubtitle;
-  legend: ApexLegend;
+  labels: string[];
+  stroke: any; // ApexStroke;
+  markers: ApexMarkers;
+  plotOptions: ApexPlotOptions;
   fill: ApexFill;
   tooltip: ApexTooltip;
 };
@@ -37,6 +37,7 @@ export type ChartOptions = {
 export class StatisticLiquidationComponent implements OnInit {
   pastDay = this.datePipe.transform(new Date().setDate(new Date().getDate() - 365), 'dd/MM/yyyy');
   today = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
+
   @ViewChild('chart') chart!: ChartComponent|any;
   public chartOptions: Partial<ChartOptions>|any;
   check = false;
@@ -45,17 +46,14 @@ export class StatisticLiquidationComponent implements OnInit {
   startDate!: string;
   endDate!: string;
   checkDateForm!: FormGroup;
-  listContractId: string[]=[];
   contract: Statistic[] = [];
   isCheckStatistic = false;
   totalMoney = 0;
-
   constructor(private statisticService: StatisticService,
               private titleService: Title,
               private datePipe: DatePipe) {
     this.titleService.setTitle('Thống kê');
     this.getEndDateStartDate();
-
   }
 
   ngOnInit(): void {
@@ -87,27 +85,26 @@ export class StatisticLiquidationComponent implements OnInit {
     });
   }
 
-  getReceiveMoney() {
-    this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
-      this.contract = value;
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.contract.length; i++) {
-        // @ts-ignore
-        this.chartOptions.series[1].data.push(Number(this.contract[i].receiveMoney));
-      }
-
-    }, error => {
-      console.log(error);
-    });
-  }
-
   getInterestMoney() {
     this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.contract.length; i++) {
         // @ts-ignore
-        this.chartOptions.series[2].data.push(Number(this.contract[i].interestMoney));
+        this.chartOptions.series[1].data.push(Number(this.contract[i].interestMoney));
+      }
+
+    }, error => {
+      console.log(error);
+    });
+  }
+  getReceiveMoney() {
+    this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
+      this.contract = value;
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.contract.length; i++) {
+        // @ts-ignore
+        this.chartOptions.series[2].data.push(Number(this.contract[i].receiveMoney));
       }
 
     }, error => {
@@ -115,15 +112,16 @@ export class StatisticLiquidationComponent implements OnInit {
     });
   }
 
-  getContractCode() {
+  getContractId() {
     this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.contract.length; i++) {
-        // @ts-ignore
-          this.listContractId.push(this.contract[i].contractId)
+      this.chartOptions.labels[0] = this.contract[0].contractId;
+      this.totalMoney += Number(this.contract[0].interestMoney);
+      for (let i = 1; i < this.contract.length; i++) {
+        this.totalMoney += Number(this.contract[i].interestMoney);
+        this.chartOptions.labels.push(this.contract[i].contractId);
+        console.log(this.contract[i].contractId);
       }
-
     }, error => {
       console.log(error);
     });
@@ -138,131 +136,87 @@ export class StatisticLiquidationComponent implements OnInit {
       this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
       // @ts-ignore
       this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
-      this.getContractCode();
       this.statisticLiquidation();
+      this.getContractId();
       this.getLoanMoney();
+      this.getInterestMoney();
       this.getReceiveMoney();
-      this.getInterestMoney()
     }
   }
 
-  statisticLiquidation(){
+  statisticLiquidation() {
     this.chartOptions = {
       series: [
         {
-          name: "Tiền tổng vay",
-          type: "column",
+          name: 'Tổng tiền cho vay',
+          type: 'column',
           data: []
         },
         {
-          name: "Tiền thanh lí",
-          type: "column",
+          name: 'Tiền lãi',
+          type: 'line',
           data: []
         },
         {
-          name: "Tiền lãi",
-          type: "line",
+          name: 'Tiền thanh lí',
+          type: 'column',
           data: []
         }
       ],
       chart: {
         height: 350,
-        type: "line",
+        type: 'line',
         stacked: false
       },
-      dataLabels: {
-        enabled: false
-      },
       stroke: {
-        width: [1, 1, 4]
+        width: [0, 2, 5],
+        curve: 'smooth'
       },
-      title: {
-        align: "left",
-        offsetX: 110
+      plotOptions: {
+        bar: {
+          columnWidth: '50%'
+        }
+      },
+
+      fill: {
+        opacity: [0.85, 0.25, 1],
+        gradient: {
+          inverseColors: false,
+          shade: 'light',
+          type: 'vertical',
+          opacityFrom: 0.85,
+          opacityTo: 0.55,
+          stops: [0, 100, 100, 100]
+        }
       },
       xaxis: {
-        categories: this.listContractId
+        labels: {
+          trim: false
+        },
+        categories: []
       },
-      yaxis: [
-        {
-          axisTicks: {
-            show: true
-          },
-          axisBorder: {
-            show: true,
-            color: "#008FFB"
-          },
-          labels: {
-            style: {
-              color: "#008FFB"
-            }
-          },
-          title: {
-            text: "Tổng vay (VND)",
-            style: {
-              color: "#008FFB"
-            }
-          },
-          tooltip: {
-            enabled: true
-          }
+      labels: [''],
+
+      markers: {
+        size: 0
+      },
+      yaxis: {
+        title: {
+          text: 'VND'
         },
-        {
-          seriesName: "Tổng vay",
-          opposite: true,
-          axisTicks: {
-            show: true
-          },
-          axisBorder: {
-            show: true,
-            color: "#00E396"
-          },
-          labels: {
-            style: {
-              color: "#00E396"
-            }
-          },
-          title: {
-            text: "Tiền thanh lí (VND)",
-            style: {
-              color: "#00E396"
-            }
-          }
-        },
-        {
-          seriesName: "Thanh lí",
-          opposite: true,
-          axisTicks: {
-            show: true
-          },
-          axisBorder: {
-            show: true,
-            color: "#FEB019"
-          },
-          labels: {
-            style: {
-              color: "#FEB019"
-            }
-          },
-          title: {
-            text: "Tiên lãi (VND)",
-            style: {
-              color: "#FEB019"
-            }
-          }
-        }
-      ],
+        min: 0
+      },
       tooltip: {
-        fixed: {
-          enabled: true,
-          position: "topLeft", // topRight, topLeft, bottomRight, bottomLeft
-          offsetY: 30,
-          offsetX: 60
+        shared: true,
+        intersect: false,
+        y: {
+          formatter(y:any) {
+            if (typeof y !== 'undefined') {
+              return y.toFixed(0) + ' VND';
+            }
+            return y;
+          }
         }
-      },
-      legend: {
-        horizontalAlign: "left",
-        offsetX: 40
       }
     };
   }
