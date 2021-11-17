@@ -28,12 +28,12 @@ export class CustomerService {
   }
 
   searchCustomer(customerId: string, dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?' + 'customerId=' + customerId + '&dateOfBirthForm=' +
+    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?customerId=' + customerId + '&dateOfBirthForm=' +
       dateOfBirthFrom + '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name, this.httpOptions);
   }
 
   searchPageCustomer(customerId: string, dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string, page: number): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?' + 'customerId=' + customerId + '&dateOfBirthForm=' +
+    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?customerId=' + customerId + '&dateOfBirthForm=' +
       dateOfBirthFrom + '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=' + page, this.httpOptions);
   }
 

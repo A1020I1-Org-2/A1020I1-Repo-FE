@@ -29,6 +29,7 @@ export class ListCustomerComponent implements OnInit {
       dateOfBirthFrom: new FormControl(''),
       dateOfBirthTo: new FormControl(''),
       address: new FormControl(''),
+      countContract: new FormControl(''),
       name: new FormControl(''),
     })
   }
@@ -42,17 +43,35 @@ export class ListCustomerComponent implements OnInit {
   }
 
   getPage(pageNum: number){
-    this.customerService.getPageList(pageNum).subscribe(data =>{
-      this.customers = data.content;
-      this.indexPage = data.pageable.pageNumber + 1;
-    });
+    // this.customerService.getPageList(pageNum).subscribe(data =>{
+    //   this.customers = data.content;
+    //   this.indexPage = data.pageable.pageNumber + 1;
+    // });
+
+    if (this.searchCustomer.value.dateOfBirthFrom == '') {
+      this.searchCustomer.value.dateOfBirthFrom = '';
+    }
+    if (this.searchCustomer.value.dateOfBirthTo == '') {
+      this.searchCustomer.value.dateOfBirthTo = '';
+    }
+    if (this.searchCustomer.value.address == '') {
+      this.searchCustomer.value.address = '';
+    }
+    if (this.searchCustomer.value.name == '') {
+      this.searchCustomer.value.name = '';
+    }
+    this.customerService.searchPageCustomer(this.searchCustomer.value.customerId, this.searchCustomer.value.dateOfBirthFrom, this.searchCustomer.value.dateOfBirthTo,
+      this.searchCustomer.value.address, this.searchCustomer.value.name, pageNum).subscribe((data) => {
+        this.customers = data.content;
+        this.indexPage  = data.pageable.pageNumber + 1;
+      })
   }
 
   openDialog(id: any, name:any): void {
     const dialogRef = this.dialog.open(DeleteCustomerComponent, {
       width: '500px',
       data: {customerId: id, name: name},
-      disableClose: true
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -61,9 +80,6 @@ export class ListCustomerComponent implements OnInit {
   }
 
   search() {
-    if (this.searchCustomer.value.customerId == '') {
-      this.searchCustomer.value.customerId = "";
-    }
     if (this.searchCustomer.value.dateOfBirthFrom == '') {
       this.searchCustomer.value.dateOfBirthFrom = '1000-01-01';
     }
@@ -76,9 +92,8 @@ export class ListCustomerComponent implements OnInit {
     if (this.searchCustomer.value.name == '') {
       this.searchCustomer.value.name = '';
     }
-    this.customerService.searchCustomer(this.searchCustomer.value.customerId, this.searchCustomer.value.dateOfBirthFrom, this.searchCustomer.value.dateOfBirthTo,
-      this.searchCustomer.value.address, this.searchCustomer.value.name)
-      .subscribe((data) => {
+    this.customerService.searchCustomer(this.searchCustomer.value.customerId.trim(), this.searchCustomer.value.dateOfBirthFrom, this.searchCustomer.value.dateOfBirthTo,
+      this.searchCustomer.value.address, this.searchCustomer.value.name).subscribe((data) => {
         this.customers = data.content;
       },() => {
         this.alertService.showMessageErrors('Không tìm thấy!');
@@ -86,9 +101,6 @@ export class ListCustomerComponent implements OnInit {
   };
 
   searchEnter($event: any) {
-    if (this.searchCustomer.value.customerId == '') {
-      this.searchCustomer.value.customerId = "";
-    }
     if (this.searchCustomer.value.dateOfBirthFrom == '') {
       this.searchCustomer.value.dateOfBirthFrom = '1000-01-01';
     }
@@ -101,9 +113,8 @@ export class ListCustomerComponent implements OnInit {
     if (this.searchCustomer.value.name == '') {
       this.searchCustomer.value.name = '';
     }
-    this.customerService.searchCustomer(this.searchCustomer.value.customerId, this.searchCustomer.value.dateOfBirthFrom, this.searchCustomer.value.dateOfBirthTo,
-      this.searchCustomer.value.address, this.searchCustomer.value.name)
-      .subscribe((data) => {
+    this.customerService.searchCustomer(this.searchCustomer.value.customerId.trim(), this.searchCustomer.value.dateOfBirthFrom, this.searchCustomer.value.dateOfBirthTo,
+      this.searchCustomer.value.address, this.searchCustomer.value.name).subscribe((data) => {
         this.customers = data.content;
       })
   }

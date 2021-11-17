@@ -7,6 +7,8 @@ import {CustomerModule} from "./customer/customer.module";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ToastrModule} from "ngx-toastr";
+import {MatDialogModule} from "@angular/material/dialog";
+import {DeleteCustomerComponent} from "./customer/delete-customer/delete-customer.component";
 
 @NgModule({
   declarations: [
@@ -19,8 +21,10 @@ import {ToastrModule} from "ngx-toastr";
     AppRoutingModule,
     CustomerModule,
     ToastrModule.forRoot(),
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  entryComponents:[DeleteCustomerComponent]
 })
 export class AppModule { }

@@ -7,7 +7,7 @@
 </div>
 <div class="container-fluid mb-4">
   <div>
-    <form class="form-group" [formGroup]="searchCustomer" (ngSubmit)="search()" (keydown)="searchEnter($event)">
+    <form class="form-group" [formGroup]="searchCustomer" (ngSubmit)="search()" (keydown.enter)="searchEnter($event)">
       <div class="row justify-content-center">
         <div class="col-2">
           <label class="col-form-label" for="ngaySinhTu">Ngày sinh từ </label>
@@ -19,17 +19,13 @@
         </div>
         <div class="col-2">
           <label class="col-form-label" for="soLuongHD">Số lượng HD</label>
-          <input type="number" class="form-control border-dark" id="soLuongHD"/>
+          <input type="number" class="form-control border-dark" id="soLuongHD" formControlName="countContract"/>
         </div>
         <div class="col-2">
           <label class="col-form-label" for="diaChi">Địa chỉ</label>
-          <select class="form-control border-dark" id="diaChi">
+          <select class="form-control border-dark" id="diaChi" formControlName="address">
             <option selected>Chọn địa chỉ</option>
-            <option>Đà Nẵng</option>
-            <option>Quảng Nam</option>
-            <option>Huế</option>
-            <option>Quảng Trị</option>
-            <option>Hà Nội</option>
+
           </select>
         </div>
         <div class="col-2">
@@ -138,20 +134,3 @@
   </div>
 </div>
 
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--  <div class="modal-dialog" role="document">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h5 class="modal-title" id="exampleModalLabel">Xóa khách hàng</h5>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        Bạn Có Muốn Xóa Khách Hàng <span style="color: red">Hoàng Ngọc Cường</span> Không ?-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>-->
-<!--        <button type="button" class="btn btn-danger">Xoá</button>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
