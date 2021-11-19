@@ -73,7 +73,7 @@ export class StatisticExpectedComponent implements OnInit {
     }, this.checkDate);
   }
 
-  getContract() {
+  getLoanMoney() {
     this.statisticService.getStatisticExpected(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
       // tslint:disable-next-line:prefer-for-of
@@ -86,13 +86,13 @@ export class StatisticExpectedComponent implements OnInit {
     });
   }
 
-  getProfit() {
+  getInterestMoney() {
     this.statisticService.getStatisticExpected(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.contract.length; i++) {
         // @ts-ignore
-        this.chartOptions.series[1].data.push(Number(this.contract[i].interestMoney));
+        this.chartOptions.series[1].data.push(Number(this.contract[i].receiveMoney-this.contract[i].loanMoney));
       }
 
     }, error => {
@@ -100,13 +100,13 @@ export class StatisticExpectedComponent implements OnInit {
     });
   }
 
-  getContractCode() {
+  getContractId() {
     this.statisticService.getStatisticExpected(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
       this.chartOptions.labels[0] = this.contract[0].contractId;
-      this.totalMoney += Number(this.contract[0].interestMoney);
+      this.totalMoney += Number(this.contract[0].receiveMoney-this.contract[0].loanMoney);
       for (let i = 1; i < this.contract.length; i++) {
-        this.totalMoney += Number(this.contract[i].interestMoney);
+        this.totalMoney += Number(this.contract[i].receiveMoney-this.contract[i].loanMoney);
         this.chartOptions.labels.push(this.contract[i].contractId);
         console.log(this.contract[i].contractId);
       }
@@ -124,14 +124,14 @@ export class StatisticExpectedComponent implements OnInit {
       this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
       // @ts-ignore
       this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
-      this.statisticInterest();
-      this.getContractCode();
-      this.getContract();
-      this.getProfit();
+      this.statisticExpected();
+      this.getContractId();
+      this.getLoanMoney();
+      this.getInterestMoney();
     }
   }
 
-  statisticInterest() {
+  statisticExpected() {
     this.chartOptions = {
       series: [
         {
