@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FinanceService} from "../../services/finance.service";
+import {Finance} from "../../interface/finance";
 
 @Component({
   selector: 'app-show-finance',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-finance.component.css']
 })
 export class ShowFinanceComponent implements OnInit {
-
-  constructor() { }
+  financeInfo!: Finance;
+  constructor(private financeService: FinanceService) { }
 
   ngOnInit(): void {
+    this.financeService.findAllFinance().subscribe((data) => {
+      this.financeInfo = data;
+    },()=>{
+      console.log("loi")
+    });
   }
 
 }

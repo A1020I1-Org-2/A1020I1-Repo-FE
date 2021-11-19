@@ -4,6 +4,8 @@ import { ListPawnComponent } from './list-pawn/list-pawn.component';
 import { DetailPawnComponent } from './detail-pawn/detail-pawn.component';
 import { ReturnPawnComponent } from './return-pawn/return-pawn.component';
 import { ListContractComponent } from './list-contract/list-contract.component';
+import {PawnRoutingModule} from "./pawn-routing.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -12,10 +14,12 @@ import { ListContractComponent } from './list-contract/list-contract.component';
     ListPawnComponent,
     DetailPawnComponent,
     ReturnPawnComponent,
-    ListContractComponent
+    ListContractComponent,
   ],
-  imports: [
-    CommonModule
-  ]
+    imports: [
+        CommonModule,
+        PawnRoutingModule,
+        ReactiveFormsModule
+    ]
 })
 export class PawnModule { }
