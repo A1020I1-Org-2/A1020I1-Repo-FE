@@ -117,11 +117,11 @@
               </div>
               <div class="row mt-2">
                 <label class="col-lg-6 col-md-6 col-xl-6">Tiền cho vay:</label>
-                <label class="col-lg-6 col-md-6 col-xl-6">{{pawnInfo?.loanMoney}} <sup class="text-danger">đ</sup></label>
+                <label class="col-lg-6 col-md-6 col-xl-6 text-danger">{{pawnInfo?.loanMoney | currency: "VND"}}</label>
               </div>
               <div class="row mt-2">
                 <label class="col-lg-6 col-md-6 col-xl-6">Tiền lãi:</label>
-                <label class="col-lg-6 col-md-6 col-xl-6">{{pawnInfo?.interestMoney}} <sup class="text-danger">đ</sup></label>
+                <label class="col-lg-6 col-md-6 col-xl-6 text-danger">{{pawnInfo?.interestMoney | currency: "VND"}}</label>
               </div>
               <div class="row mt-2">
                 <label class="col-lg-6 col-md-6 col-xl-6">Ngày bắt đầu:</label>
