@@ -67,6 +67,7 @@ export class LoginComponent implements OnInit {
         this.isOpenToast = true;
       }else{
         this.isOpenToast = false;
+        this.loginService.saveUserName(account.userName);
         this.loginService.saveToken(account.token);
         this.checkDateChangePassword(account.lastUpdate);
         if (this.formLogin.controls.rememberMe.value){
@@ -111,6 +112,8 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl("/change-password").then();
         }
       })
+    }else{
+      this.showMessage('Đăng nhập thành công', 2);
     }
   }
 }

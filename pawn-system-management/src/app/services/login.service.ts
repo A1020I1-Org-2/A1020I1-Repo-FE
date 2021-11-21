@@ -22,7 +22,8 @@ export class LoginService {
   }
 
   doChangePassword(username: string, password: string, newPassword: string): Observable<any>{
-    return this.http.post(this.API + '/change-password', {
+    return this.http.post(this.API + 'change-password', {
+      username: username,
       password: password,
       newPassword: newPassword
     })

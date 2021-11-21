@@ -45,13 +45,12 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   doSubmit(): void{
-    this.isOpenToast = true;
     if(this.formChangePassword.valid){
       this.isSubmit = false;
       if(this.username !== null){
         this.loginService.doChangePassword(this.username, this.form.password.value, this.newPassword?.value)
-          .subscribe(account => {
-            if(account === null){
+          .subscribe(result => {
+            if(result.message !== 'success'){
               this.isOpenToast = true;
             }else{
               this.isOpenToast = false;
