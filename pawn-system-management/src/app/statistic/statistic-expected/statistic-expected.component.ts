@@ -46,6 +46,8 @@ export class StatisticExpectedComponent implements OnInit {
   checkEndDate = this.today;
   startDate!: string;
   endDate!: string;
+  eDate!:string;
+  interestDays:any;
   checkDateForm!: FormGroup;
   contract: Statistic[] = [];
   isCheckStatistic = false;
@@ -103,11 +105,12 @@ export class StatisticExpectedComponent implements OnInit {
   getContractId() {
     this.statisticService.getStatisticExpected(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
-      this.chartOptions.labels[0] = this.contract[0].contractId;
-      this.totalMoney += Number(this.contract[0].receiveMoney-this.contract[0].loanMoney);
+      // @ts-ignore
+      this.chartOptions.labels[0] = this.contract[0].contractId+" |  "+this.formatDate(this.contract[0].endDate);
+      // this.totalMoney += Number(this.contract[0].receiveMoney-this.contract[0].loanMoney);
       for (let i = 1; i < this.contract.length; i++) {
-        this.totalMoney += Number(this.contract[i].receiveMoney-this.contract[i].loanMoney);
-        this.chartOptions.labels.push(this.contract[i].contractId);
+        // this.totalMoney += Number(this.contract[i].receiveMoney-this.contract[i].loanMoney);
+        this.chartOptions.labels.push(this.contract[i].contractId+" | "+this.formatDate(this.contract[i].endDate));
         console.log(this.contract[i].contractId);
       }
     }, error => {
@@ -115,6 +118,23 @@ export class StatisticExpectedComponent implements OnInit {
     });
   }
 
+  getInterestDay() {
+    this.statisticService.getStatisticExpected(this.startDate, this.endDate).subscribe(value => {
+      this.contract = value;
+      // @ts-ignore
+      this.eDate = this.checkDateForm.get('checkEndDate').value;
+      this.interestDays=this.dateDifference(this.contract[0].endDate,this.eDate);
+      this.totalMoney += Number((this.contract[0].receiveMoney-this.contract[0].loanMoney)+this.interestDays*100000);
+      this.chartOptions.series[2].data.push(Number(this.totalMoney));
+      for (let i = 1; i < this.contract.length; i++) {
+        this.interestDays=this.dateDifference(this.contract[i].endDate,this.eDate);
+        this.totalMoney += Number((this.contract[i].receiveMoney-this.contract[i].loanMoney)+this.interestDays*100000);
+        this.chartOptions.series[2].data.push(Number(this.contract[i].receiveMoney-this.contract[i].loanMoney)+this.interestDays*100000);
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
   getStatistic() {
     this.check = true;
     this.isCheckStatistic = true;
@@ -128,6 +148,7 @@ export class StatisticExpectedComponent implements OnInit {
       this.getContractId();
       this.getLoanMoney();
       this.getInterestMoney();
+      this.getInterestDay()
     }
   }
 
@@ -141,7 +162,12 @@ export class StatisticExpectedComponent implements OnInit {
         },
         {
           name: 'Tiền lãi',
-          type: 'area',
+          type: 'line',
+          data: []
+        },
+        {
+          name: 'Tiền lãi dự kiến',
+          type: 'column',
           data: []
         }
       ],
@@ -211,5 +237,17 @@ export class StatisticExpectedComponent implements OnInit {
     if (day.length < 2) day = '0' + day;
     return [day, month, year].join('/');
   }
+   // @ts-ignore
+   dateDifference(date1, date2) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
+    date1=new Date(date1);
+    date2=new Date(date2);
+    console.log(date1);
+    // Discard the time and time-zone information.
+    const utc1 = Date.UTC(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const utc2 = Date.UTC(date2.getFullYear(), date2.getMonth(), date2.getDate());
+
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+  }
 }
