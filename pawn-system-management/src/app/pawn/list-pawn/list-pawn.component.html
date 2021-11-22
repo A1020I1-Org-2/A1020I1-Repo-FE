@@ -16,7 +16,7 @@
         <div class="col-lg-3 col-xl-3"></div>
         <label class="col-lg-1 col-xl-1 col-form-label" for="sc">Tìm Đồ: </label>
         <div class="col-lg-3 col-xl-3">
-          <input type="text" class="form-control border-dark" id="sc" formControlName="search"/>
+          <input type="text" class="form-control border-dark" id="sc" formControlName="search" maxlength="25"/>
         </div>
         <div class="col-lg-2 col-xl-2">
           <select class="form-control border-dark" formControlName="typeSearch">
@@ -39,11 +39,16 @@
             <th>Chức Năng</th>
           </tr>
           </thead>
-          <tbody class="text-center">
-          <tr *ngFor="let p of pawnList">
+          <tbody class="text-center" *ngIf="pawnList.length >0">
+          <tr *ngFor="let p of pawnList" >
             <td>{{p.productName}}</td>
             <td>{{p.typeProduct.name}}</td>
-            <td>{{p.statusContract.name}}</td>
+            <td *ngIf="p.statusContract.statusContractId == 1"
+                [ngStyle]="{'color': 'green', 'font-size': '15px', 'font-weight': 'bold'}">Thanh Lý</td>
+            <td *ngIf="p.statusContract.statusContractId == 2"
+                [ngStyle]="{'color': 'yellow', 'font-size': '15px', 'font-weight': 'bold'}">Đang Cầm</td>
+            <td *ngIf="p.statusContract.statusContractId == 3"
+                [ngStyle]="{'color': 'red', 'font-size': '15px', 'font-weight': 'bold'}">Quá Hạn</td>
             <td class="text-danger">{{p.loanMoney | currency: "VND"}}</td>
             <td>
               <button class="btn btn-outline-warning border-0" (click)="temp(p.contractId)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-eye"></i></button> &nbsp;

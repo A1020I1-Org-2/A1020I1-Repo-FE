@@ -46,7 +46,7 @@ export class ListPawnComponent implements OnInit {
   }
 
   searchP() {
-    this.pawnService.searchPawn(this.searchPawn.value.search,this.searchPawn.value.typeSearch).subscribe((data) => {
+    this.pawnService.searchPawn(this.searchPawn.value.search.trim(),this.searchPawn.value.typeSearch).subscribe((data) => {
       this.pawnList = data.content;
     },()=> {
       this.alertService.showMessageErrors("Không tìm thấy!");
@@ -54,13 +54,13 @@ export class ListPawnComponent implements OnInit {
   }
 
   searchP2($event: any) {
-    this.pawnService.searchPawn(this.searchPawn.value.search,this.searchPawn.value.typeSearch).subscribe((data) => {
+    this.pawnService.searchPawn(this.searchPawn.value.search.trim(),this.searchPawn.value.typeSearch).subscribe((data) => {
       this.pawnList = data.content;
-    })
+    },()=> {})
   }
 
   getPage(page: number) {
-    this.pawnService.getSearchPawn(this.searchPawn.value.search,this.searchPawn.value.typeSearch,page).subscribe((data) => {
+    this.pawnService.getSearchPawn(this.searchPawn.value.search.trim(),this.searchPawn.value.typeSearch,page).subscribe((data) => {
       this.pawnList= data.content;
       this.indexPagination  = data.pageable.pageNumber + 1;
     })
