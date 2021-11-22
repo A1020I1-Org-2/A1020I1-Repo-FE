@@ -10,6 +10,7 @@ import {CreateLiquidationContractComponentComponent} from './create-liquidation-
 import {ContractRoutingModule} from "./contract-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxPaginationModule} from "ngx-pagination";
+import {ToastrModule} from "ngx-toastr";
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     ReactiveFormsModule,
     FormsModule,
     NgxPaginationModule,
+    ToastrModule.forRoot()
 
   ]
 })

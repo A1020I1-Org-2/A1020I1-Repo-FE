@@ -49,7 +49,7 @@ export class ContractService{
   }
 
   updateStatusContractPawn(contractID:string):Observable<any>{
-    return this.httpClient.put<any>(this.APIUpdateStatusContractPawn,contractID);
+    return this.httpClient.get<any>(this.APIUpdateStatusContractPawn + '?contractID=' + contractID);
   }
   getPageListCustomer(pageNum: number,searchName:string):Observable<any>{
     const url = this.APISearchCustomer + '?page=' + pageNum +'&searchName=' + searchName;

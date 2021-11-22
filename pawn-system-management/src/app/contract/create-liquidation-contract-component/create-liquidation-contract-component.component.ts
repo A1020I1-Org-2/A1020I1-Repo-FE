@@ -9,6 +9,9 @@ import {TypeProduct} from "../../interface/type-product";
 import {ContractDTO} from "../../model/ContractDTO";
 import {StatusContract} from "../../interface/status-contract";
 import {TypeContract} from "../../interface/type-contract";
+import {AlertService} from "../alert.service";
+import {error} from "@angular/compiler/src/util";
+import {ToastrService} from "ngx-toastr";
 
 
 function checkLiquidationDate(param: AbstractControl): ValidationErrors | null {
@@ -50,17 +53,22 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   statusContract!: StatusContract;
   typeContract: TypeContract = {typeContractId: 2, name: "Thanh lý"};
   employeeName: string = "";
-  quantity : number = 0;
+  quantity: number = 0;
   typeProductName: string = "";
   p: any;
   indexPagination: number = 1;
   totalPagination: number = 0;
-  listTypeProduct :TypeProduct[] =[];
+  listTypeProduct: TypeProduct[] = [];
+  isFoundCs:boolean = true;
+  isFoundEm:boolean = true;
+  isFoundPd:boolean = true;
 
   constructor(
     public contractService: ContractService,
     public formBuilder: FormBuilder,
-    public router: Router
+    public router: Router,
+    private alertService: AlertService,
+    private toast : ToastrService
   ) {
   }
 
@@ -87,30 +95,35 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   };
 
   createLiquidationContract() {
-    const value = this.formCreate.value;
-
-    this.contractID = "HD-" + Math.floor(Math.random() * 10000);
-
-    for (let i = 0; i < this.liquidationProductList.length; i++) {
-      if (this.liquidationProductList[i].contractId === this.formCreate.value.contractId) {
-        this.productImg = this.liquidationProductList[i].productImg;
+    if (this.formCreate.valid){
+      const value = this.formCreate.value;
+      this.contractID = "HD-" + Math.floor(Math.random() * 10000);
+      for (let i = 0; i < this.liquidationProductList.length; i++) {
+        if (this.liquidationProductList[i].contractId === this.formCreate.value.contractId) {
+          this.productImg = this.liquidationProductList[i].productImg;
+        }
       }
+      this.statusContract = {statusContractId: 3, name: "Close"};
+
+      this.Contract = new ContractDTO(this.contractID, this.productImg, value.productName, 0
+        , value.receiveMoney, 0, value.liquidationDate, "", "", value.quantity, this.statusContract,
+        value.customer, this.typeContract, value.typeProduct, value.employee);
+
+      this.contractService.updateStatusContractPawn(this.formCreate.value.contractId).subscribe(
+        data => {
+        }
+      );
+
+      this.contractService.saveLiquidationContract(this.Contract).subscribe(
+        data => {
+          this.ngOnInit();
+        }
+      );
+      this.reset();
+      this.alertService.showAlertSuccess("Tạo mới hợp đồng thanh lý thành công");
+    }else {
+      this.alertService.showAlertError("Tạo mới thất bại")
     }
-
-    this.statusContract = {statusContractId: 3, name: "Close"};
-
-    this.Contract = new ContractDTO(this.contractID, this.productImg, value.productName, 0
-      , value.receiveMoney, 0, value.liquidationDate, "", "", value.quantity, this.statusContract,
-      value.customer, this.typeContract, value.typeProduct, value.employee);
-
-    this.contractService.updateStatusContractPawn(this.formCreate.value.contractId);
-
-    this.contractService.saveLiquidationContract(this.Contract).subscribe(
-      data => {
-        this.ngOnInit();
-      }
-    );
-    this.reset();
   }
 
   getLiquidationProductList() {
@@ -119,13 +132,15 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       this.totalPagination = data.totalPages;
     })
   }
-  getListTypeProduct(){
-    this.contractService.getTypeProductList().subscribe(data=>{
+
+  getListTypeProduct() {
+    this.contractService.getTypeProductList().subscribe(data => {
       this.typeProductList = data;
     })
   }
+
   getPageListProduct(pageNum: number) {
-    this.contractService.getPageListProduct(pageNum, this.productName,this.receiveMoney,this.typeProduct).subscribe(
+    this.contractService.getPageListProduct(pageNum, this.productName, this.receiveMoney, this.typeProduct).subscribe(
       data => {
         this.liquidationProductList = data.content;
         this.indexPagination = data.pageable.pageNumber + 1;
@@ -133,6 +148,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       }
     )
   }
+
   getCustomerList() {
     this.contractService.getCustomerList().subscribe(data => {
       this.customerList = data.content;
@@ -179,10 +195,10 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
     this.contractService.searchLiquidationProduct(this.searchProduct.value.productName,
       this.searchProduct.value.receiveMoney, this.searchProduct.value.typeProduct).subscribe(
       (data) => {
+        this.isFoundPd = true;
         this.liquidationProductList = data.content;
-      },
-      () => {
-        // this.alertService.showAlertSuccess("Không thể tìm kiếm máy như theo yêu cầu!");
+      },error => {
+        this.isFoundPd = false;
       }
     )
   }
@@ -194,34 +210,35 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
     if (this.searchProduct.value.receiveMoney == 0) {
       this.searchProduct.value.receiveMoney = 0;
     }
-
     if (this.searchProduct.value.name == '') {
       this.searchProduct.value.typeProduct.name = "";
     }
-
     this.contractService.searchLiquidationProduct(this.searchProduct.value.productName,
       this.searchProduct.value.receiveMoney,
       this.searchProduct.value.typeProduct.name,).subscribe((data) => {
-
-      // @ts-ignore
       this.liquidationProductList = data.content;
       console.log("Đây là search" + this.liquidationProductList);
 
     })
   }
-
   searchCustomer() {
     this.contractService.searchCustomer(this.searchCus).subscribe(data => {
-      this.customerList = data.content;
-    })
+        this.isFoundCs = true;
+        this.customerList = data.content;
+      },
+      () =>{
+      this.isFoundCs = false;
+      })
   }
-
   searchEmployee() {
     this.contractService.searchEmployee(this.searchEm).subscribe(data => {
+      this.isFoundEm = true;
       this.employeeList = data.content;
-    })
+    },
+      error => {
+      this.isFoundEm = false;
+      })
   }
-
   chooseProduct(contractId: string) {
     for (let i = 0; i < this.liquidationProductList.length; i++) {
       if (this.liquidationProductList[i].contractId === contractId) {
@@ -235,7 +252,6 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       }
     }
   }
-
   chooseCustomer(customerId: string) {
     this.formCreate.controls.customer.setValue(customerId);
     for (let i = 0; i < this.customerList.length; i++) {
@@ -252,7 +268,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       }
     }
   }
-  reset(){
+  reset() {
     this.customerName = '';
     this.employeeName = '';
     this.productName = '';
@@ -260,11 +276,27 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
     this.quantity = 0;
     this.receiveMoney = 0;
   }
-  resetOfCancel(){
-   this.ngOnInit();
-   this.reset();
-  }
-  setStatusContact(){
 
+  resetOfCancel() {
+    this.ngOnInit();
+    this.reset();
+    this.alertService.showAlertSuccess("Đã huỷ thành công!")
+  }
+
+  resetModalEM() {
+    this.searchEm = '';
+    this.searchEmployee();
+  }
+
+  resetModalCS() {
+    this.searchCus = '';
+    this.searchCustomer();
+  }
+
+  resetModalPD() {
+    this.searchProduct.controls.productName.setValue("");
+    this.searchProduct.controls.receiveMoney.setValue(0);
+    this.searchProduct.controls.typeProduct.setValue("");
+    this.search();
   }
 }
