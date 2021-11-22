@@ -14,27 +14,17 @@ export class CustomerService {
     return this.httpClient.get<any>(this.API_URL + '/listCustomer', this.httpOptions);
   }
 
-  getPageList(pageNum: number): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/listCustomer?page=' + pageNum, this.httpOptions);
-  }
-
-
   deleteCustomer(id: number | undefined): Observable<any> {
     return this.httpClient.delete<any>(this.API_URL +'/deleteCustomer/'+ id, this.httpOptions);
   }
 
-  getCustomerById(id: number): Observable<any>{
-    return this.httpClient.get<any>(this.API_URL + '/getCustomer/' + id, this.httpOptions);
+  searchCustomer(dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string): Observable<any> {
+    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?dateOfBirthFrom=' + dateOfBirthFrom +
+      '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=0');
   }
 
-  searchCustomer(customerId: string, dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?customerId=' + customerId + '&dateOfBirthForm=' +
-      dateOfBirthFrom + '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name, this.httpOptions);
+  searchPageCustomer(dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string, page: number): Observable<any> {
+    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?dateOfBirthFrom=' + dateOfBirthFrom +
+      '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=' + page);
   }
-
-  searchPageCustomer(customerId: string, dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string, page: number): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/searchCustomer?customerId=' + customerId + '&dateOfBirthForm=' +
-      dateOfBirthFrom + '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=' + page, this.httpOptions);
-  }
-
 }
