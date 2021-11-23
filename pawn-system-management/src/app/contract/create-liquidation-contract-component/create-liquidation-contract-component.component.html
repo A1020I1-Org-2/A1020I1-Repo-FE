@@ -208,7 +208,7 @@
               <tr class="row">
                 <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">Tên đồ:</th>
                 <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">Loại đồ:</th>
-                <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">Giá:</th>
+                <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">Giá(VNĐ):</th>
                 <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3"></th>
               </tr>
               <tr class="row">
@@ -252,7 +252,7 @@
               <td>{{list.productName}}</td>
               <td>{{list.typeProduct.name}}</td>
               <td class="text-center">{{list.quantity}}</td>
-              <td class="text-center">{{list.receiveMoney}}</td>
+              <td class="text-center">{{list.loanMoney}}</td>
               <td class="text-center ">
                 <button class="text-center btn btn-outline-info" (click)="chooseProduct(list.contractId)"
                         data-bs-dismiss="modal">Chọn
@@ -310,7 +310,6 @@
             </ul>
           </nav>
         </div>
-        <!--        <pagination-controls (pageChange)="p = $event"></pagination-controls>-->
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
         </div>

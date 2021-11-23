@@ -31,7 +31,6 @@ import {ToastrModule} from "ngx-toastr";
     ContractRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxPaginationModule,
     ToastrModule.forRoot()
 
   ]
