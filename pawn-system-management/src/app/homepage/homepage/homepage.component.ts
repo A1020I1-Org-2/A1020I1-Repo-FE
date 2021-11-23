@@ -1,0 +1,61 @@
+import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {PawnType} from "./PawnType";
+import {RegisterService} from "../register.service";
+import {Register} from "../Register";
+
+@Component({
+  selector: 'app-homepage',
+  templateUrl: './homepage.component.html',
+  styleUrls: ['./homepage.component.css']
+})
+export class HomepageComponent implements OnInit {
+  form: FormGroup;
+  pawnTypes: PawnType[];
+  createSuccess: boolean = false;
+
+  constructor(public registerService: RegisterService) { }
+
+  ngOnInit(): void {
+    this.form = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.pattern("^([a-zA-Z ])*$")]),
+      email: new FormControl('', [Validators.required,
+        Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")]),
+      phone: new FormControl('', [Validators.required, Validators.pattern("^([0-9]{10}|[0-9]{12})$")]),
+      address: new FormControl('', [Validators.required]),
+      note: new FormControl(''),
+      pawnTypeId: new FormControl('', [Validators.required]),
+    });
+    this.getAllType();
+  }
+
+  getAllType() {
+    this.registerService.getAllType().subscribe(res => {
+      this.pawnTypes = res;
+    });
+  }
+
+  get f(){
+    return this.form.controls;
+  }
+
+  compareFn(c1: Register, c2: Register): boolean {
+    return c1 && c2 ? c1.registerId === c2.registerId : c1 === c2;
+  }
+
+  fadeOutLink() {
+    setTimeout( () => {
+      this.createSuccess = false;
+    }, 2000);
+  }
+
+
+  submit(){
+    if (this.form.valid){
+      this.registerService.create(this.form.value).subscribe(res => {
+        this.createSuccess = true;
+        this.fadeOutLink();
+      })
+    }
+  }
+}
