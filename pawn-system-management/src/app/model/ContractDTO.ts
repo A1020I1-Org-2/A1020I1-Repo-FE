@@ -19,7 +19,6 @@ export class ContractDTO {
   private typeProduct!:TypeProduct;
   private employeeId!:string;
 
-
   constructor(contractId: string, productImg: string, productName: string, interestMoney: number, receiveMoney: number, loanMoney: number, liquidationDate: string, startDate: string, endDate: string, quantity: number, statusContract: StatusContract, customerId: string, typeContract: TypeContract, typeProduct: TypeProduct, employeeId: string) {
     this.contractId = contractId;
     this.productImg = productImg;

@@ -10,7 +10,6 @@ import {ContractDTO} from "../../model/ContractDTO";
 import {StatusContract} from "../../interface/status-contract";
 import {TypeContract} from "../../interface/type-contract";
 import {AlertService} from "../alert.service";
-import {error} from "@angular/compiler/src/util";
 import {ToastrService} from "ngx-toastr";
 
 
@@ -58,17 +57,16 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   p: any;
   indexPagination: number = 1;
   totalPagination: number = 0;
-  listTypeProduct: TypeProduct[] = [];
-  isFoundCs:boolean = true;
-  isFoundEm:boolean = true;
-  isFoundPd:boolean = true;
+  isFoundCs: boolean = true;
+  isFoundEm: boolean = true;
+  isFoundPd: boolean = true;
 
   constructor(
     public contractService: ContractService,
     public formBuilder: FormBuilder,
     public router: Router,
     private alertService: AlertService,
-    private toast : ToastrService
+    private toast: ToastrService
   ) {
   }
 
@@ -95,7 +93,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   };
 
   createLiquidationContract() {
-    if (this.formCreate.valid){
+    if (this.formCreate.valid) {
       const value = this.formCreate.value;
       this.contractID = "HD-" + Math.floor(Math.random() * 10000);
       for (let i = 0; i < this.liquidationProductList.length; i++) {
@@ -121,7 +119,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       );
       this.reset();
       this.alertService.showAlertSuccess("Tạo mới hợp đồng thanh lý thành công");
-    }else {
+    } else {
       this.alertService.showAlertError("Tạo mới thất bại")
     }
   }
@@ -197,7 +195,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       (data) => {
         this.isFoundPd = true;
         this.liquidationProductList = data.content;
-      },error => {
+      }, error => {
         this.isFoundPd = false;
       }
     )
@@ -217,28 +215,29 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       this.searchProduct.value.receiveMoney,
       this.searchProduct.value.typeProduct.name,).subscribe((data) => {
       this.liquidationProductList = data.content;
-      console.log("Đây là search" + this.liquidationProductList);
-
     })
   }
+
   searchCustomer() {
     this.contractService.searchCustomer(this.searchCus).subscribe(data => {
         this.isFoundCs = true;
         this.customerList = data.content;
       },
-      () =>{
-      this.isFoundCs = false;
+      () => {
+        this.isFoundCs = false;
       })
   }
+
   searchEmployee() {
     this.contractService.searchEmployee(this.searchEm).subscribe(data => {
-      this.isFoundEm = true;
-      this.employeeList = data.content;
-    },
+        this.isFoundEm = true;
+        this.employeeList = data.content;
+      },
       error => {
-      this.isFoundEm = false;
+        this.isFoundEm = false;
       })
   }
+
   chooseProduct(contractId: string) {
     for (let i = 0; i < this.liquidationProductList.length; i++) {
       if (this.liquidationProductList[i].contractId === contractId) {
@@ -252,6 +251,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       }
     }
   }
+
   chooseCustomer(customerId: string) {
     this.formCreate.controls.customer.setValue(customerId);
     for (let i = 0; i < this.customerList.length; i++) {
@@ -260,6 +260,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       }
     }
   }
+
   chooseEmployee(employeeId: string) {
     this.formCreate.controls.employee.setValue(employeeId);
     for (let i = 0; i < this.employeeList.length; i++) {
@@ -268,6 +269,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       }
     }
   }
+
   reset() {
     this.customerName = '';
     this.employeeName = '';
