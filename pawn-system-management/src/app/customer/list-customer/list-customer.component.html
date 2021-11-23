@@ -30,32 +30,54 @@
                             <td *ngIf="emptyObject">{{customer.customerId}}</td>
                             <td *ngIf="!emptyObject">
                                 <input *ngIf="customer.customerId == idCustomerEdit" class="form-control" type="text"
-                                    [(ngModel)]="customer.customerId" readonly>
+                                    [value]="customer.customerId" readonly>
                                 <p *ngIf="!(customer.customerId == idCustomerEdit)">{{customer.customerId}}</p>
                             </td>
                             <td *ngIf="emptyObject">{{customer.name}}</td>
                             <td *ngIf="!emptyObject">
                                 <input *ngIf="customer.customerId == idCustomerEdit" class="form-control" type="text"
-                                    [(ngModel)]="customer.name">
+                                    [value]="customer.name"
+                                    (input)="customerValidate.setName($any($event).target.value)">
                                 <p *ngIf="!(customer.customerId == idCustomerEdit)">{{customer.name}}</p>
+                                <p *ngIf="!customerValidate.checkRequired('name') && (customer.customerId == idCustomerEdit) "
+                                    class="text-danger">Không được để
+                                    trống tên</p>
                             </td>
                             <td *ngIf="emptyObject">{{customer.dateOfBirth | date }}</td>
                             <td *ngIf="!emptyObject">
                                 <input *ngIf="customer.customerId == idCustomerEdit" type="date" class="form-control"
-                                    [(ngModel)]="customer.dateOfBirth">
+                                    [value]="customer.dateOfBirth"
+                                    (input)="customerValidate.setDateOfBirth($any($event).target.value)">
                                 <p *ngIf="!(customer.customerId == idCustomerEdit)">{{customer.dateOfBirth | date}}</p>
+                                <p *ngIf="!customerValidate.checkRequired('dateOfBirth') && (customer.customerId == idCustomerEdit) "
+                                    class="text-danger">Không được để
+                                    trống ngày sinh</p>
+                                <p *ngIf="!customerValidate.checkAge() && (customer.customerId == idCustomerEdit)&& customerValidate.checkRequired('dateOfBirth')"
+                                    class="text-danger">Tuổi phải lớn hơn 18 tuổi</p>
                             </td>
                             <td *ngIf="emptyObject">{{customer.phone}}</td>
                             <td *ngIf="!emptyObject">
                                 <input *ngIf="customer.customerId == idCustomerEdit" class="form-control" type="text"
-                                    [(ngModel)]="customer.phone">
+                                    [value]="customer.phone"
+                                    (input)="customerValidate.setPhone($any($event).target.value)">
                                 <p *ngIf="!(customer.customerId == idCustomerEdit)">{{customer.phone}}</p>
+                                <p *ngIf="!customerValidate.checkRequired('phone') && (customer.customerId == idCustomerEdit) "
+                                    class="text-danger">Không được để
+                                    trống số điện thoại</p>
+                                <p *ngIf="!customerValidate.checkPattern('phone') && (customer.customerId == idCustomerEdit)  && customerValidate.checkRequired('phone')"
+                                    class="text-danger">Số điện thoại chứa 10-12 kí tự</p>
                             </td>
                             <td *ngIf="emptyObject">{{customer.email}}</td>
                             <td *ngIf="!emptyObject">
                                 <input *ngIf="customer.customerId == idCustomerEdit" class="form-control" type="email"
-                                    [(ngModel)]="customer.email">
+                                    [value]="customer.email"
+                                    (input)="customerValidate.setEmail($any($event).target.value)">
                                 <p *ngIf="!(customer.customerId == idCustomerEdit)">{{customer.email}}</p>
+                                <p *ngIf="!customerValidate.checkRequired('email') && (customer.customerId == idCustomerEdit) "
+                                    class="text-danger">Không được để
+                                    trống số email</p>
+                                <p *ngIf="!customerValidate.checkPattern('email') && (customer.customerId == idCustomerEdit)&& customerValidate.checkRequired('email') "
+                                    class="text-danger">Email không đúng định dạng</p>
                             </td>
                             <td *ngIf="emptyObject && customer.gender">Nam</td>
                             <td *ngIf="emptyObject && !(customer.gender)">Nữ</td>
@@ -81,14 +103,24 @@
                             <td *ngIf="emptyObject">{{customer.address}}</td>
                             <td *ngIf="!emptyObject">
                                 <input *ngIf="customer.customerId == idCustomerEdit" class="form-control" type="text"
-                                    [(ngModel)]="customer.address">
+                                    [value]="customer.address"
+                                    (input)="customerValidate.setAddress($any($event).target.value)">
                                 <p *ngIf="!(customer.customerId == idCustomerEdit)">{{customer.address}}</p>
+                                <p *ngIf="!customerValidate.checkRequired('address') && (customer.customerId == idCustomerEdit)"
+                                    class="text-danger">Không được để
+                                    trống địa chỉ</p>
                             </td>
                             <td *ngIf="emptyObject">{{customer.idCard}}</td>
                             <td *ngIf="!emptyObject">
                                 <input *ngIf="customer.customerId == idCustomerEdit" class="form-control" type="text"
-                                    [(ngModel)]="customer.idCard">
+                                    [value]="customer.idCard"
+                                    (input)="customerValidate.setIdCard($any($event).target.value)">
                                 <p *ngIf="!(customer.customerId == idCustomerEdit)">{{customer.idCard}}</p>
+                                <p *ngIf="!customerValidate.checkRequired('idCard') && (customer.customerId == idCustomerEdit) "
+                                    class="text-danger">Không được để
+                                    trống số chứng minh nhân dân</p>
+                                <p *ngIf="!customerValidate.checkPattern('idCard') && (customer.customerId == idCustomerEdit) && customerValidate.checkRequired('idCard')"
+                                    class="text-danger">Số chứng minh không đúng định dạng</p>
                             </td>
                             <td class="text-center"><span class="d-inline-flex">
                                     <button *ngIf="emptyObject" (click)="edit(customer)"
