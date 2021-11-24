@@ -1,13 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CreatePawnContractComponent } from './create-pawn-contract/create-pawn-contract.component';
-import { UpdateContractComponent } from './update-contract/update-contract.component';
-import { ListTop10ContractComponent } from './list-top10-contract/list-top10-contract.component';
-import { ListContractComponent } from './list-contract/list-contract.component';
-import { DeleteContractComponent } from './delete-contract/delete-contract.component';
-import { DetailContractComponent } from './detail-contract/detail-contract.component';
-import { CreateLiquidationContractComponentComponent } from './create-liquidation-contract-component/create-liquidation-contract-component.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {CreatePawnContractComponent} from './create-pawn-contract/create-pawn-contract.component';
+import {UpdateContractComponent} from './update-contract/update-contract.component';
+import {ListTop10ContractComponent} from './list-top10-contract/list-top10-contract.component';
+import {ListContractComponent} from './list-contract/list-contract.component';
+import {DeleteContractComponent} from './delete-contract/delete-contract.component';
+import {DetailContractComponent} from './detail-contract/detail-contract.component';
+import {CreateLiquidationContractComponentComponent} from './create-liquidation-contract-component/create-liquidation-contract-component.component';
+import {ContractRoutingModule} from "./contract-routing.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgxPaginationModule} from "ngx-pagination";
+import {ToastrModule} from "ngx-toastr";
 
 
 @NgModule({
@@ -20,8 +23,17 @@ import { CreateLiquidationContractComponentComponent } from './create-liquidatio
     DetailContractComponent,
     CreateLiquidationContractComponentComponent
   ],
+  exports: [
+    CreateLiquidationContractComponentComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    ContractRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ToastrModule.forRoot()
+
   ]
 })
-export class ContractModule { }
+export class ContractModule {
+}
