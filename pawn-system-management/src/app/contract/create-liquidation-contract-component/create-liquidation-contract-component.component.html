@@ -252,7 +252,7 @@
               <td>{{list.productName}}</td>
               <td>{{list.typeProduct.name}}</td>
               <td class="text-center">{{list.quantity}}</td>
-              <td class="text-center">{{list.loanMoney}}</td>
+              <td class="text-center text-danger">{{list.loanMoney |currency:"VND"}}</td>
               <td class="text-center ">
                 <button class="text-center btn btn-outline-info" (click)="chooseProduct(list.contractId)"
                         data-bs-dismiss="modal">Chọn
