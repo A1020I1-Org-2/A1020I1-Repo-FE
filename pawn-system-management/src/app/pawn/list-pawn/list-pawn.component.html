@@ -39,7 +39,7 @@
             <th>Chức Năng</th>
           </tr>
           </thead>
-          <tbody class="text-center" *ngIf="pawnList.length >0">
+          <tbody class="text-center">
           <tr *ngFor="let p of pawnList" >
             <td>{{p.productName}}</td>
             <td>{{p.typeProduct.name}}</td>
@@ -52,7 +52,7 @@
             <td class="text-danger">{{p.loanMoney | currency: "VND"}}</td>
             <td>
               <button class="btn btn-outline-warning border-0" (click)="temp(p.contractId)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-eye"></i></button> &nbsp;
-              <button class="btn btn-outline-danger border-0"><i class="fa fa-trash-alt"></i></button>
+              <button class="btn btn-outline-danger border-0"><i class="fas fa-shipping-fast"></i></button>
             </td>
           </tr>
           </tbody>
@@ -60,6 +60,9 @@
       </div>
       <nav aria-label="Page navigation example">
         <ul class="pagination  justify-content-end">
+          <li class="page-item" style="padding-right: 60%">
+            <p><span>Trang Hiện Tại: </span> <span>{{indexPagination}}/</span><span>{{totalPagination}}</span></p>
+          </li>
           <li class="page-item">
             <a class="page-link" aria-label="Previous"  (click)="getPage(0)">
               <span aria-hidden="true">&laquo;</span>
@@ -135,6 +138,15 @@
               <div class="row mt-2">
                 <label class="col-lg-6 col-md-6 col-xl-6">Ngày kết thúc:</label>
                 <label class="col-lg-6 col-md-6 col-xl-6">{{pawnInfo?.endDate | date: "dd/MM/yyyy"}}</label>
+              </div>
+              <div class="row mt-2">
+                <label class="col-lg-6 col-md-6 col-xl-6">Trạng thái:</label>
+                <label class="col-lg-6 col-md-6 col-xl-6" *ngIf="pawnInfo?.statusContract?.statusContractId == 1"
+                       [ngStyle]="{'color': 'green', 'font-size': '15px', 'font-weight': 'bold'}" >Thanh Lý</label>
+                <label class="col-lg-6 col-md-6 col-xl-6" *ngIf="pawnInfo?.statusContract?.statusContractId == 2"
+                       [ngStyle]="{'color': 'yellow', 'font-size': '15px', 'font-weight': 'bold'}" >Đang Cầm</label>
+                <label class="col-lg-6 col-md-6 col-xl-6" *ngIf="pawnInfo?.statusContract?.statusContractId == 3"
+                       [ngStyle]="{'color': 'red', 'font-size': '15px', 'font-weight': 'bold'}" >Quá Hạn</label>
               </div>
             </div>
           </div>
