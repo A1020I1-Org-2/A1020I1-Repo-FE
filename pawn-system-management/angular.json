@@ -1,7 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
-    "analytics": "b714d3ff-0b25-456e-afa0-2d3cd50c1900"
+
+    "analytics": "d4ebb876-68eb-482f-b95c-737eeaaf8329"
+
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -32,12 +34,16 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css",
-              "./node_modules/bootstrap/dist/css/bootstrap.min.css"
-
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css"         
+              "./node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+
+
+
+              "node_modules/apexcharts/dist//apexcharts.min.js"
 
             ]
           },
@@ -115,3 +121,4 @@
   },
   "defaultProject": "pawn-system-management"
 }
+

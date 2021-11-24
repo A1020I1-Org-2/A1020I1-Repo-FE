@@ -1,4 +1,5 @@
 export interface Customer {
+
   customerId: string,
   name: string,
   dateOfBirth: Date,
@@ -7,4 +8,5 @@ export interface Customer {
   phone: string,
   gender: boolean,
   idCard: string
+
 }

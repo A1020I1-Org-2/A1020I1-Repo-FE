@@ -1,3 +1,4 @@
+
 import {TypeContract} from "./type-contract";
 import {TypeProduct} from "./type-product";
 import {StatusContract} from "./status-contract";
@@ -18,4 +19,6 @@ export interface Contract {
   statusContract: StatusContract,
   typeContract: TypeContract,
   typeProduct: TypeProduct
+  productImg: string;
+  employee: Employee;
 }

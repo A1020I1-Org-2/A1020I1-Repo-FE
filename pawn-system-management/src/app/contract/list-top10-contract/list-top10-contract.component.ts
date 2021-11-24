@@ -1,3 +1,4 @@
+
 import {Component, OnInit} from '@angular/core';
 import {Contract} from "../../interface/contract";
 import {ContractService} from "../../services/contract.service";
@@ -9,12 +10,14 @@ import {DeleteListTop10ContractComponent} from "../delete-list-top10-contract/de
 import {EditListTop10Component} from "../edit-list-top10/edit-list-top10.component";
 
 
+
 @Component({
   selector: 'app-list-top10-contract',
   templateUrl: './list-top10-contract.component.html',
   styleUrls: ['./list-top10-contract.component.css']
 })
 export class ListTop10ContractComponent implements OnInit {
+
   listTop10Contract: Contract[] = [];
   getInforList!: Contract;
   searchListTop10!: FormGroup;
@@ -105,4 +108,5 @@ export class ListTop10ContractComponent implements OnInit {
       }
     )
   }
+
 }
