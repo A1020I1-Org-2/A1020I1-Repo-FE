@@ -9,9 +9,7 @@ import {DetailContractComponent} from './detail-contract/detail-contract.compone
 import {CreateLiquidationContractComponentComponent} from './create-liquidation-contract-component/create-liquidation-contract-component.component';
 import {ContractRoutingModule} from "./contract-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgxPaginationModule} from "ngx-pagination";
 import {ToastrModule} from "ngx-toastr";
-
 
 @NgModule({
   declarations: [
