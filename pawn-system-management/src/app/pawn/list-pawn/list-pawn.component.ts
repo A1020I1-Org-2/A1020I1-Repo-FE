@@ -48,6 +48,7 @@ export class ListPawnComponent implements OnInit {
   searchP() {
     this.pawnService.searchPawn(this.searchPawn.value.search.trim(),this.searchPawn.value.typeSearch).subscribe((data) => {
       this.pawnList = data.content;
+      this.totalPagination = data.totalPages;
     },()=> {
       this.alertService.showMessageErrors("Không tìm thấy!");
     })
@@ -56,6 +57,7 @@ export class ListPawnComponent implements OnInit {
   searchP2($event: any) {
     this.pawnService.searchPawn(this.searchPawn.value.search.trim(),this.searchPawn.value.typeSearch).subscribe((data) => {
       this.pawnList = data.content;
+      this.totalPagination = data.totalPages;
     },()=> {})
   }
 
@@ -63,6 +65,7 @@ export class ListPawnComponent implements OnInit {
     this.pawnService.getSearchPawn(this.searchPawn.value.search.trim(),this.searchPawn.value.typeSearch,page).subscribe((data) => {
       this.pawnList= data.content;
       this.indexPagination  = data.pageable.pageNumber + 1;
+      this.totalPagination = data.totalPages;
     })
   }
 }
