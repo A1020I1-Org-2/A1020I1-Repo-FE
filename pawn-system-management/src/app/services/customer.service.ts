@@ -11,7 +11,7 @@ export class CustomerService {
   constructor(private httpClient: HttpClient) { }
 
   getListCustomer(): Observable<any> {
-    return this.httpClient.get<any>(this.API_URL + '/listCustomer', this.httpOptions);
+    return this.httpClient.get<any>(this.API_URL + '/listCustomer');
   }
 
   deleteCustomer(id: number | undefined): Observable<any> {
