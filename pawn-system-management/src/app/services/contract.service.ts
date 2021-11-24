@@ -21,37 +21,49 @@ export class ContractService {
 
   private API = "http://localhost:8080/contract";
   private API_SEARCH = "http://localhost:8080/contract/search";
+  readonly URL = "http://localhost:8080/contract/";
+  readonly URL_SEARCH_TOP10 = "http://localhost:8080/contract/listTop10/search?key=";
+  private APIUpdateStatusContractPawn: string = "http://localhost:8080/contract/update-status-contract";
+  private APICreateLiquidationContract: string = "http://localhost:8080/contract/create-liquidation-contract";
+  private APIGetProductList: string = "http://localhost:8080/contract/get-liquidation-product-list";
+  private APIGetCustomerList: string = "http://localhost:8080/customer/getCustomerList";
+  private APIGetEmployeeList: string = "http://localhost:8080/employee/getEmployeeList";
+  private APISearchLiquidationProduct: string = "http://localhost:8080/contract/search-liquidation-product";
+  private APISearchCustomer: string = "http://localhost:8080/customer/searchCustomer";
+  private APISearchEmployee: string = "http://localhost:8080/employee/searchEmployee";
+  private APIProductList: string = "http://localhost:8080/contract/getListTypeProduct";
 
-
+  constructor(private httpClient: HttpClient) {
+  }
   getAllContract(): Observable<any>{
-    return this.http.get<any>(this.API + '/listContract')
+    return this.httpClient.get<any>(this.API + '/listContract')
   }
   getPageList(pageNum: number): Observable<any>{
-    return this.http.get<any>(this.API + '/listContract?page=' +pageNum);
+    return this.httpClient.get<any>(this.API + '/listContract?page=' +pageNum);
 
   }
   getInfo(id: string): Observable<any>{
-    return this.http.get<any>(this.API + '/detail/' + id)
+    return this.httpClient.get<any>(this.API + '/detail/' + id);
   }
+  // getInfo(id: string): Observable<Contract> {
+  //   return this.httpClient.get<Contract>(this.URL + "info/" + id);
+  // }
   deleteContract(id: string): Observable<Contract>{
-    return this.http.delete<Contract>(this.API + '/delete/' + id)
+    return this.httpClient.delete<Contract>(this.API + '/delete/' + id)
   }
   searchContract(customer: string, productName: string,  statusContract: string, typeContract: string, startDateFrom: string,
                  endDateTo: string): Observable<any>{
 
-    return this.http.get<any>(this.API_SEARCH + '?customer=' + customer + '&productName=' + productName + '&statusContract='
+    return this.httpClient.get<any>(this.API_SEARCH + '?customer=' + customer + '&productName=' + productName + '&statusContract='
       + statusContract + '&typeContract=' + typeContract + '&startDateFrom=' + startDateFrom + '&endDateTo=' + endDateTo);
   }
   getPageSearch(pageNumber: number, customer: string, productName: string,  statusContract: string, typeContract: string, startDateFrom: string,
-                endDateTo: string): Observable<any>{
-    return this.http.get<any>(this.API_SEARCH +  '?page=' + pageNumber + '&customer=' + customer + '&productName=' + productName + '&statusContract='
+                endDateTo: string): Observable<any> {
+    return this.httpClient.get<any>(this.API_SEARCH + '?page=' + pageNumber + '&customer=' + customer + '&productName=' + productName + '&statusContract='
       + statusContract + '&typeContract=' + typeContract + '&startDateFrom=' + startDateFrom + '&endDateTo=' + endDateTo);
-
-  readonly URL = "http://localhost:8080/contract/";
-  readonly URL_SEARCH_TOP10 = "http://localhost:8080/contract/listTop10/search?key=";
-
-  constructor(private httpClient: HttpClient) {
   }
+
+
   getListTypeProduct():Observable<TypeProduct[]>{
     return this.httpClient.get<TypeProduct[]>(this.URL+ "listTypeProduct");
   }
@@ -65,9 +77,7 @@ export class ContractService {
     return this.httpClient.get<any>(this.URL + "listTop10");
   }
 
-  getInfo(id: string): Observable<Contract> {
-    return this.httpClient.get<Contract>(this.URL + "info/" + id);
-  }
+
 
   searchContractListTop10(key: string): Observable<any> {
     return this.httpClient.get<any>(this.URL_SEARCH_TOP10 + key);
@@ -78,19 +88,9 @@ export class ContractService {
   }
 
   editContract(contract: ContractEdit): Observable<ContractEdit> {
-    return this.httpClient.put<ContractEdit>(this.URL + 'edit',contract);
+    return this.httpClient.put<ContractEdit>(this.URL + 'edit', contract);
+  }
 
-  private APIUpdateStatusContractPawn: string = "http://localhost:8080/contract/update-status-contract";
-  private APICreateLiquidationContract: string = "http://localhost:8080/contract/create-liquidation-contract";
-  private APIGetProductList: string = "http://localhost:8080/contract/get-liquidation-product-list";
-  private APIGetCustomerList: string = "http://localhost:8080/customer/getCustomerList";
-  private APIGetEmployeeList: string = "http://localhost:8080/employee/getEmployeeList";
-  private APISearchLiquidationProduct: string = "http://localhost:8080/contract/search-liquidation-product";
-  private APISearchCustomer: string = "http://localhost:8080/customer/searchCustomer";
-  private APISearchEmployee: string = "http://localhost:8080/employee/searchEmployee";
-  private APIProductList: string = "http://localhost:8080/contract/getListTypeProduct";
-
-  
 
   saveLiquidationContract(contract: ContractDTO): Observable<ContractDTO> {
     return this.httpClient.post<ContractDTO>(this.APICreateLiquidationContract, contract);

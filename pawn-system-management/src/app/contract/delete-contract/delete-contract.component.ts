@@ -28,7 +28,7 @@ export class DeleteContractComponent implements OnInit {
       this.alertService.showAlertSuccess("Xóa thành công.")
 
     }, error => {
-      this.alertService.showMessageErrors('Hợp đồng này đã được xóa!');
+      this.alertService.showAlertError('Hợp đồng này đã được xóa!');
     });
 
   }

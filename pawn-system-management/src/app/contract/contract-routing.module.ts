@@ -8,21 +8,17 @@ import {ListTop10ContractComponent} from "./list-top10-contract/list-top10-contr
 import {UpdateContractComponent} from "./update-contract/update-contract.component";
 import {CreateLiquidationContractComponentComponent} from "./create-liquidation-contract-component/create-liquidation-contract-component.component";
 
-
 const routes: Routes = [
-  {path: 'listTop10Contract', component: ListTop10ContractComponent}, 
+  {path: 'listTop10Contract', component: ListTop10ContractComponent},
   {path: 'listContract',component: ListContractComponent},
   {path: 'editContract', component: UpdateContractComponent},
   {path: 'create-liquidation-contract', component:CreateLiquidationContractComponentComponent}
-
-
-
-
+  ]
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(routesContract)],
+    RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class ContractRoutingModule { }

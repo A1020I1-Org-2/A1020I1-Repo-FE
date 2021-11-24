@@ -3,6 +3,7 @@ import {TypeContract} from "./type-contract";
 import {TypeProduct} from "./type-product";
 import {StatusContract} from "./status-contract";
 import {Customer} from "./customer";
+import {Employee} from "./employee";
 
 export interface Contract {
   contractId: string,

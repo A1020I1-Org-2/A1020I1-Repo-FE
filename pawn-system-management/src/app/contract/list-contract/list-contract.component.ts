@@ -127,7 +127,7 @@ export class ListContractComponent implements OnInit {
         this.listContract = data.content;
         console.log(data)
       }, () =>{
-        this.toast.showMessageErrors("Không tìm thấy kết quả như yêu cầu");
+        this.toast.showAlertError("Không tìm thấy kết quả như yêu cầu");
       })
     }
   }

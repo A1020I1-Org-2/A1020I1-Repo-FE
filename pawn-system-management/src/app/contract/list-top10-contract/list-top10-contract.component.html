@@ -3,16 +3,16 @@
   <h2 class="text-center mt-3" style="color: darkblue; font-size: 35px">10 HỢP ĐỒNG MỚI NHẤT</h2>
   <div class="row mt-5 px-0 mx-0" style="height: 80%;">
     <div class="col-lg-2">
-      <div class="list-group border border-primary rounded h-100">
-        <a href="#" class="list-group-item list-group-item-action">Thông tin cửa hàng</a>
-        <a href="#" class="list-group-item list-group-item-action ">Tài chính</a>
-        <a href="#" class="list-group-item list-group-item-action">Danh sách đồ cầm</a>
-        <a routerLink="/listTop10Contract" class="list-group-item list-group-item-action active">10 hợp đồng mới
-          nhất</a>
-        <a href="#" class="list-group-item list-group-item-action">Thống kê lợi nhuận</a>
-        <a href="#" class="list-group-item list-group-item-action">Lịch sử giao dịch</a>
-      </div>
+    <div class="list-group border border-primary rounded h-100">
+      <a href="#" class="list-group-item list-group-item-action">Thông tin cửa hàng</a>
+      <a href="#" class="list-group-item list-group-item-action ">Tài chính</a>
+      <a href="#" class="list-group-item list-group-item-action">Danh sách đồ cầm</a>
+      <a routerLink="/listTop10Contract" class="list-group-item list-group-item-action">10 hợp đồng mới
+        nhất</a>
+      <a href="#" class="list-group-item list-group-item-action">Thống kê lợi nhuận</a>
+      <a routerLink="/listContract" class="list-group-item list-group-item-action">Lịch sử giao dịch</a>
     </div>
+  </div>
     <div class="col-lg-10 col-sm-12">
       <form [formGroup]="searchListTop10" (ngSubmit)="searchContractListTop10()" (keydown)="seacrhEnter($event)">
         <div class="row mb-2">

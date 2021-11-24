@@ -11,8 +11,6 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ContractRoutingModule} from "./contract-routing.module";
 
-import {DetailContractComponent} from './detail-contract/detail-contract.component';
-import {ReactiveFormsModule} from "@angular/forms";
 import {DeleteListTop10ContractComponent} from './delete-list-top10-contract/delete-list-top10-contract.component';
 import {EditListTop10Component} from './edit-list-top10/edit-list-top10.component';
 import {MatButtonModule} from "@angular/material/button";
@@ -32,7 +30,6 @@ import {ToastrModule} from "ngx-toastr";
         ListContractComponent,
         DeleteContractComponent,
         CreateLiquidationContractComponentComponent,
-        DetailContractComponent,
         DeleteListTop10ContractComponent,
         EditListTop10Component,
 
@@ -41,7 +38,7 @@ import {ToastrModule} from "ngx-toastr";
       ListContractComponent,
       DeleteContractComponent,
       ContractRoutingModule,
-      UpdateContractComponent 
+      UpdateContractComponent,
       CreateLiquidationContractComponentComponent
     ],
   imports: [
@@ -51,7 +48,7 @@ import {ToastrModule} from "ngx-toastr";
     MatDialogModule,
     ContractRoutingModule,
     NgxTrimDirectiveModule,
-    MatButtonModule
+    MatButtonModule,
     ToastrModule.forRoot()
   ]
 })
