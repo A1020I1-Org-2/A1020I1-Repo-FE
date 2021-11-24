@@ -5,12 +5,11 @@ import {
   FormControl,
   FormGroup,
   ValidationErrors,
-  ValidatorFn,
   Validators
 } from "@angular/forms";
 import {ContractService} from "../../services/contract.service";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {Contract} from "../../interface/contract";
+
 import {Router} from "@angular/router";
 import {ContractEdit} from "../../interface/ContractEdit";
 import {formatDate} from "@angular/common";
@@ -102,8 +101,6 @@ export class EditListTop10Component implements OnInit {
       console.log(new Date(this.editContract.value.startDate).toISOString())
     });
   }
-
-
 
   onEditContract() {
     if (this.editContract.valid) {

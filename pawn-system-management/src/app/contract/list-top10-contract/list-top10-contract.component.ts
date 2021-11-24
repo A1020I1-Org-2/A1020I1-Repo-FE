@@ -68,7 +68,6 @@ export class ListTop10ContractComponent implements OnInit {
     this.contractService.getInfo(contractId).subscribe((data)=>{
       const dialog = this.dialog.open(DeleteListTop10ContractComponent,{
           width: '500px',
-
           data: data,
           disableClose: true,
           autoFocus: false
