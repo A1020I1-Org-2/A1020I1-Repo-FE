@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ContractService} from "../../services/contract.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {AlertService} from "../alert.service";
+
 
 @Component({
   selector: 'app-delete-list-top10-contract',
@@ -10,7 +12,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 export class DeleteListTop10ContractComponent implements OnInit {
   id!:string;
   constructor(private contractService: ContractService, private dialog: MatDialogRef<DeleteListTop10ContractComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+              @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.id = this.data.contractId;
@@ -19,6 +21,7 @@ export class DeleteListTop10ContractComponent implements OnInit {
   deleteListTop10() {
     this.contractService.deleteListTop10(this.id).subscribe(()=>{
       this.dialog.close();
+      this.alertService.showAlertSuccess("Xóa hợp đồng thành công!");
     })
   }
 

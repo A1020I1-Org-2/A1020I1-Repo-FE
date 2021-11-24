@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col-lg-10 col-sm-12">
-      <form [formGroup]="searchListTop10" (ngSubmit)="searchContractListTop10()">
+      <form [formGroup]="searchListTop10" (ngSubmit)="searchContractListTop10()" (keydown)="seacrhEnter($event)">
         <div class="row mb-2">
           <div class="col-2 col-xl-2 col-sm-2 col-lg-2"></div>
           <div class="col-3 col-xl-3 col-sm-3 col-lg-3">
@@ -42,21 +42,33 @@
           </thead>
           <tbody>
           <tr *ngFor="let listContract of listTop10Contract">
-            <th scope="row">{{listContract.contractId}}</th>
-            <td>{{listContract.productName}}</td>
-            <td>{{listContract.customer.name}}</td>
-            <td>{{listContract.startDate | date: 'dd/MM/yyyy'}}</td>
-            <td>{{listContract.typeContract.name}}</td>
-            <td>{{listContract.statusContract.name}}</td>
+            <th scope="row" class="text-center ">{{listContract.contractId}}</th>
+            <td class="text-center ">{{listContract.productName}}</td>
+            <td class="text-center ">{{listContract.customer.name}}</td>
+            <td class="text-center ">{{listContract.startDate | date: 'dd/MM/yyyy'}}</td>
+            <td class="text-center ">{{listContract.typeContract.name}}</td>
+
+            <td *ngIf="listContract.statusContract.statusContractId == 1"
+                [ngStyle]="{'color': 'green', 'font-size': '15px', 'font-weight': 'bold'}" class="text-center ">Thanh Lý</td>
+            <td *ngIf="listContract.statusContract.statusContractId == 2"
+                [ngStyle]="{'color': 'yellow', 'font-size': '15px', 'font-weight': 'bold'}" class="text-center ">Đang Cầm</td>
+<!--            <td>{{listContract.statusContract.name}}</td>-->
+
+            <td *ngIf="listContract.statusContract.statusContractId == 3"
+                [ngStyle]="{'color': 'red', 'font-size': '15px', 'font-weight': 'bold'}" class="text-center ">Quá Hạn</td>
+            <!--            <td>{{listContract.statusContract.name}}</td>-->
             <td>
 
               <button type="button" class="  border-0  btn btn-outline-warning " data-bs-toggle="modal"
                       data-bs-target="#exampleModal" (click)="getId(listContract.contractId)">
                 <i class="fas fa-eye"></i>
               </button>
-              <button class="  border-0 btn  btn-outline-info" ><i class="fas fa-pencil-alt"></i></button>
+<!--              <button class="  border-0 btn  btn-outline-info" routerLink="/editContract" [queryParams]="{id: listContract.contractId}">-->
+<!--              <i class="fas fa-pencil-alt"></i></button>-->
+              <button class="  border-0 btn  btn-outline-info" (click)="openDialogEdit(listContract.contractId)">
+                <i class="fas fa-pencil-alt"></i></button>
               <button type="button" class=" border-0 btn btn-outline-danger" data-bs-toggle="modal"
-                      data-bs-target="#exampleModalDelete" (click)="openDialog(listContract.contractId)"
+                      data-bs-target="#exampleModalDelete"  (click)="openDialog(listContract.contractId)"
               ><i class="fas fa-trash-alt"></i></button>
             </td>
           </tr>
@@ -114,22 +126,5 @@
     </div>
   </div>
 </div>
-<!--<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--  <div class="modal-dialog">-->
-<!--    <div class="modal-content">-->
-<!--      <div class="modal-header">-->
-<!--        <h5 class="modal-title " id="exampleModalLabeDelete">XÁC NHẬN XÓA DỊCH VỤ</h5>-->
-<!--        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--      </div>-->
-<!--      <div class="modal-body">-->
-<!--        <p class="my-3">Bạn có chắc chắn muốn xoá dịch vụ-->
-<!--          <span class="text-danger font-weight-bold">{{getInforList?.contractId}} </span>không?-->
-<!--        </p>-->
-<!--      </div>-->
-<!--      <div class="modal-footer">-->
-<!--        <button type="button" class="btn btn-secondary" (click)="deleteContract()">Xóa</button>-->
-<!--        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
+
+

@@ -3,9 +3,11 @@ import {Contract} from "../../interface/contract";
 import {ContractService} from "../../services/contract.service";
 
 import {FormControl, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
+
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteListTop10ContractComponent} from "../delete-list-top10-contract/delete-list-top10-contract.component";
+import {EditListTop10Component} from "../edit-list-top10/edit-list-top10.component";
+
 
 @Component({
   selector: 'app-list-top10-contract',
@@ -62,18 +64,11 @@ export class ListTop10ContractComponent implements OnInit {
     )
   }
 
-
-
-  deleteContract() {
-    this.contractService.deleteListTop10(this.getInforList.contractId).subscribe(() => {
-      this.ngOnInit();
-    })
-  }
-
   openDialog(contractId: string) {
     this.contractService.getInfo(contractId).subscribe((data)=>{
       const dialog = this.dialog.open(DeleteListTop10ContractComponent,{
           width: '500px',
+
           data: data,
           disableClose: true,
           autoFocus: false
@@ -84,5 +79,31 @@ export class ListTop10ContractComponent implements OnInit {
       });
     })
 
+  }
+
+  openDialogEdit(contractId: string) {
+    this.contractService.getInfo(contractId).subscribe((data)=>{
+      const  dialog = this.dialog.open(EditListTop10Component,{
+        width: '1000px',
+        data: data,
+        disableClose: true,
+        autoFocus: false
+      })
+      dialog.afterClosed().subscribe(result => {
+        this.ngOnInit();
+      });
+    })
+  }
+
+  seacrhEnter($event: KeyboardEvent) {
+    if (this.searchListTop10.value.key == '') {
+      this.getListTop10();
+    }
+    this.contractService.searchContractListTop10(this.searchListTop10.value.key).subscribe(
+      (data) => {
+        this.listTop10Contract = data;
+        console.log(data);
+      }
+    )
   }
 }
