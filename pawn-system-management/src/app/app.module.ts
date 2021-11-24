@@ -1,8 +1,9 @@
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ContractModule} from "./contract/contract.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -16,10 +17,17 @@ import {PawnModule} from "./pawn/pawn.module";
 import {ToastrModule} from "ngx-toastr";
 
 
+
+import {MaterialModule} from "./material-module";
+
+
+
+
 @NgModule({
   declarations: [
     AppComponent
   ],
+
     imports: [
       BrowserModule,
       AppRoutingModule,
@@ -31,12 +39,19 @@ import {ToastrModule} from "ngx-toastr";
       HttpClientModule,
       MatDialogModule,
       BrowserAnimationsModule,
+      MaterialModule,
       MatDividerModule,
       MatButtonModule,
       MatIconModule,
       ToastrModule.forRoot(),
     ],
+
+
+
+
   providers: [],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
+
