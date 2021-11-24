@@ -267,8 +267,8 @@
           <div class="col-1"></div>
         </div>
         <!--Phân Trang-->
-        <div class="col-md-12 mt-3" *ngIf="isFoundPd">
-          <nav aria-label="..." class="float-right">
+        <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12 mt-3 " *ngIf="isFoundPd">
+          <nav aria-label="..." class="float-lg-end">
             <ul class="pagination">
               <li class="page-item">
                 <button class="page-link" (click)="getPageListProduct(0)"><<</button>
@@ -310,7 +310,7 @@
             </ul>
           </nav>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer justify-content-start">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
         </div>
       </div>
@@ -371,7 +371,7 @@
           </div>
           <!--Phân Trang-->
           <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12 mt-3" *ngIf="isFoundCs">
-            <nav aria-label="..." class="float-right">
+            <nav aria-label="..." class="float-lg-end">
               <ul class="pagination">
                 <li class="page-item">
                   <a class="page-link" (click)="getPageCustomer(0)"><<</a>
@@ -413,7 +413,7 @@
               </ul>
             </nav>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer justify-content-start">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
           </div>
         </div>
@@ -473,7 +473,7 @@
           </div>
           <!--Phân Trang-->
           <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 mt-3" *ngIf="isFoundEm">
-            <nav aria-label="..." class="float-right">
+            <nav aria-label="..." class="float-lg-end">
               <ul class="pagination">
                 <li class="page-item">
                   <a class="page-link" (click)="getPageEmployee(0)"><<</a>
@@ -515,7 +515,7 @@
               </ul>
             </nav>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer justify-content-start">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
           </div>
         </div>
