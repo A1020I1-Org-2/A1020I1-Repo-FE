@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "d4ebb876-68eb-482f-b95c-737eeaaf8329"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -34,6 +37,7 @@
             "scripts": [
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/apexcharts/dist//apexcharts.min.js"
             ]
           },
           "configurations": {
