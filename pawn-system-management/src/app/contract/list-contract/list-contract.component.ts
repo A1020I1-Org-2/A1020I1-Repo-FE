@@ -116,10 +116,10 @@ export class ListContractComponent implements OnInit {
         this.searchContract.value.typeContract = '';
       }
       if(this.searchContract.get('dateGroup.startDateFrom')?.value == ''){
-        this.searchContract.get('dateGroup.startDateFrom')?.setValue('1900-01-01');
+        this.searchContract.get('dateGroup.startDateFrom')?.setValue('');
       }
       if(this.searchContract.get('dateGroup.endDateTo')?.value== ''){
-        this.searchContract.get('dateGroup.endDateTo')?.setValue('3000-01-01');
+        this.searchContract.get('dateGroup.endDateTo')?.setValue('');
       }
       this.contractService.searchContract(this.searchContract.value.customer, this.searchContract.value.productName,
         this.searchContract.value.statusContract, this.searchContract.value.typeContract, this.searchContract.get('dateGroup.startDateFrom')?.value,
