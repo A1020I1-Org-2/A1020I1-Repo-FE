@@ -1,4 +1,5 @@
 export interface Employee {
+
   employeeId: string;
   fullName: string;
   dateOfBirth: Date;
@@ -9,4 +10,5 @@ export interface Employee {
   salary: number;
   idCard: string
   img: string;
+
 }
