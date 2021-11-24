@@ -8,6 +8,8 @@ import {ToastrService} from "ngx-toastr";
 })
 export class AlertService {
 
+ 
+
   constructor(
     private toast: ToastrService
   ) { }
@@ -18,5 +20,6 @@ export class AlertService {
   showAlertError(message: string) {
     this.toast.error(message, 'Thông báo: ');
   }
+
 
 }

@@ -21,4 +21,5 @@ export interface Contract {
   typeProduct: TypeProduct
   productImg: string;
   employee: Employee;
+
 }
