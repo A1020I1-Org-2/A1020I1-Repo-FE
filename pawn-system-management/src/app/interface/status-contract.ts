@@ -1,4 +1,6 @@
 export interface StatusContract {
-  statusContractId: number;
-  name: String;
+
+  statusContractId: number,
+  name: string
+
 }

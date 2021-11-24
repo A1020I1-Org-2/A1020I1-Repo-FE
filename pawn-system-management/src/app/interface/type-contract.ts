@@ -1,4 +1,6 @@
 export interface TypeContract {
-  typeContractId: number;
-  name: String;
+
+  typeContractId: number,
+  name: string
+
 }
