@@ -10,9 +10,9 @@ export interface Contract {
   interestMoney: number;
   receiveMoney: number;
   loanMoney: number;
-  liquidationDate: string;
-  startDate: string;
-  endDate: string;
+  liquidationDate: Date;
+  startDate: Date;
+  endDate: Date;
   quantity: number;
   statusContract: StatusContract;
   typeContract: TypeContract;

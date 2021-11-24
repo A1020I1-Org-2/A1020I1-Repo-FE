@@ -13,6 +13,10 @@ import {MatDividerModule} from "@angular/material/divider";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {PawnModule} from "./pawn/pawn.module";
+import {ToastrModule} from "ngx-toastr";
+import {ListContractComponent} from "./contract/list-contract/list-contract.component";
+import {DeleteContractComponent} from "./contract/delete-contract/delete-contract.component";
+import {ContractRoutingModule} from "./contract/contract-routing.module";
 
 @NgModule({
   declarations: [
@@ -32,6 +36,7 @@ import {PawnModule} from "./pawn/pawn.module";
       MatDividerModule,
       MatButtonModule,
       MatIconModule,
+      ToastrModule.forRoot(),
     ],
   providers: [],
   bootstrap: [AppComponent]

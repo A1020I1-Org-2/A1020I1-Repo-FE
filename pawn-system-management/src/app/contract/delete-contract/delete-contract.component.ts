@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {ContractService} from "../../services/contract.service";
+import {AlertService} from "../alert.service";
 
 @Component({
   selector: 'app-delete-contract',
@@ -9,12 +10,12 @@ import {ContractService} from "../../services/contract.service";
 })
 export class DeleteContractComponent implements OnInit {
 
-  // @ts-ignore
-  id: string;
+  id= '';
   name = '';
   constructor(public dialog: MatDialogRef<DeleteContractComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
               public contractService: ContractService,
+              private alertService: AlertService,
               ) { }
 
   ngOnInit(): void {
@@ -24,8 +25,10 @@ export class DeleteContractComponent implements OnInit {
   delete() {
     this.contractService.deleteContract(this.id).subscribe(()=>{
       this.dialog.close();
-      // this.alertService.showAlertSuccess("Xóa thành công.")
+      this.alertService.showAlertSuccess("Xóa thành công.")
 
+    }, error => {
+      this.alertService.showMessageErrors('Hợp đồng này đã được xóa!');
     });
 
   }

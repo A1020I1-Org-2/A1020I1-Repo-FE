@@ -28,6 +28,7 @@ export class ContractService {
   }
   searchContract(customer: string, productName: string,  statusContract: string, typeContract: string, startDateFrom: string,
                  endDateTo: string): Observable<any>{
+
     return this.http.get<any>(this.API_SEARCH + '?customer=' + customer + '&productName=' + productName + '&statusContract='
       + statusContract + '&typeContract=' + typeContract + '&startDateFrom=' + startDateFrom + '&endDateTo=' + endDateTo);
   }

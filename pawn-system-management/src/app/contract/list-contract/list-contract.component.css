@@ -11,14 +11,14 @@
 /*  margin-left: 10px;*/
 /*  text-align: center;*/
 /*}*/
-.pagination {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-  border-radius: 0.25rem; }
-h5{
+/*.pagination {*/
+/*  display: -webkit-box;*/
+/*  display: -ms-flexbox;*/
+/*  display: flex;*/
+/*  padding-left: 0;*/
+/*  list-style: none;*/
+/*  border-radius: 0.25rem; }*/
+h2{
   color: darkblue;
   size: 35px;
   margin: 0 auto;
@@ -33,4 +33,5 @@ h5{
 .col2{
   margin-left: 20px;
 }
+
 
