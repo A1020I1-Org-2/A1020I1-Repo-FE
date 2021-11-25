@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import {RouterModule} from "@angular/router";
 
 
 
@@ -12,8 +13,13 @@ import { HomepageComponent } from './homepage/homepage.component';
     FooterComponent,
     HomepageComponent
   ],
+  exports: [
+    HeaderComponent,
+    FooterComponent
+  ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterModule
   ]
 })
 export class HomepageModule { }
