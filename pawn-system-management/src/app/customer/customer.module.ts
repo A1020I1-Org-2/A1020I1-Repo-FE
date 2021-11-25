@@ -4,8 +4,16 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CustomerRoutingModule } from './customer-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -15,7 +23,16 @@ import { DeleteCustomerComponent } from './delete-customer/delete-customer.compo
     DeleteCustomerComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HttpClientModule,
+    MatDialogModule,
+    CustomerRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
   ]
 })
 export class CustomerModule { }

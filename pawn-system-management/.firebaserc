@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "pawn-project-3af93": {
+      "hosting": {
+        "pawn-system-management": [
+          "pawn-project-3af93"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "pawn-project-3af93"
+  }
+}
