@@ -4,7 +4,7 @@
       <img src="./assets/img/logo.jpg" alt="" >
     </div>
     <p class="h4 text-center" style="color: darkblue; font-size: 35px;">ĐĂNG NHẬP VÀO HỆ THỐNG</p>
-    <div class="d-flex justify-content-center mt-4" *ngIf="isOpenToast">
+    <div class="d-flex justify-content-center mb-4" *ngIf="isOpenToast">
       <div class="toast align-items-center text-white bg-danger border-0 show fade" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
           <div class="toast-body">
@@ -18,15 +18,17 @@
       <div class="col"></div>
       <div class="col-4">
         <form [formGroup]="formLogin" (ngSubmit)="doSubmit()">
-          <div>
-            <input type="text" class="input-custom-1 form-control " placeholder="Tên đăng nhập"
-                   formControlName="userName"
+          <div class="mb-4">
+            <label for="username">Tên đăng nhập<span class="text-danger">(*)</span></label>
+            <input type="text" class="input-custom-1 form-control "
+                   formControlName="userName" id="username"
                    [ngClass]="(login.userName?.touched || isSubmit ) ? (login.userName?.invalid ? 'is-invalid' : '') : ''">
             <div class="invalid-feedback px-4" *ngIf="login.userName?.errors?.required">Tên đăng nhập không được để trống.</div>
           </div>
           <div>
-            <input type="password" class="input-custom-1 form-control " placeholder="Mật khẩu"
-                   formControlName="password" autocomplete="on"
+            <label for="password">Mật khẩu<span class="text-danger">(*)</span></label>
+            <input type="password" class="input-custom-1 form-control "
+                   formControlName="password" autocomplete="on" id="password"
                    [ngClass]="(login.password?.touched || isSubmit) ? (login.password?.invalid ? 'is-invalid' : '') : ''">
             <div class="invalid-feedback px-4" *ngIf="login.password?.errors?.required">Mật khẩu không được để trống.</div>
           </div>

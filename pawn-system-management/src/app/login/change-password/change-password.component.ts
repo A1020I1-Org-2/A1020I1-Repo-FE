@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {Title} from "@angular/platform-browser";
 import {LoginService} from "../../services/login.service";
@@ -7,6 +7,13 @@ import {Router} from "@angular/router";
 function checkPassword(input: AbstractControl): ValidationErrors | null {
   if (input.value.newPassword !== input.value.confirmPassword){
     return {checkPassword: true}
+  }
+  return null;
+}
+
+function checkEqualsPassword(input: AbstractControl): ValidationErrors | null {
+  if(input.value.password === input.value.passwordGroup.newPassword){
+    return {checkEqualsPassword: true}
   }
   return null;
 }
@@ -23,20 +30,30 @@ export class ChangePasswordComponent implements OnInit {
   formChangePassword: FormGroup = new FormGroup({
     password: new FormControl('', [Validators.required]),
     passwordGroup: new FormGroup({
-      newPassword: new FormControl('', [Validators.required]),
+      newPassword: new FormControl('', [Validators.required,
+        Validators.pattern('^((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&\'()*+,-.:;<=>?@[\\]^_`{|}~]).{6,12})$')]),
       confirmPassword: new FormControl('', [Validators.required])
     }, [checkPassword])
-  });
+  }, [checkEqualsPassword]);
   constructor(private titleService: Title,
               private loginService: LoginService,
-              private router: Router) { }
+              private router: Router,
+              private element: ElementRef) { }
 
   ngOnInit(): void {
+    this.setFocus();
     this.titleService.setTitle("Đổi mật khẩu");
     if (this.loginService.getUserName() !== null){
       this.username = this.loginService.getUserName();
     }else{
       this.router.navigateByUrl("/login").then();
+    }
+  }
+
+  setFocus(){
+    const elm = this.element.nativeElement.querySelector('#password');
+    if(!elm?.autofocus){
+      elm?.focus();
     }
   }
 
@@ -47,10 +64,12 @@ export class ChangePasswordComponent implements OnInit {
   doSubmit(): void{
     if(this.formChangePassword.valid){
       this.isSubmit = false;
+      this.isOpenToast = false;
       if(this.username !== null){
         this.loginService.doChangePassword(this.username, this.form.password.value, this.newPassword?.value)
           .subscribe(result => {
             if(result.message !== 'success'){
+              this.setFocus();
               this.isOpenToast = true;
             }else{
               this.isOpenToast = false;

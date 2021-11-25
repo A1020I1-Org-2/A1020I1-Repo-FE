@@ -13,7 +13,6 @@
   border-radius: 40px;
   border: none;
   padding: 1.0rem 1.0rem;
-  margin-top: 1.5rem;
   background: #edecf1;
 }
 .btn-login{
@@ -43,4 +42,9 @@
   background-color: #787c80;
   border-color: #787c80;
   color: white;
+}
+
+label{
+  padding-left: 1rem;
+  font-size: 1.1rem;
 }

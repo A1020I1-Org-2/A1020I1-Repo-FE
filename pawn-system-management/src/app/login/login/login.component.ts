@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {Title} from "@angular/platform-browser";
@@ -18,6 +18,7 @@ export interface DialogMessage {
 export class LoginComponent implements OnInit {
   isOpenToast: boolean = false;
   isSubmit: boolean = false;
+  isAutoFocus: boolean = true;
 
   formLogin: FormGroup = new FormGroup({
     userName: new FormControl('', [Validators.required]),
@@ -28,10 +29,12 @@ export class LoginComponent implements OnInit {
   constructor(private loginService: LoginService,
               private titleService: Title,
               private dialog: MatDialog,
-              private router: Router) { }
+              private router: Router,
+              private element: ElementRef) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("Đăng nhập");
+    this.setFocus();
     let remember = this.loginService.getRememberMe();
     if(remember != null){
       this.login.userName.setValue(remember.username);
@@ -48,6 +51,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  setFocus(){
+    const elm = this.element.nativeElement.querySelector('#username');
+    if(!elm?.autofocus){
+      elm?.focus();
+    }
+  }
+
   hideToast(): void{
     this.isOpenToast = false;
   }
@@ -55,6 +65,7 @@ export class LoginComponent implements OnInit {
   doSubmit(): void{
     if(this.formLogin.valid){
       this.isSubmit = false;
+      this.isOpenToast = false;
       this.doLogin(this.login.userName.value, this.login.password.value);
     }else{
       this.isSubmit = true;
@@ -64,6 +75,7 @@ export class LoginComponent implements OnInit {
   doLogin(username: string, password: string){
     this.loginService.doLogin(username, password).subscribe(account => {
       if(account === null){
+        this.setFocus();
         this.isOpenToast = true;
       }else{
         this.isOpenToast = false;
