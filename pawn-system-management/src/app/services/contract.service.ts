@@ -12,8 +12,8 @@ import {ContractDTO} from "../model/ContractDTO";
 import { ContractDto } from '../dto/contractDto';
 import {FileUpload} from "../interface/FileUpload";
 import {finalize} from "rxjs/operators";
-import {AngularFireDatabase, AngularFireList} from "@angular/fire/database";
-import {AngularFireStorage} from "@angular/fire/storage";
+import {AngularFireDatabase, AngularFireList} from "@angular/fire/compat/database";
+import {AngularFireStorage} from "@angular/fire/compat/storage";
 
 
 
@@ -42,6 +42,7 @@ export class ContractService {
 
   constructor(private httpClient: HttpClient,private db: AngularFireDatabase, private storage: AngularFireStorage) {
   }
+  //hòa code
   getAllContract(): Observable<any>{
     return this.httpClient.get<any>(this.API + '/listContract')
   }
@@ -69,8 +70,8 @@ export class ContractService {
     return this.httpClient.get<any>(this.API_SEARCH + '?page=' + pageNumber + '&customer=' + customer + '&productName=' + productName + '&statusContract='
       + statusContract + '&typeContract=' + typeContract + '&startDateFrom=' + startDateFrom + '&endDateTo=' + endDateTo);
   }
-
-
+//hòa //
+//khánh code
   getListTypeProduct():Observable<TypeProduct[]>{
     return this.httpClient.get<TypeProduct[]>(this.URL+ "listTypeProduct");
   }
@@ -97,7 +98,8 @@ export class ContractService {
   editContract(contract: ContractEdit): Observable<ContractEdit> {
     return this.httpClient.put<ContractEdit>(this.URL + 'edit', contract);
   }
-
+//khánh//
+  //mai code
 
   saveLiquidationContract(contract: ContractDTO): Observable<ContractDTO> {
     return this.httpClient.post<ContractDTO>(this.APICreateLiquidationContract, contract);
@@ -153,7 +155,8 @@ export class ContractService {
 
 
   }
-
+//mai//
+  //nhân code
   saveNewContractPawn(contract:ContractDto):Observable<any>{
     return this.httpClient.post<any>(this.API+"/createPawn",contract);
   }
@@ -178,4 +181,5 @@ export class ContractService {
   private saveFileData(fileUpload: FileUpload): void {
     this.db.list(this.basePath).push(fileUpload);
   }
+  //nhân
 }

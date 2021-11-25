@@ -93,6 +93,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   };
 
   createLiquidationContract() {
+    console.log(this.formCreate);
     if (this.formCreate.valid) {
       const value = this.formCreate.value;
       this.contractID = "HD-" + Math.floor(Math.random() * 10000);
@@ -271,6 +272,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   }
 
   reset() {
+    this.ngOnInit();
     this.customerName = '';
     this.employeeName = '';
     this.productName = '';

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ContractModule} from "./contract/contract.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -19,6 +18,9 @@ import {ToastrModule} from "ngx-toastr";
 
 
 import {MaterialModule} from "./material-module";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {environment} from "../environments/environment";
+import {AngularFireModule} from "@angular/fire/compat";
 
 
 

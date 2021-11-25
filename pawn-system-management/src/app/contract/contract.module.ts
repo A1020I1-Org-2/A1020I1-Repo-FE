@@ -10,13 +10,16 @@ import { CreateLiquidationContractComponentComponent } from './create-liquidatio
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ContractRoutingModule} from "./contract-routing.module";
-
 import {DeleteListTop10ContractComponent} from './delete-list-top10-contract/delete-list-top10-contract.component';
 import {EditListTop10Component} from './edit-list-top10/edit-list-top10.component';
 import {MatButtonModule} from "@angular/material/button";
 import {NgxTrimDirectiveModule} from "ngx-trim-directive";
 import {NgxPaginationModule} from "ngx-pagination";
 import {ToastrModule} from "ngx-toastr";
+import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../../environments/environment";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 
 
 
@@ -49,6 +52,9 @@ import {ToastrModule} from "ngx-toastr";
     ContractRoutingModule,
     NgxTrimDirectiveModule,
     MatButtonModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
     ToastrModule.forRoot()
   ]
 })
