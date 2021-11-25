@@ -1,1 +1,361 @@
-<p>create-pawn-contract works!</p>
+<div class="container-fluid bg-light">
+  <div class="row">
+    <div class="col-lg-12 col-sm-12">
+      <div class="container bg-white mt-5 mb-5" style="border-radius: 2%">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12">
+            <h1 class="text-center mt-3" style="size: 35px;color: darkblue">
+              THÊM MỚI HỢP ĐỒNG
+            </h1>
+          </div>
+        </div>
+        <div class="row mb-3 mt-3">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-lg-4 col-sm-4">
+                <button class="btn btn-primary float-end" data-bs-toggle="modal"
+                        data-bs-target="#listCustomer">
+                  Chọn khách hàng
+                </button>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#listEmployee"
+                        style="position: relative; left: 50%; transform: translate(-50%)">Chọn nhân viên
+                </button>
+              </div>
+
+              <div class="col-lg-4 col-sm-4">
+                <button class="btn btn-primary">Thêm khách hàng</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-8">
+            <form class="row g-3" [formGroup]="formCreate" novalidate>
+              <div class="row">
+                <div class="mb-3 mt-3 col-sm-6 col-lg-6">
+                  <label for="name" class="form-label required">Khách hàng:</label>
+                  <div *ngIf="customerName==''" class="toast show bg-danger align-items-center text-white border-0"
+                       role="alert"
+                       aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        Khách hàng không được để trống.
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="customerName!=''" class="toast show bg-info align-items-center text-white border-0"
+                       role="alert"
+                       aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        {{customerName}}
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                              (click)="removeCus()"></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3 mt-3 col-sm-6 col-lg-6">
+                  <label for="name" class="form-label required">Nhân viên:</label>
+                  <div *ngIf="employeeName==''" class="toast show bg-danger align-items-center text-white border-0"
+                       role="alert"
+                       aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        Khách hàng không được để trống.
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="employeeName!=''" class="toast show bg-info align-items-center text-white border-0"
+                       role="alert"
+                       aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                      <div class="toast-body">
+                        {{employeeName}}
+                      </div>
+                      <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                              (click)="removeEmployee()"></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="mb-3 mt-3 col-sm-6 col-lg-6">
+                  <label for="name" class="form-label required">Đồ cầm:</label>
+                  <input type="text" formControlName="productName" [class]="classProductName" id="name"
+                         placeholder="Nhập tên đồ cầm" (keyup)="changeClass()">
+                  <div *ngIf="formCreate.controls.productName.invalid">
+                    <div class="valid" *ngIf="formCreate.controls.productName.errors?.required">Đồ cầm không được để
+                      trống.
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3 mt-3 col-sm-6 col-lg-6">
+                  <label for="type" class="form-label required">Loại đồ:</label>
+                  <select id="type" formControlName="productType" [class]="classProductType"
+                          aria-label="Default select example" (select)="changeClass()">
+                    <option value=0>Chọn loại đồ</option>
+                    <option *ngFor="let typeProduct of listTypeProduct"
+                            (click)="chooseTypeProduct(typeProduct.typeProductId)" >{{typeProduct.name}}</option>
+                  </select>
+                  <div *ngIf="formCreate.controls.productType.invalid">
+                    <div class="valid" *ngIf="formCreate.controls.productType.errors?.notNull">Loại đồ không được để
+                      trống.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                  <label for="currency" class="form-label m-0 required">Số tiền cho vay:</label>
+                  <div class="input-group mb-3">
+                    <input type="text" formControlName="loanMoney" [class]="classLoanMoney" id="currency"
+                           placeholder="Nhập số tiền cho vay." aria-label="Amount" (keyup)="changeClass()" (keydown)="changeValueLoan()">
+                    <span class="input-group-text">.VNĐ</span>
+                    <div *ngIf="formCreate.controls.loanMoney.invalid">
+                      <div class="valid" *ngIf="formCreate.controls.loanMoney.errors?.required">Số tiền cho vay không
+                        được
+                        để trống.
+                      </div>
+                      <div class="valid" *ngIf="formCreate.controls.loanMoney.errors?.min">Số tiền cho vay không được
+                        dưới 500.000 VNĐ.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-sm-6">
+                  <label for="interestRate" class="form-label m-0 required">Tiền lãi:</label>
+                  <div class="input-group mb-3">
+                    <input readonly type="text" class="form-control" id="interestRate" formControlName="interestMoney"
+                           placeholder="Nhập tiền lãi."
+                           aria-label="Amount">
+                    <span class="input-group-text">.VNĐ</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                  <label for="startDate" class="form-label required">Ngày bắt đầu:</label>
+                  <input readonly type="date" formControlName="startDate" class="form-control"  id="startDate">
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                  <label for="endDate" class="form-label required">Ngày kết thúc:</label>
+                  <input type="date" formControlName="endDate" [class]="classEndDate" id="endDate"
+                         placeholder="Nhập loại đồ" (change)="changeClass()">
+                  <div *ngIf="formCreate.controls.endDate.invalid">
+                    <div class="valid" *ngIf="formCreate.controls.endDate.errors?.required">Ngày kết thúc không được
+                      để trống.
+                    </div>
+                  </div>
+                  <div *ngIf="formCreate.errors?.invalidCheckout">
+                    <div class="valid">Ngày kết thúc phải hơn ngày bắt đầu.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                  <label for="img" class="form-label required">Ảnh đồ cầm:</label>
+                  <input type="file" id="img" class="form-control"
+                         (change)="selectFile($event)">
+                  <div *ngIf="formCreate.controls.imgProduct.invalid">
+                    <div class="valid" *ngIf="formCreate.controls.endDate.errors?.required">Ảnh đồ cầm không được để
+                      trống.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-sm-6 mt-2">
+                  <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+                    Thêm ảnh
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-sm-6 mt-2">
+                  <img [src]="img" style="height: 200px" alt="Không có ảnh để hiển thị.">
+                </div>
+              </div>
+              <div class="col-md-2 mb-3"></div>
+              <div class="col-md-3 mb-3">
+                <button type="reset" class="btn btn-danger w-100">Hủy</button>
+              </div>
+              <div class="col-md-2 mb-3"></div>
+              <div class="col-md-3 mb-3">
+                <button type="button" [disabled]="formCreate.invalid" class="btn btn-success" (click)="create()">Thêm hợp đồng
+                </button>
+              </div>
+              <div class="col-md-2 mb-3"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="listCustomer" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="col-lg-11 col-sm-11 modal-title text-center mt-3" style="size: 35px;color: darkblue">CHỌN KHÁCH
+          HÀNG</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12">
+            <button class="btn btn-primary float-end mt-1">Thêm khách hàng</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-lg-12">
+            <form class="row g-3 mt-1 mb-3">
+              <div class="col-md-6"></div>
+              <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Tìm kiếm..." (keyup)="eventSearchCustomer($event)">
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn float-end"
+                        style="background-color: #94c4f4; border-color: #94c4f4">Tìm kiếm
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped table-bordered ">
+              <thead class="table-primary text-center">
+              <tr>
+                <th>Mã khách hàng</th>
+                <th>Tên khách hàng</th>
+                <th>CMND/ Hộ chiếu</th>
+                <th>Chọn</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngIf="customerList.length == 0">
+                <td class="text-center" colspan="4">Không có kết quả để hiển thị.</td>
+              </tr>
+              <tr *ngFor="let customer of customerList">
+                <td>{{customer.customerId}}</td>
+                <td>{{customer.name}}</td>
+                <td>{{customer.idCard}}</td>
+                <td>
+                  <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal"
+                          (click)="chooseCustomer(customer.customerId,customer.name)">Chọn
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <nav aria-label="...">
+          <ul class="pagination">
+            <li class="page-item">
+              <button class="btn page-link" tabindex="-1" [disabled]="((pageCurrentCus-1)<0)" (click)="prevPageCus()">Trước</button>
+            </li>
+            <li class="page-item"><a class="page-link" *ngIf="(pageCurrentCus-1)>=0"  (click)="prevPageCus()">{{pageCurrentCus}}</a></li>
+            <li class="page-item active" aria-current="page">
+              <a class="page-link">{{pageCurrentCus+1}}</a>
+            </li>
+            <li class="page-item"><a class="page-link" (click)="nextPageCus()" *ngIf="(pageCurrentCus+1)<totalPageCus">{{pageCurrentCus+2}}</a></li>
+            <li class="page-item">
+              <button class="btn page-link" [disabled]="((pageCurrentCus+1)>=totalPageCus)" (click)="nextPageCus()">Tiếp theo</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="listEmployee" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog  modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="col-lg-11 col-sm-11 modal-title text-center mt-3" style="size: 35px;color: darkblue">CHỌN NHÂN
+          VIÊN</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12">
+            <button class="btn btn-primary float-end mt-1">Thêm nhân viên</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-lg-12">
+            <form class="row g-3 mt-1 mb-3">
+              <div class="col-md-6"></div>
+              <div class="col-md-4">
+                <input type="text" class="form-control" placeholder="Tìm kiếm..." (keyup)="eventSearchEmployee($event)">
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn float-end"
+                        style="background-color: #94c4f4; border-color: #94c4f4">Tìm kiếm
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <table class="table table-striped table-bordered ">
+              <thead class="table-primary text-center">
+              <tr>
+                <th>Mã nhân viên</th>
+                <th>Tên nhân viên</th>
+                <th>CMND/ Hộ chiếu</th>
+                <th>Chọn</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngIf="employeeList.length == 0">
+                <td class="text-center" colspan="4">Không có kết quả để hiển thị.</td>
+              </tr>
+              <tr *ngFor="let employee of employeeList">
+                <td>{{employee.employeeId}}</td>
+                <td>{{employee.fullName}}</td>
+                <td>{{employee.idCard}}</td>
+                <td>
+                  <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal"
+                          (click)="chooseEmployee(employee.employeeId,employee.fullName)">Chọn
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <nav aria-label="...">
+          <ul class="pagination">
+            <li class="page-item">
+              <button class="btn page-link" tabindex="-1" [disabled]="((pageCurrentEmployee-1)<0)" (click)="prevPageEmployee()">Trước</button>
+            </li>
+            <li class="page-item"><a class="page-link" *ngIf="(pageCurrentEmployee-1)>=0"  (click)="prevPageEmployee()">{{pageCurrentEmployee}}</a></li>
+            <li class="page-item active" aria-current="page">
+              <a class="page-link">{{pageCurrentEmployee+1}}</a>
+            </li>
+            <li class="page-item"><a class="page-link" (click)="nextPageEmployee()" *ngIf="(pageCurrentEmployee+1)<totalPageCus">{{pageCurrentEmployee+2}}</a></li>
+            <li class="page-item">
+              <button class="btn page-link" [disabled]="((pageCurrentEmployee+1)>=totalPageEmployee)" (click)="nextPageEmployee()">Tiếp theo</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
