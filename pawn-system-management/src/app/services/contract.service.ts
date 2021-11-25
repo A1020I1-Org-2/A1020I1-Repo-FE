@@ -9,6 +9,11 @@ import {StatusContract} from "../interface/status-contract";
 import {TypeContract} from "../interface/type-contract";
 import {ContractEdit} from "../interface/ContractEdit";
 import {ContractDTO} from "../model/ContractDTO";
+import { ContractDto } from '../dto/contractDto';
+import {FileUpload} from "../interface/FileUpload";
+import {finalize} from "rxjs/operators";
+import {AngularFireDatabase, AngularFireList} from "@angular/fire/database";
+import {AngularFireStorage} from "@angular/fire/storage";
 
 
 
@@ -32,8 +37,10 @@ export class ContractService {
   private APISearchCustomer: string = "http://localhost:8080/customer/searchCustomer";
   private APISearchEmployee: string = "http://localhost:8080/employee/searchEmployee";
   private APIProductList: string = "http://localhost:8080/contract/getListTypeProduct";
+  private basePath = '/imgPawn';
+  private readonly API_TYPE_PRODUCT = "http://localhost:8080/typeProduct/listTypeProduct"
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,private db: AngularFireDatabase, private storage: AngularFireStorage) {
   }
   getAllContract(): Observable<any>{
     return this.httpClient.get<any>(this.API + '/listContract')
@@ -145,5 +152,30 @@ export class ContractService {
     return this.httpClient.get<any>(this.APIUpdateStatusContractPawn + '?contractID=' + contractID);
 
 
+  }
+
+  saveNewContractPawn(contract:ContractDto):Observable<any>{
+    return this.httpClient.post<any>(this.API+"/createPawn",contract);
+  }
+
+  pushFileToStorage(fileUpload: FileUpload): Observable<string> {
+    const filePath = `${this.basePath}/${fileUpload.file.name}`;
+    const storageRef = this.storage.ref(filePath);
+    const uploadTask = this.storage.upload(filePath, fileUpload.file);
+
+    uploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        storageRef.getDownloadURL().subscribe(downloadURL => {
+          fileUpload.url = downloadURL;
+          fileUpload.name = fileUpload.file.name;
+          this.saveFileData(fileUpload);
+        });
+      })
+    ).subscribe();
+    return this.storage.ref(this.basePath + "/" + fileUpload.file.name).getDownloadURL();
+  }
+
+  private saveFileData(fileUpload: FileUpload): void {
+    this.db.list(this.basePath).push(fileUpload);
   }
 }
