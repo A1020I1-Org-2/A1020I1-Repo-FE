@@ -1,4 +1,4 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {LoginService} from "../../services/login.service";
 import {Title} from "@angular/platform-browser";
@@ -18,7 +18,6 @@ export interface DialogMessage {
 export class LoginComponent implements OnInit {
   isOpenToast: boolean = false;
   isSubmit: boolean = false;
-  isAutoFocus: boolean = true;
 
   formLogin: FormGroup = new FormGroup({
     userName: new FormControl('', [Validators.required]),
@@ -46,7 +45,7 @@ export class LoginComponent implements OnInit {
     }
     if(this.loginService.message === 'success'){
       setTimeout(() => {
-       this.showMessage('Cập nhập mật khẩu thành công', 2)
+        this.showMessage('Cập nhập mật khẩu thành công', 2)
       }, 400);
     }
   }

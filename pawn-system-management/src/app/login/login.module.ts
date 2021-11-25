@@ -11,14 +11,14 @@ import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
-    declarations: [
-      LoginComponent,
-      DialogMessage,
-      ChangePasswordComponent
-    ],
-    exports: [
-        LoginComponent
-    ],
+  declarations: [
+    LoginComponent,
+    DialogMessage,
+    ChangePasswordComponent
+  ],
+  exports: [
+    LoginComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -7,13 +7,13 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {AlertService} from "../../services/alert.service";
 import {Title} from "@angular/platform-browser";
 
+
 @Component({
   selector: 'app-list-customer',
   templateUrl: './list-customer.component.html',
   styleUrls: ['./list-customer.component.css']
 })
 export class ListCustomerComponent implements OnInit {
-
   customers!: Customer[];
   customer!: Customer;
   searchCustomer!: FormGroup;
