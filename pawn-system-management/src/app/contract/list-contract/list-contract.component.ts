@@ -11,6 +11,7 @@ import {CustomerService} from "../../services/customer.service";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteContractComponent} from "../delete-contract/delete-contract.component";
 import {AlertService} from "../alert.service";
+import {EditListTop10Component} from "../edit-list-top10/edit-list-top10.component";
 function checkDate(form:AbstractControl): ValidationErrors|null {
 
   const startDate = new Date(form.value.startDateFrom);
@@ -142,4 +143,17 @@ export class ListContractComponent implements OnInit {
 
   }
 
+  openDialogEdit(contractId: string) {
+    this.contractService.getInfo(contractId).subscribe((data)=>{
+      const  dialog = this.dialog.open(EditListTop10Component,{
+        width: '1000px',
+        data: data,
+        disableClose: true,
+        autoFocus: false
+      })
+      dialog.afterClosed().subscribe(result => {
+        this.ngOnInit();
+      });
+    })
+  }
 }
