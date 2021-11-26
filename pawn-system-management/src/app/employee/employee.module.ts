@@ -6,9 +6,16 @@ import { ListEmployeeComponent } from './list-employee/list-employee.component';
 import { ViewEmployeeComponent } from './view-employee/view-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { EditInfomationEmmployeeComponent } from './edit-infomation-emmployee/edit-infomation-emmployee.component';
+import {BrowserModule} from "@angular/platform-browser";
+import {HttpClientModule} from "@angular/common/http";
+import {RouterModule} from "@angular/router";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 
+// noinspection AngularInvalidImportedOrDeclaredSymbol
 @NgModule({
   declarations: [
     CreateEmployeeComponent,
@@ -19,7 +26,14 @@ import { EditInfomationEmmployeeComponent } from './edit-infomation-emmployee/ed
     EditInfomationEmmployeeComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    BrowserModule,
+    HttpClientModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ]
 })
 export class EmployeeModule { }

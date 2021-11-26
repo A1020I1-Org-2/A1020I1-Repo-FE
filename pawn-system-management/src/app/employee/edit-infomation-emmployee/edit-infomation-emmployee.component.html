@@ -1,1 +1,92 @@
-<p>edit-infomation-emmployee works!</p>
+<h2>Edit Employee</h2>
+<div>
+  <div class="container mb-5">
+    <div class="card row" style="border-color: white">
+
+      <form [formGroup]="editForm" (ngSubmit)="update()">
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="name">Mã NV <span class="text-danger"> *</span></label>
+            <input type="text" class="form-control border-dark" id="idNV"
+                   formControlName="employeeId">
+          </div>
+          <div class="col-6">
+            <label for="name">Tên NV <span class="text-danger"> *</span></label>
+            <input type="text" class="form-control border-dark" id="name"
+                   formControlName="fullName">
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="email">Email<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control border-dark" id="email"
+                   placeholder="abc@example.com"
+                   formControlName="email">
+          </div>
+          <div class="col-6">
+            <label for="dateOfBirth">Ngày Sinh</label><span
+            class="text-danger"> *</span>
+            <input type="date" class="form-control border-dark date" id="dateOfBirth"
+                   formControlName="dOB">
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label for="phone">Địa chỉ</label><span class="text-danger"> *</span>
+            <input type="text" class="form-control border-dark" id="address"
+                   formControlName="address">
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="phone">Số điện thoại</label><span class="text-danger"> *</span>
+            <input type="number" class="form-control border-dark" id="phone"
+                   formControlName="phone">
+          </div>
+          <div class="col-6">
+            <label for="status">Giới tính</label><span class="text-danger"> *</span>
+            <select class="form-select border-dark w-100"
+                    aria-label="Default select example"
+                    id="status"
+                    style="height: 38px" formControlName="gender">
+              <option selected value="nam">Nam</option>
+              <option value="nữ">Nữ</option>
+              <option value="khác">Khác</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-6">
+            <label for="password">CMND / Hộ chiếu</label><span
+            class="text-danger"> *</span>
+            <input type="number" class="form-control border-dark" id="password"
+                   formControlName="idCard">
+          </div>
+          <div class="col-6">
+            <label for="passwordRetype">Lương</label><span class="text-danger"> *</span>
+            <input type="number" class="form-control border-dark" id="passwordRetype"
+                   formControlName="salary">
+          </div>
+        </div>
+        <div class="row mt-3">
+          <label>Tải ảnh</label>
+          <input type="file" name="uploadfile" id="img" formControlName="img"/>
+
+        </div>
+        <div class="row mt-3 justify-content-center">
+          <div class="col-3 text-center">
+            <button class="btn close btn-primary"
+                    type="submit" onclick="createEmployee()">
+              Thêm Mới
+            </button>
+            <label>&nbsp;</label>
+            <a class="btn close btn-secondary" routerLink="/customer">
+              Hủy
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

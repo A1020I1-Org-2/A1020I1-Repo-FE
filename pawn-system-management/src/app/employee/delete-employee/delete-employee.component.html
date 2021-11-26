@@ -1,1 +1,7 @@
-<p>delete-employee works!</p>
+<h1 class="text-center">Xác nhận xóa Khách hàng</h1>
+<hr>
+<p>bạn chắc chắn muốn xóa khách hàng có tên là <span class="text-danger font-weight-bold">{{nameEmp}}</span> này không? <br>Lưu ý: thao tác không thể hoàn tác!!</p>
+<div class="row d-flex justify-content-end">
+  <button mat-button mat-dialog-close class="btn btn-warning mr-3" style="width: 80px">Cancel</button>
+  <button class="btn btn-danger mr-3" style="width: 80px" (click)="delete()">Delete</button>
+</div>
