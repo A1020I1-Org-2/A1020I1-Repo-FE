@@ -1,19 +1,30 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgApexchartsModule} from 'ng-apexcharts';
+import {StatisticLiquidationComponent} from './statistic-liquidation/statistic-liquidation.component';
 import { StatisticInterestComponent } from './statistic-interest/statistic-interest.component';
-import { StatisticLiquidationComponent } from './statistic-liquidation/statistic-liquidation.component';
 import { StatisticExpectedComponent } from './statistic-expected/statistic-expected.component';
-
-
+import {RouterModule} from '@angular/router';
+import {StatisticRoutingModule} from './statistic-routing.module';
+import {StatisticService} from "../services/statistic.service";
 
 @NgModule({
-  declarations: [
-    StatisticInterestComponent,
+  declarations: [ StatisticLiquidationComponent, StatisticInterestComponent, StatisticExpectedComponent],
+  exports: [
     StatisticLiquidationComponent,
-    StatisticExpectedComponent
+    StatisticExpectedComponent,
+    StatisticInterestComponent
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    ReactiveFormsModule,
+    NgApexchartsModule,
+    RouterModule,
+    StatisticRoutingModule,
+    FormsModule
+  ],
+  providers: [DatePipe, StatisticService]
+
 })
 export class StatisticModule { }

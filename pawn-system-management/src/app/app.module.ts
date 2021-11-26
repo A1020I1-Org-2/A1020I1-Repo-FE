@@ -11,6 +11,7 @@ import {DeleteCustomerComponent} from "./customer/delete-customer/delete-custome
 import {ToastrModule} from "ngx-toastr";
 import {HomepageModule} from "./homepage/homepage.module";
 import {AppRoutingModule} from "./app-routing.module";
+import {StatisticModule} from "./statistic/statistic.module";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {AppRoutingModule} from "./app-routing.module";
       BrowserAnimationsModule,
       ToastrModule.forRoot(),
       MatDialogModule,
-      HomepageModule
+      HomepageModule,
+      StatisticModule
   ],
   providers: [],
   bootstrap: [AppComponent],
