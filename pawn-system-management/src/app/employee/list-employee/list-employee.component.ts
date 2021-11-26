@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {EmployeeService} from "../../services/employee.service";
 import {IEmployee} from "../IEmployee";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteEmployeeComponent} from "../delete-employee/delete-employee.component";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-list-employee',
@@ -14,10 +15,14 @@ export class ListEmployeeComponent implements OnInit {
   employee!:IEmployee[];
   totalPage!: number;
   pageNow: number = 1;
+  searchName!: string;
 
-  constructor(private service:EmployeeService, public dialog: MatDialog) { }
+  constructor(private service:EmployeeService,
+              public dialog: MatDialog,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle("Danh sách nhân viên");
     this.getAll();
   }
 
@@ -38,18 +43,21 @@ export class ListEmployeeComponent implements OnInit {
 
   delete(cusId: string): void {
     this.service.finById(cusId).subscribe(data =>{
-      console.log(data.employeeId);
-      console.log(typeof data.employeeId);
-
       const dialogRef = this.dialog.open(DeleteEmployeeComponent, {
         width: '500px',
-        data: {data1: data}
+        disableClose: true,
+        data: data
       });
-
       dialogRef.afterClosed().subscribe(() => {
         console.log('The dialog was closed');
         this.getAll();
       });
     })
+  }
+
+  search() {
+    this.service.search(this.searchName).subscribe(data => {
+      this.employee = data.content;
+    });
   }
 }

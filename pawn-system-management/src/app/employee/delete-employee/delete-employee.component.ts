@@ -9,16 +9,16 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class DeleteEmployeeComponent implements OnInit {
 
-  nameEmp!: String;
-  idEmp!: string;
+  nameEmp: string = '';
+  idEmp: string = '';
 
-  constructor(private service: EmployeeService, public dialogRef: MatDialogRef<DeleteEmployeeComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private service: EmployeeService,
+              public dialogRef: MatDialogRef<DeleteEmployeeComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    this.idEmp = this.data.data1.employeeId;
-    this.nameEmp = this.data.data1.fullName;
-    console.log(this.idEmp + " a");
-    console.log(typeof this.idEmp + ' a');
+    this.idEmp = this.data.employeeId;
+    this.nameEmp = this.data.fullName;
   }
 
   delete() {

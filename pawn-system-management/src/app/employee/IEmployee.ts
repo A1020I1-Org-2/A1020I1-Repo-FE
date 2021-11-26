@@ -1,10 +1,10 @@
 export interface IEmployee {
   employeeId: string;
   address: string;
-  dOB: string;
+  dateOfBirth: Date;
   email: string;
   fullName: string;
-  gender: number;
+  gender: boolean;
   idCard: string;
   img: string;
   phone: string;
