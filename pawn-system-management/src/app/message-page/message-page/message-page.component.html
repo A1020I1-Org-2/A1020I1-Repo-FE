@@ -66,7 +66,7 @@
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
             <p>Harvey Specter</p>
           </div>
-          <div class="messages">
+          <div #scrollMe class="messages">
             <ul>
               <ng-container *ngFor="let item of listContentMessage">
                 <li class="{{item.receiver == tmpIdUser ? 'sent' : 'replies'}}">

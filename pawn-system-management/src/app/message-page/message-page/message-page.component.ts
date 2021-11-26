@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Chat} from "../../interface/chat";
 import {ChatService} from "../../services/chat.service";
@@ -9,7 +9,9 @@ import {map} from "rxjs/operators";
   templateUrl: './message-page.component.html',
   styleUrls: ['./message-page.component.css']
 })
-export class MessagePageComponent implements OnInit {
+export class MessagePageComponent implements OnInit, AfterViewChecked {
+
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef | any;
 
   listContentMessage: Chat[] = [];
   formGroup!: FormGroup;
@@ -54,6 +56,17 @@ export class MessagePageComponent implements OnInit {
       });
     }
   }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }
+  }
+
   private getMessageAllUser(){
     this.chatService.getAllUser().snapshotChanges().pipe(
       map(changes =>
