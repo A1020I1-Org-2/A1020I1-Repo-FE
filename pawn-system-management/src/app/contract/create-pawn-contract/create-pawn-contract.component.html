@@ -1,6 +1,19 @@
 <div class="container-fluid bg-light">
   <div class="row">
     <div class="col-lg-12 col-sm-12">
+      <div [class]="classToast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-primary">
+          <strong class="me-auto text-white">Thông báo</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-light">
+          Thêm mới hợp đồng thành công.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 col-sm-12">
       <div class="container bg-white mt-5 mb-5" style="border-radius: 2%">
         <div class="row">
           <div class="col-lg-12 col-sm-12">

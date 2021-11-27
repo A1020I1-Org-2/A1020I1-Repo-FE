@@ -52,6 +52,7 @@ export class CreatePawnContractComponent implements OnInit {
   pageCurrentEmployee: number = 0;
   totalPageEmployee: number = 0;
   searchValueEmployee: string = "";
+  classToast : string = "toast position-toast";
 
   constructor(private customerService: CustomerService,
               private employeeService: EmployeeService,
@@ -224,8 +225,29 @@ export class CreatePawnContractComponent implements OnInit {
     this.contractPawn = new ContractDto(this.contractID, CONTROLS.imgProduct, CONTROLS.productName, CONTROLS.interestMoney
       , 0, CONTROLS.loanMoney, '', CONTROLS.startDate, CONTROLS.endDate, 1, this.statusContract,
       this.typeProduct, this.typeContract, CONTROLS.employeeId, CONTROLS.customerId);
-    this.contractService.saveNewContractPawn(this.contractPawn).subscribe(data => {
-    });
+    this.contractService.saveNewContractPawn(this.contractPawn).subscribe(
+      data => {
+        this.classToast="toast show position-toast";
+        this.formCreate = new FormGroup({
+            customerId: new FormControl('', [Validators.required]),
+            employeeId: new FormControl('', [Validators.required]),
+            productName: new FormControl('', [Validators.required]),
+            productType: new FormControl(0, [validSelectValidators()]),
+            loanMoney: new FormControl(0, [Validators.required, Validators.min(500000)]),
+            interestMoney: new FormControl(0),
+            startDate: new FormControl(this.dateCurrent, [Validators.required]),
+            endDate: new FormControl('', [Validators.required]),
+            imgProduct: new FormControl('', [Validators.required])
+          }, {validators: [validDateCheckoutValidators('startDate', 'endDate')]}
+        );
+
+        setTimeout(()=>{
+          this.classToast="toast position-toast";
+        }, 10000);
+      },error => {
+        console.log(error);
+      }
+    );
   }
 
   chooseTypeProduct(typeProductId: number) {
