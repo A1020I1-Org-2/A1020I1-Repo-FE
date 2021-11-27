@@ -40,7 +40,6 @@ export class ListCustomerComponent implements OnInit {
     this.customerService.getListCustomer().subscribe(data => {
       this.customers = data.content;
       this.totalPage = data.totalPages;
-      console.log(this.customers);
     });
   }
 

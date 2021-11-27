@@ -12,6 +12,7 @@ import {ToastrModule} from "ngx-toastr";
 import {HomepageModule} from "./homepage/homepage.module";
 import {AppRoutingModule} from "./app-routing.module";
 import {StatisticModule} from "./statistic/statistic.module";
+import {EmployeeModule} from "./employee/employee.module";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {StatisticModule} from "./statistic/statistic.module";
       ToastrModule.forRoot(),
       MatDialogModule,
       HomepageModule,
-      StatisticModule
+      StatisticModule,
+      EmployeeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
