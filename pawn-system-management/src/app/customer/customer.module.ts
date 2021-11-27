@@ -4,14 +4,21 @@ import { CreateCustomerComponent } from './create-customer/create-customer.compo
 import { UpdateCustomerComponent } from './update-customer/update-customer.component';
 import { ListCustomerComponent } from './list-customer/list-customer.component';
 import { DeleteCustomerComponent } from './delete-customer/delete-customer.component';
+
 import {CustomerRoutingModule} from "./customer-routing.module";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
 import {RouterModule} from "@angular/router";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { environment } from 'src/environments/environment';
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -28,6 +35,12 @@ import {RouterModule} from "@angular/router";
     ReactiveFormsModule,
     RouterModule,
     MatDialogModule,
+    FormsModule,
+    MatSnackBarModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireStorageModule,
+    ToastrModule.forRoot(),
   ],
   entryComponents:[DeleteCustomerComponent]
 })
