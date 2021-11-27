@@ -5,7 +5,9 @@
             <div class="row d-flex justify-content-around">
                 <div class="header m-3">
                     <div class="user">
-                        <img [src]="formAddNewCustomer.controls.img.value" alt="avatar">
+                        <div *ngIf="loading">
+                        </div>
+                        <img [hidden]="loading" (load)="onLoad()" [src]="formAddNewCustomer.controls.img.value" />
                     </div>
                 </div>
             </div>
@@ -15,12 +17,10 @@
                     <input type="file" class="text-nowrap text-truncate" (change)="selectFile($event)" name="photo"
                         id="upload-photo" />
                 </div>
-                <button class="btn btn-primary col mx-1" [disabled]="!selectedFiles" (click)="upload()">Thêm
-                    ảnh</button>
             </div>
         </div>
         <div class="col-9">
-            <form [formGroup]="formAddNewCustomer">
+            <form [formGroup]="formAddNewCustomer" (ngSubmit)="createCustomer()">
                 <div class="form-group col mb-3">
                     <label class="form-label col-" for="id">Mã khách hàng: <span style="color: red">(*)</span></label>
                     <input type="text" class="form-control" id="id" formControlName="customerId">
@@ -28,12 +28,16 @@
                         class="text-danger mt-2">Vui lòng nhâp Id</p>
                     <p *ngIf="formAddNewCustomer.controls.customerId.errors?.pattern && formAddNewCustomer.controls.customerId.touched"
                         class="text-danger mt-2">Id không đúng định dạng KH-XXXX (X là số)!</p>
+                    <p *ngIf="formAddNewCustomer.controls.customerId.touched && formAddNewCustomer.controls.customerId.errors?.checkExistId"
+                        class="text-danger mt-2">Id đã tồn tại!</p>
                 </div>
                 <div class="form-group col mb-3">
                     <label for="name">Họ tên: <span style="color: red">(*)</span> </label>
                     <input type="text" class="form-control" id="name" formControlName="name">
                     <p *ngIf="formAddNewCustomer.controls.name.errors?.required && formAddNewCustomer.controls.name.touched"
                         class="text-danger mt-1">Vui lòng nhập tên</p>
+                    <p *ngIf="formAddNewCustomer.controls.name.errors?.pattern && formAddNewCustomer.controls.name.touched"
+                        class="text-danger mt-2">Tên không đúng định dạng</p>
                 </div>
                 <div class="row mb-3">
                     <div class="form-group col">
@@ -41,6 +45,8 @@
                         <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth">
                         <p *ngIf="formAddNewCustomer.controls.dateOfBirth.errors?.required && formAddNewCustomer.controls.dateOfBirth.touched"
                             class="text-danger mt-1">Vui lòng nhập sinh nhật</p>
+                        <p *ngIf="formAddNewCustomer.controls.dateOfBirth.errors?.checkAge && formAddNewCustomer.controls.dateOfBirth.touched"
+                            class="text-danger mt-1">Số tuổi phải lớn hơn 18</p>
                     </div>
                     <div class="form-group col">
                         <label for="gender">Giới tính: <span style="color: red">(*)</span></label>
@@ -85,14 +91,16 @@
                         <label for="idCard">CMND/Hộ chiếu: <span style="color: red">(*)</span></label>
                         <input type="text" class="form-control" id="idCard" formControlName="idCard">
                         <p *ngIf="formAddNewCustomer.controls.idCard.errors?.required && formAddNewCustomer.controls.idCard.touched"
-                            class="text-danger mt-1">Vui lòng nhập số cmnd</p>
+                            class="text-danger mt-1">Vui lòng nhập số CMND/Hộ chiếu</p>
                         <p *ngIf="formAddNewCustomer.controls.idCard.errors?.pattern && formAddNewCustomer.controls.idCard.touched"
-                            class="text-danger mt-1">Số chứng minh phải 11 số</p>
+                            class="text-danger mt-1">CMND/Hộ chiếu phải 11 số</p>
+                        <p *ngIf="formAddNewCustomer.controls.idCard.touched && formAddNewCustomer.controls.idCard.errors?.checkExistIdCard"
+                            class="text-danger mt-2">CMND/Hộ chiếu đã tồn tại!</p>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center mt-2">
-                    <button [disabled]="formAddNewCustomer.invalid" class="btn btn-primary mx-5"
-                        (click)="createCustomer()">Thêm mới</button>
+                    <button [disabled]="formAddNewCustomer.invalid" class="btn btn-primary mx-5" type="submit">Thêm
+                        mới</button>
                     <button class="btn btn-secondary mx-5" (click)="onNoClick()">Hủy</button>
                 </div>
             </form>

@@ -14,6 +14,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
+import { ToastrModule } from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { environment } from 'src/environments/environment';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
+    ToastrModule.forRoot(),
   ]
 })
 export class CustomerModule { }

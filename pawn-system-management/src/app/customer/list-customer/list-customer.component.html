@@ -42,6 +42,8 @@
                                 <p *ngIf="!customerValidate.checkRequired('name') && (customer.customerId == idCustomerEdit) "
                                     class="text-danger">Không được để
                                     trống tên</p>
+                                <p *ngIf="!customerValidate.checkPattern('name') && (customer.customerId == idCustomerEdit)&& customerValidate.checkRequired('name')"
+                                    class="text-danger">Tên không đúng định dạng</p>
                             </td>
                             <td *ngIf="emptyObject">{{customer.dateOfBirth | date }}</td>
                             <td *ngIf="!emptyObject">
@@ -86,14 +88,16 @@
                                     <div *ngIf="customer.customerId == idCustomerEdit"
                                         class="form-check form-check-inline mt-2">
                                         <input class="form-check-input" type="radio" id="inlineRadio1" value=true
-                                            [value]="true" name="gender" [(ngModel)]="customer.gender">
+                                            [value]="true" name="gender" [(ngModel)]="customer.gender"
+                                            (ngModelChange)="customerValidate.setGender(true)">
                                         <label class="form-check-label" for="inlineRadio1">Nam</label>
                                     </div>
                                     <div *ngIf="customer.customerId == idCustomerEdit"
                                         class="form-check form-check-inline mt-2">
                                         <input *ngIf="customer.customerId == idCustomerEdit" class="form-check-input"
                                             type="radio" id="inlineRadio2" [value]="false" name="gender"
-                                            [(ngModel)]="customer.gender">
+                                            [(ngModel)]="customer.gender"
+                                            (ngModelChange)="customerValidate.setGender(false)">
                                         <label class="form-check-label" for="inlineRadio2">Nữ</label>
                                     </div>
                                 </div>
@@ -121,6 +125,8 @@
                                     trống số chứng minh nhân dân</p>
                                 <p *ngIf="!customerValidate.checkPattern('idCard') && (customer.customerId == idCustomerEdit) && customerValidate.checkRequired('idCard')"
                                     class="text-danger">Số chứng minh không đúng định dạng</p>
+                                <p *ngIf="!customerValidate.checkIdCard() && (customer.customerId == idCustomerEdit)&& customerValidate.checkRequired('idCard') && customerValidate.checkPattern('idCard')"
+                                    class="text-danger">Số chứng minh trùng lặp</p>
                             </td>
                             <td class="text-center"><span class="d-inline-flex">
                                     <button *ngIf="emptyObject" (click)="edit(customer)"
@@ -135,8 +141,18 @@
                                                 class="fas fa-pencil-alt"></i></button>
                                     </span>
                                     &nbsp;
-                                    <button class="btn btn-outline-danger border-0" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i></button></span>
+                                    <button *ngIf="emptyObject" class="btn btn-outline-danger border-0"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                                            class="fas fa-trash-alt"></i></button>
+                                    <span *ngIf="!emptyObject">
+                                        <button *ngIf="customer.customerId == idCustomerEdit"
+                                            class="btn btn-outline-secondary border-0" (click)="closeEdit()"><i
+                                                class="far fa-times-circle"></i></button>
+                                        <button *ngIf="customer.customerId != idCustomerEdit"
+                                            class="btn btn-outline-danger border-0" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i></button>
+                                    </span>
+                                </span>
                             </td>
                         </tr>
                     </tbody>

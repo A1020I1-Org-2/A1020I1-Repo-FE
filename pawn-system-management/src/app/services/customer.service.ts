@@ -12,6 +12,7 @@ import { finalize } from "rxjs/operators";
 export class CustomerService {
   private basePath = '/imgCustomer';
   public APICustomer: string = "http://localhost:8080/customer"
+  public customers: Customer[] = [];
   constructor(
     public http: HttpClient,
     private db: AngularFireDatabase,

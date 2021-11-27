@@ -1,11 +1,45 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Customer } from 'src/app/interface/customer';
 import { FileUpload } from 'src/app/interface/FileUpload';
 import { CustomerService } from 'src/app/services/customer.service';
+import { AlertService } from '../alert.service';
+
+interface ValidatorFn {
+  (control: AbstractControl): ValidationErrors | null
+}
+
+function checkExistId(customers: Customer[]): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    for (let i = 0; i < customers.length; i++) {
+      if (control.value === customers[i].customerId) {
+        return { checkExistId: true }
+      }
+    }
+    return null;
+  };
+}
+
+function checkExistIdCard(customers: Customer[]): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    for (let i = 0; i < customers.length; i++) {
+      if (control.value === customers[i].idCard) {
+        return { checkExistIdCard: true }
+      }
+    }
+    return null;
+  };
+}
+
+function checkAge(control: AbstractControl): ValidationErrors | null {
+  const now = new Date();
+  const birthday = new Date(control.value);
+  let between = now.getTime() - birthday.getTime();
+  let age = (between / (1000 * 60 * 60 * 24)) / 365;
+  return age > 18 ? null : { checkAge: true };
+}
 
 @Component({
   selector: 'app-create-customer',
@@ -16,25 +50,30 @@ export class CreateCustomerComponent implements OnInit {
   selectedFiles?: FileList;
   currentFileUpload?: FileUpload;
   formAddNewCustomer!: FormGroup;
+  checkUpload: any = false;
+  isExsitId: boolean = false;
+  customers: Customer[] = [];
+  loading: boolean = true
   constructor(
     public formBuilder: FormBuilder,
     public customerService: CustomerService,
-    private snackBar: MatSnackBar,
     public router: Router,
+    public alertService: AlertService,
     public dialogRef: MatDialogRef<CreateCustomerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: Customer[]
   ) { }
 
   ngOnInit(): void {
+    this.customers = this.customerService.customers;
     this.formAddNewCustomer = this.formBuilder.group({
-      customerId: ['', [Validators.required, Validators.pattern('^(KH-)[\\d]{4}$')]],
-      name: ['', [Validators.required,]],
-      dateOfBirth: ['', [Validators.required]],
+      customerId: ['', [Validators.required, Validators.pattern('^(KH-)[\\d]{4}$'), checkExistId(this.data)]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-Z\'-\'\\sáàảãạăâắằấầặẵẫậéèẻ ẽẹếềểễệóêòỏõọôốồổỗộ ơớờởỡợíìỉĩịđùúủũụưứ� �ửữựÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠ ƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼ� ��ỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞ ỠỢỤỨỪỬỮỰỲỴÝỶỸửữựỵ ỷỹ]*$')]],
+      dateOfBirth: ['', [Validators.required, checkAge]],
       email: ['', [Validators.required, Validators.email]],
       address: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      gender: ['', [Validators.required]],
-      idCard: ['', [Validators.required, Validators.pattern('^[0-9]{11}$')]],
+      phone: ['', [Validators.required, Validators.pattern('^(\\d{10,12})$')]],
+      gender: ['true', [Validators.required]],
+      idCard: ['', [Validators.required, Validators.pattern('^(\\d{9}|\\d{11})$'), checkExistIdCard(this.data)]],
       img: ['', [Validators.required]]
     })
   }
@@ -45,6 +84,12 @@ export class CreateCustomerComponent implements OnInit {
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+    this.upload();
+    this.checkUpload = true;
+  }
+
+  onLoad() {
+    this.loading = false;
   }
 
   upload(): void {
@@ -77,15 +122,13 @@ export class CreateCustomerComponent implements OnInit {
   createCustomer() {
     let tempCus: Customer = this.formAddNewCustomer.value;
     tempCus.gender = this.formAddNewCustomer.controls.gender.value == "true" ? true : false;
-    console.log(tempCus)
     this.customerService.create(tempCus).subscribe(data => {
-      this.snackBar.open('Create New Customer Successfully !!!', '', {
-        duration: 2000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      });
-      this.router.navigateByUrl('/');
-    })
+      this.dialogRef.close();
+      this.alertService.showAlertSuccess("Tạo mới khách hàng thành công")
+    },
+      error => {
+        this.alertService.showAlertError("Tạo mới khách hàng thất bại")
+      }
+    )
   }
-
 }
