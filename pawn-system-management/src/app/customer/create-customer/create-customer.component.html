@@ -1,1 +1,108 @@
-<p>create-customer works!</p>
+<div class="container-fluid">
+    <h1 class="text-center mb-3" style="size: 35px;color: darkblue;">THÊM MỚI KHÁCH HÀNG</h1>
+    <div class="row box-main d-flex justify-content-center align-items-center">
+        <div class="col-3">
+            <div class="row d-flex justify-content-around">
+                <div class="header m-3">
+                    <div class="user">
+                        <div *ngIf="loading">
+                        </div>
+                        <img [hidden]="loading" (load)="onLoad()" [src]="formAddNewCustomer.controls.img.value" />
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center mt-3">
+                <div class="col ml-4">
+                    <label class="text-primary mt-2" for="upload-photo">Chọn ảnh...</label>
+                    <input type="file" class="text-nowrap text-truncate" (change)="selectFile($event)" name="photo"
+                        id="upload-photo" />
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            <form [formGroup]="formAddNewCustomer" (ngSubmit)="createCustomer()">
+                <div class="form-group col mb-3">
+                    <label class="form-label col-" for="id">Mã khách hàng: <span style="color: red">(*)</span></label>
+                    <input type="text" class="form-control" id="id" formControlName="customerId">
+                    <p *ngIf="formAddNewCustomer.controls.customerId.errors?.required && formAddNewCustomer.controls.customerId.touched"
+                        class="text-danger mt-2">Vui lòng nhâp Id</p>
+                    <p *ngIf="formAddNewCustomer.controls.customerId.errors?.pattern && formAddNewCustomer.controls.customerId.touched"
+                        class="text-danger mt-2">Id không đúng định dạng KH-XXXX (X là số)!</p>
+                    <p *ngIf="formAddNewCustomer.controls.customerId.touched && formAddNewCustomer.controls.customerId.errors?.checkExistId"
+                        class="text-danger mt-2">Id đã tồn tại!</p>
+                </div>
+                <div class="form-group col mb-3">
+                    <label for="name">Họ tên: <span style="color: red">(*)</span> </label>
+                    <input type="text" class="form-control" id="name" formControlName="name">
+                    <p *ngIf="formAddNewCustomer.controls.name.errors?.required && formAddNewCustomer.controls.name.touched"
+                        class="text-danger mt-1">Vui lòng nhập tên</p>
+                    <p *ngIf="formAddNewCustomer.controls.name.errors?.pattern && formAddNewCustomer.controls.name.touched"
+                        class="text-danger mt-2">Tên không đúng định dạng</p>
+                </div>
+                <div class="row mb-3">
+                    <div class="form-group col">
+                        <label for="dateOfBirth">Ngày sinh: <span style="color: red">(*)</span></label>
+                        <input type="date" class="form-control" id="dateOfBirth" formControlName="dateOfBirth">
+                        <p *ngIf="formAddNewCustomer.controls.dateOfBirth.errors?.required && formAddNewCustomer.controls.dateOfBirth.touched"
+                            class="text-danger mt-1">Vui lòng nhập sinh nhật</p>
+                        <p *ngIf="formAddNewCustomer.controls.dateOfBirth.errors?.checkAge && formAddNewCustomer.controls.dateOfBirth.touched"
+                            class="text-danger mt-1">Số tuổi phải lớn hơn 18</p>
+                    </div>
+                    <div class="form-group col">
+                        <label for="">Giới tính: <span style="color: red">(*)</span></label>
+                        <div class="mt-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineRadio1" value=true
+                                    formControlName="gender">
+                                <label class="form-check-label" for="inlineRadio1">Nam</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineRadio2" value=false
+                                    formControlName="gender">
+                                <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col mb-3">
+                    <label for="email">Email: <span style="color: red">(*)</span></label>
+                    <input type="email" class="form-control" id="email" formControlName="email">
+                    <p *ngIf="formAddNewCustomer.controls.email.errors?.required && formAddNewCustomer.controls.email.touched"
+                        class="text-danger mt-1">Vui lòng nhâp email</p>
+                    <p *ngIf="formAddNewCustomer.controls.email.errors?.email" class="text-danger mt-1">Email không đúng
+                        định dạng abc@gmail.com!</p>
+                </div>
+                <div class="form-group col mb-3">
+                    <label for="address">Địa chỉ: <span style="color: red">(*)</span></label>
+                    <input type="text" class="form-control" id="address" formControlName="address">
+                    <p *ngIf="formAddNewCustomer.controls.address.errors?.required && formAddNewCustomer.controls.address.touched"
+                        class="text-danger mt-1">Vui lòng nhập địa chỉ</p>
+                </div>
+                <div class="row mb-3">
+                    <div class="form-group col">
+                        <label for="phone">Số điện thoại: <span style="color: red">(*)</span></label>
+                        <input type="text" class="form-control" id="phone" formControlName="phone">
+                        <p *ngIf="formAddNewCustomer.controls.phone.errors?.required && formAddNewCustomer.controls.phone.touched"
+                            class="text-danger mt-1">Vui lòng nhập số điện thoại</p>
+                        <p *ngIf="formAddNewCustomer.controls.phone.errors?.pattern && formAddNewCustomer.controls.phone.touched"
+                            class="text-danger mt-1">Số điện thoại không đúng định dạng</p>
+                    </div>
+                    <div class="form-group col">
+                        <label for="idCard">CMND/Hộ chiếu: <span style="color: red">(*)</span></label>
+                        <input type="text" class="form-control" id="idCard" formControlName="idCard">
+                        <p *ngIf="formAddNewCustomer.controls.idCard.errors?.required && formAddNewCustomer.controls.idCard.touched"
+                            class="text-danger mt-1">Vui lòng nhập số CMND/Hộ chiếu</p>
+                        <p *ngIf="formAddNewCustomer.controls.idCard.errors?.pattern && formAddNewCustomer.controls.idCard.touched"
+                            class="text-danger mt-1">CMND/Hộ chiếu phải 11 số</p>
+                        <p *ngIf="formAddNewCustomer.controls.idCard.touched && formAddNewCustomer.controls.idCard.errors?.checkExistIdCard"
+                            class="text-danger mt-2">CMND/Hộ chiếu đã tồn tại!</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                    <button [disabled]="formAddNewCustomer.invalid" class="btn btn-primary mx-5" type="submit">Thêm mới</button>
+                    <button class="btn btn-secondary mx-5" (click)="onNoClick()">Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

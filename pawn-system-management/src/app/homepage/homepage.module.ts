@@ -1,17 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { HomepageRoutingModule } from './homepage-routing.module';
+import { HomepageComponent } from './homepage/homepage.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { HomepageComponent } from './homepage/homepage.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
-
-
 
 @NgModule({
   declarations: [
+    HomepageComponent,
     HeaderComponent,
-    FooterComponent,
-    HomepageComponent
+    FooterComponent
   ],
   exports: [
     HeaderComponent,
@@ -19,6 +20,9 @@ import {RouterModule} from "@angular/router";
   ],
   imports: [
     CommonModule,
+    HomepageRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
     RouterModule
   ]
 })
