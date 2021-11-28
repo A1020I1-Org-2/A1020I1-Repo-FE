@@ -2,6 +2,7 @@ import {Customer} from "./customer";
 import {StatusContract} from "./status-contract";
 import {TypeContract} from "./type-contract";
 import {TypeProduct} from "./type-product";
+import {Employee} from "./employee";
 
 export interface Contract {
   contractId: string;
@@ -18,4 +19,6 @@ export interface Contract {
   statusContract: StatusContract;
   typeContract: TypeContract;
   typeProduct: TypeProduct;
+  productImg: string;
+  employee: Employee;
 }

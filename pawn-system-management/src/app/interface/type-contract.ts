@@ -1,4 +1,7 @@
+import {Contract} from "./contract";
+
 export interface TypeContract {
-  typeContractId: number;
-  name: String;
+  contractList?: Contract[];
+  typeContractId: number,
+  name: string
 }

@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {IEmployee} from "../employee/IEmployee";
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -42,7 +43,15 @@ export class EmployeeService {
     return this.http.put<any>(this.URL + 'update-employee', employee);
   }
 
-  deleteAll(): Observable<any>{
+  deleteAll(): Observable<any> {
     return this.http.delete<any>(this.URL + 'delete-all');
+  }
+
+  getListEmployee(page:number):Observable<any>{
+    return this.http.get<any>(this.URL+"getEmployeeList?page="+page);
+  }
+
+  searchEmployee(searchValue:string,page:number):Observable<any>{
+    return this.http.get<any>(this.URL+"/searchEmployee?searchValue="+searchValue+"&page="+page);
   }
 }

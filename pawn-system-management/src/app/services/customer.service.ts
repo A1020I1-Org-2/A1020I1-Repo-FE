@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Customer } from '../interface/customer';
@@ -6,11 +7,11 @@ import { FileUpload } from '../interface/FileUpload';
 import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { finalize } from "rxjs/operators";
+
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-
   private API_CUSTOMER: string = "http://localhost:8080/customer";
   private basePath = '/imgCustomer';
   httpOptions: any;
@@ -23,7 +24,11 @@ export class CustomerService {
   ) { }
 
   getListCustomer(): Observable<any> {
-    return this.http.get<any>(this.API_CUSTOMER + '/listCustomer');
+    return this.http.get<any>(this.API_CUSTOMER + '/list-customer');
+  }
+
+  getListCustomer1(page:number):Observable<any>{
+    return this.http.get<any>(this.API_CUSTOMER+"/getCustomerList?page="+page);
   }
 
   deleteCustomer(id: number | undefined): Observable<any> {
@@ -31,8 +36,12 @@ export class CustomerService {
   }
 
   searchCustomer(dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string): Observable<any> {
-    return this.http.get<any>(this.API_CUSTOMER + '/searchCustomer?dateOfBirthFrom=' + dateOfBirthFrom +
+    return this.http.get<any>(this.API_CUSTOMER + '/search-customer?dateOfBirthFrom=' + dateOfBirthFrom +
       '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=0');
+  }
+
+  searchCustomer1(searchValue:string,page:number):Observable<any>{
+    return this.http.get<any>(this.API_CUSTOMER+"/searchCustomer?searchValue="+searchValue+"&page="+page);
   }
 
   searchPageCustomer(dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string, page: number): Observable<any> {
@@ -73,5 +82,9 @@ export class CustomerService {
   getFiles(numberItems: number): AngularFireList<FileUpload> {
     return this.db.list(this.basePath, ref =>
       ref.limitToLast(numberItems));
+  }
+
+  getAllCustomer(): Observable<Customer[]>{
+    return this.http.get<Customer[]>(this.API_CUSTOMER + '/listCustomer')
   }
 }

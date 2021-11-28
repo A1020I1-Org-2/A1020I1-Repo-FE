@@ -1,4 +1,7 @@
+import {Contract} from "./contract";
+
 export interface StatusContract {
-  statusContractId: number;
-  name: String;
+  contractList?: Contract[];
+  statusContractId: number,
+  name: string
 }

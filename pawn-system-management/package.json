@@ -31,6 +31,11 @@
     "firebase": "^9.4.0",
     "ng-apexcharts": "^1.5.12",
     "rxfire": "^6.0.0",
+    "hammerjs": "^2.0.8",
+    "jquery": "^3.6.0",
+    "ngx-pagination": "^5.1.1",
+    "ngx-trim-directive": "^1.1.0",
+    "pagination": "^0.4.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
