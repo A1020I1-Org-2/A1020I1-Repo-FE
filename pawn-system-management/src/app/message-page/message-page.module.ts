@@ -4,6 +4,9 @@ import { MessagePageComponent } from './message-page/message-page.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {environment} from "../../environments/environment";
+import {AngularFireModule} from "@angular/fire/compat";
 
 
 
@@ -16,6 +19,8 @@ import {RouterModule} from "@angular/router";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebaseConfigThanhNHM),
     RouterModule.forRoot([
       {path: "chat", component: MessagePageComponent}
     ])

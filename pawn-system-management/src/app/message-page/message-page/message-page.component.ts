@@ -163,7 +163,7 @@ export class MessagePageComponent implements OnInit, AfterViewChecked {
   submitContent() {
     this.seen();
     if (this.formGroup.get('content')?.invalid){
-      console.log('invalid');
+      // console.log('invalid');
     }else {
       // @ts-ignore
       document.getElementById('idInputContent').value = '';
@@ -191,11 +191,11 @@ export class MessagePageComponent implements OnInit, AfterViewChecked {
           this.objForUpdateMessageLatest[0].key,
           {status: "seen"}).then(
           () => {
-            console.log("đã seen");
+            // console.log("đã seen");
           }
         ).catch(
           (err) => {
-            console.log(err);
+            // console.log(err);
           }
         );
       }
@@ -210,15 +210,15 @@ export class MessagePageComponent implements OnInit, AfterViewChecked {
                 this.objForUpdateMessageLatest[index].key,
                 {status: "seen"}).then(
                 () => {
-                  console.log("đã seen");
+                  // console.log("đã seen");
                 }
               ).catch(
                 (err) => {
-                  console.log(err);
+                  // console.log(err);
                 }
               );
               this.objForUpdateMessageLatest.splice(indexNeedRemove,1);
-              console.log(this.objForUpdateMessageLatest);
+              // console.log(this.objForUpdateMessageLatest);
             }
           }
         );

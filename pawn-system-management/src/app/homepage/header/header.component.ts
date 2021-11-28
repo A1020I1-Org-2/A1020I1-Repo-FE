@@ -85,7 +85,6 @@ export class HeaderComponent implements OnInit {
               break;
             }
           }
-          console.log(this.objForUpdateMessageLatest);
         }else {
           this.messageUnseenArr = [];
           for (let i = 0; i < data.length; i++){

@@ -1,1 +1,11 @@
-<p>delete-contract works!</p>
+<h2 mat-dialog-title style="text-align: center; color: darkblue">XÓA GIAO DỊCH</h2>
+<hr>
+<mat-dialog-content>
+  <p class="my-3">Bạn có chắc chắn muốn xóa <span class="text-danger font-weight-bold">{{id}}</span>
+  không? <br> Lưu ý: Thao tác không hoàn tác ! </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-dialog-close class="btn btn-secondary me-2" style="width: 80px;">Hủy bỏ</button>
+    <button class="btn btn-danger me-2" style="width: 80px;" (click)="delete()">Xóa</button>
+</mat-dialog-actions>
+
