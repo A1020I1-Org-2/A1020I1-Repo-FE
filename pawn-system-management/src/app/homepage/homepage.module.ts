@@ -18,10 +18,6 @@ import {RouterModule} from "@angular/router";
     HeaderComponent,
     FooterComponent
   ],
-  exports: [
-    HeaderComponent,
-    FooterComponent
-  ],
   imports: [
     CommonModule,
     HomepageRoutingModule,
