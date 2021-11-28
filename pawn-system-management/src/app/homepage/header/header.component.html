@@ -39,7 +39,13 @@
                 <li class="nav-item"><a routerLink="/show-finance" class="nav-link text-light"><strong>Thông tin cửa hàng</strong></a></li>
                 <li class="nav-item"><a routerLink="/customer/list-customer" class="nav-link text-light"><strong>Quản lý khách hàng</strong></a></li>
                 <li class="nav-item"><a routerLink="/view-employee" class="nav-link text-light"><strong>Thông tin cá nhân</strong></a></li>
-                <li class="nav-item"><a href="#" class="nav-link text-light"><strong>Nhắn tin</strong></a></li>
+                <li class="nav-item">
+                  <a routerLink="/chat" class="nav-link text-light">
+                    <strong>
+                      Nhắn tin <span *ngIf="showNotification" id="notification"></span>
+                    </strong>
+                  </a>
+                </li>
               </ul>
             </div>
           </div>

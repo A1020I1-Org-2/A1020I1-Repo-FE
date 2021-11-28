@@ -6,10 +6,15 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
     HomepageComponent,
+    HeaderComponent,
+    FooterComponent
+  ],
+  exports: [
     HeaderComponent,
     FooterComponent
   ],
@@ -22,6 +27,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     HomepageRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule
   ]
 })
 export class HomepageModule { }

@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+
   //DatNT
   // production: false,
   // firebaseConfig: {
@@ -27,6 +28,15 @@ export const environment = {
     storageBucket: "angular-app-chat.appspot.com",
     messagingSenderId: "934114327129",
     appId: "1:934114327129:web:4365a8e6388fb470db4f48"
+  },
+  firebaseConfigThanhNHM : {
+    apiKey: "AIzaSyDhUmxUXDJa1JWBBF7MIBb-Mx8g5i08nUY",
+    authDomain: "bezkoder-firebase-8a2d9.firebaseapp.com",
+    databaseURL: "https://bezkoder-firebase-8a2d9-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "bezkoder-firebase-8a2d9",
+    storageBucket: "bezkoder-firebase-8a2d9.appspot.com",
+    messagingSenderId: "1065103956130",
+    appId: "1:1065103956130:web:02a9d5fe658b0ab2491ffb"
   }
 };
 

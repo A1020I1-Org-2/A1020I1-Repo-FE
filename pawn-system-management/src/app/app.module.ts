@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
+
 import {LoginModule} from "./login/login.module";
 import {CustomerModule} from "./customer/customer.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -22,6 +23,11 @@ import {MatIconModule} from "@angular/material/icon";
 import {PawnModule} from "./pawn/pawn.module";
 import {MaterialModule} from "./material-module";
 import {FinanceModule} from "./finance/finance.module";
+import {MessagePageModule} from "./message-page/message-page.module";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../environments/environment";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +54,11 @@ import {FinanceModule} from "./finance/finance.module";
       MatButtonModule,
       MatIconModule,
       FinanceModule
+
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    MessagePageModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent],
