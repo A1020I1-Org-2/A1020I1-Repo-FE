@@ -12,12 +12,12 @@ import {MatDialog} from "@angular/material/dialog";
 import {DeleteContractComponent} from "../delete-contract/delete-contract.component";
 import {AlertService} from "../alert.service";
 import {EditListTop10Component} from "../edit-list-top10/edit-list-top10.component";
+import {Title} from "@angular/platform-browser";
 function checkDate(form:AbstractControl): ValidationErrors|null {
 
   const startDate = new Date(form.value.startDateFrom);
   const endDate = new Date(form.value.endDateTo);
   let resultDate = (startDate.getTime() - endDate.getTime())/(1000*60*60*24);
-  console.log(resultDate);
   if (resultDate > 0){
     return {checkDate: true};
   }
@@ -38,8 +38,8 @@ export class ListContractComponent implements OnInit {
   searchContract!: FormGroup;
   getInforList!: Contract;
   searchStatus= '';
-  indexPagination: number = 1;
-  totalPagination: number = 0;
+  totalPage: number[] = [];
+  pageNow: number = 1;
   startDateFrom: any;
   endDateTo: any;
   constructor(private contractService: ContractService,
@@ -48,8 +48,10 @@ export class ListContractComponent implements OnInit {
               private customerService: CustomerService,
               private toast: AlertService,
               private dialog: MatDialog,
+              private title: Title
               ) { }
   ngOnInit(): void {
+    this.title.setTitle("Lịch sử giao dịch");
     this.getList();
     this.searchContract = new FormGroup({
       customer: new FormControl('', [Validators.maxLength(10)]),
@@ -70,7 +72,11 @@ export class ListContractComponent implements OnInit {
   getList() {
     this.contractService.getAllContract().subscribe((data)=>{
       this.listContract = data.content;
-      this.totalPagination = data.totalPages;
+      this.pageNow = data.number;
+      this.totalPage = [];
+      for(let i=0; i<data.totalPages; i++){
+        this.totalPage.push(0)
+      }
     });
     this.customerService.getAllCustomer().subscribe((data)=>{
 
@@ -95,9 +101,12 @@ export class ListContractComponent implements OnInit {
     this.contractService.getPageSearch(pageNumber, this.searchContract.value.customer, this.searchContract.value.productName,
       this.searchContract.value.statusContract, this.searchContract.value.typeContract, this.searchContract.get('dateGroup.startDateFrom')?.value,
       this.searchContract.get('dateGroup.endDateTo')?.value).subscribe(data =>{
-        this.listContract = data.content;
-        this.indexPagination = data.pageable.pageNumber + 1;
-        this.totalPagination = data.totalPages;
+      this.listContract = data.content;
+      this.pageNow = data.number;
+      this.totalPage = [];
+      for(let i=0; i<data.totalPages; i++){
+        this.totalPage.push(0)
+      }
     })
 
   }

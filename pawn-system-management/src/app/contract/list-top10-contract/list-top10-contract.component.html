@@ -1,24 +1,19 @@
 <div class="container-fluid" >
-  <h2 class="text-center mt-3" style="color: darkblue; font-size: 35px">10 HỢP ĐỒNG MỚI NHẤT</h2>
   <div class="row mt-5 px-0 mx-0" >
     <div class="col-lg-2">
     <div class="list-group border border-primary rounded h-100">
-      <a href="#" class="list-group-item list-group-item-action">Thông tin cửa hàng</a>
-      <a href="#" class="list-group-item list-group-item-action ">Tài chính</a>
-      <a href="#" class="list-group-item list-group-item-action">Danh sách đồ cầm</a>
-      <a routerLink="/listTop10Contract" class="list-group-item list-group-item-action">10 hợp đồng mới
-        nhất</a>
-      <a href="#" class="list-group-item list-group-item-action">Thống kê lợi nhuận</a>
-      <a routerLink="/listContract" class="list-group-item list-group-item-action">Lịch sử giao dịch</a>
+      <a class="list-group-item list-group-item-action" routerLink="/show-finance" routerLinkActive="active">Tài chính</a>
+      <a class="list-group-item list-group-item-action" routerLink="/pawn-list" routerLinkActive="active">Danh sách đồ cầm</a>
+      <a class="list-group-item list-group-item-action" routerLink="/list-top-10-contract" routerLinkActive="active">10 hợp đồng mới nhất</a>
+      <a class="list-group-item list-group-item-action" routerLink="/statistic-interest" routerLinkActive="active">Thống kê lợi nhuận</a>
+      <a class="list-group-item list-group-item-action" routerLink="/list-contract" routerLinkActive="active">Lịch sử giao dịch</a>
     </div>
   </div>
     <div class="col-lg-10 col-sm-12">
+      <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">10 HỢP ĐỒNG MỚI NHẤT</h2>
       <form [formGroup]="searchListTop10" (ngSubmit)="searchContractListTop10()" (keydown)="seacrhEnter($event)">
         <div class="row mb-2">
-          <div class="col-2 col-xl-2 col-sm-2 col-lg-2"></div>
-          <div class="col-3 col-xl-3 col-sm-3 col-lg-3">
-            <h5></h5>
-          </div>
+          <div class="col-8 col-xl-8 col-sm-8 col-lg-8"></div>
           <div class="col-lg-3 col-xl-3 col-sm-3">
             <input type="text" class="form-control border-dark " placeholder="10 Hợp đồng mới nhất" formControlName="key">
           </div>
@@ -42,7 +37,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let listContract of listTop10Contract">
-            <th scope="row" class="text-center ">{{listContract.contractId}}</th>
+            <th scope="row" class="text-center">{{listContract.contractId}}</th>
             <td class="text-center ">{{listContract.productName}}</td>
             <td class="text-center ">{{listContract.customer.name}}</td>
             <td class="text-center ">{{listContract.startDate | date: 'dd/MM/yyyy'}}</td>

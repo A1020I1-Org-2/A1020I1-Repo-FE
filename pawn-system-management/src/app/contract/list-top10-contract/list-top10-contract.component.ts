@@ -8,6 +8,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {DeleteListTop10ContractComponent} from "../delete-list-top10-contract/delete-list-top10-contract.component";
 import {EditListTop10Component} from "../edit-list-top10/edit-list-top10.component";
+import {Title} from "@angular/platform-browser";
 
 
 
@@ -23,10 +24,13 @@ export class ListTop10ContractComponent implements OnInit {
   searchListTop10!: FormGroup;
 
 
-  constructor(private contractService: ContractService,private dialog: MatDialog) {
+  constructor(private contractService: ContractService,
+              private dialog: MatDialog,
+              private title: Title) {
   }
 
   ngOnInit(): void {
+    this.title.setTitle("Top 10 giao dịch mới nhất");
     this.getListTop10();
     this.searchListTop10 = new FormGroup({
       key: new FormControl('')

@@ -14,6 +14,10 @@ import {StatusContract} from 'src/app/interface/status-contract';
 import {TypeContract} from 'src/app/interface/type-contract';
 import {TypeProduct} from 'src/app/interface/type-product';
 import {data} from "browserslist";
+import {AlertService} from "../../services/alert.service";
+import {MatDialog} from "@angular/material/dialog";
+import {CreateCustomerComponent} from "../../customer/create-customer/create-customer.component";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-create-pawn-contract',
@@ -55,11 +59,15 @@ export class CreatePawnContractComponent implements OnInit {
 
   constructor(private customerService: CustomerService,
               private employeeService: EmployeeService,
-              private contractService: ContractService
+              private contractService: ContractService,
+              private alert: AlertService,
+              private dialog: MatDialog,
+              private title: Title
   ) {
   }
 
   ngOnInit(): void {
+    this.title.setTitle("Tạo mới hợp đồng");
     this.getListCustomer(0);
     this.getListEmployee(0);
     this.getLisTypeProduct();
@@ -218,6 +226,22 @@ export class CreatePawnContractComponent implements OnInit {
     )
   }
 
+  addNewCustomer(){
+    this.customerService.getAllCustomer().subscribe(data => {
+      let dialogRef = this.dialog.open(CreateCustomerComponent, {
+        height: '680px',
+        width: '1000px',
+        disableClose: true,
+        autoFocus: false,
+        data: data
+      });
+    })
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   this.getListCustomer();
+    // });
+  }
+
   create() {
     this.contractID = "HD-" + Math.floor(Math.random() * 10000);
     const CONTROLS = this.formCreate.value;
@@ -225,6 +249,9 @@ export class CreatePawnContractComponent implements OnInit {
       , 0, CONTROLS.loanMoney, '', CONTROLS.startDate, CONTROLS.endDate, 1, this.statusContract,
       this.typeProduct, this.typeContract, CONTROLS.employeeId, CONTROLS.customerId);
     this.contractService.saveNewContractPawn(this.contractPawn).subscribe(data => {
+      this.alert.showAlertSuccess("Tạo mới hợp đồng thành công");
+    }, error => {
+      this.alert.showMessageErrors("Tạo mới hợp đồng không thành công")
     });
   }
 

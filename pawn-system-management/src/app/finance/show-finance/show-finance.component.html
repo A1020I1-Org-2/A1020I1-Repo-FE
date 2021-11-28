@@ -1,1 +1,39 @@
-<p>show-finance works!</p>
+<div class="container-fluid mt-5" style="height: 100vh">
+  <div class="row px-0 mx-0" style="height: 80%;">
+    <div class="col-xl-2 col-lg-2">
+      <div class="list-group border border-primary rounded h-100">
+<!--        <a href="#" class="list-group-item list-group-item-action">Thông tin cửa hàng</a>-->
+        <a class="list-group-item list-group-item-action" routerLink="/show-finance" routerLinkActive="active">Tài chính</a>
+        <a class="list-group-item list-group-item-action" routerLink="/pawn-list" routerLinkActive="active">Danh sách đồ cầm</a>
+        <a class="list-group-item list-group-item-action" routerLink="/list-top-10-contract" routerLinkActive="active">10 hợp đồng mới nhất</a>
+        <a class="list-group-item list-group-item-action" routerLink="/statistic-interest" routerLinkActive="active">Thống kê lợi nhuận</a>
+        <a class="list-group-item list-group-item-action" routerLink="/list-contract" routerLinkActive="active">Lịch sử giao dịch</a>
+      </div>
+    </div>
+    <div class="col-xl-10 col-lg-10 card border border-primary rounded">
+      <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">THỐNG KÊ TÀI CHÍNH</h2>
+      <div class="row mt-5">
+        <div class="col-lg-4 col-xl-4"></div>
+        <div class="col-lg-8 col-xl-8">
+          <div class="row">
+            <label class="col-lg-3 col-xl-3">Số Tiền Trong Két: </label>
+            <label class="col-lg-9 col-xl-9 text-danger">{{financeInfo?.moneyOfSafe | currency: 'VND'}}</label>
+          </div>
+          <div class="row mt-2">
+            <label class="col-lg-3 col-xl-3">Vốn Hiện Tại: </label>
+            <label class="col-lg-9 col-xl-9 text-danger" >{{financeInfo?.currentCapital | currency: 'VND'}}</label>
+          </div>
+          <div class="row mt-2">
+            <label class="col-lg-3 col-xl-3">Vốn Đầu Tư: </label>
+            <label class="col-lg-9 col-xl-9 text-danger">{{financeInfo?.investmentMoney | currency: 'VND'}}</label>
+          </div>
+          <div class="row mt-2">
+            <label class="col-lg-3 col-xl-3">Lãi Dự Kiến: </label>
+            <label class="col-lg-9 col-xl-9 text-danger">{{financeInfo?.expectedProfit | currency: 'VND'}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

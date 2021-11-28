@@ -54,12 +54,12 @@ export class ListCustomerComponent implements OnInit {
 
   getPage(pageNum: number) {
     if (this.searchCustomer.value.dateOfBirthFrom == '') {
-      this.searchCustomer.value.dateOfBirthFrom = '1900-1-1';
-      this.searchCustomer.value.dateOfBirthTo = '';
+      this.searchCustomer.value.dateOfBirthFrom = '1900-01-01';
+      // this.searchCustomer.value.dateOfBirthTo = '';
     }
     if (this.searchCustomer.value.dateOfBirthTo == '') {
-      this.searchCustomer.value.dateOfBirthFrom = '';
-      this.searchCustomer.value.dateOfBirthTo = '2500-1-1';
+      // this.searchCustomer.value.dateOfBirthFrom = '';
+      this.searchCustomer.value.dateOfBirthTo = '2500-01-01';
     }
     this.customerService.searchPageCustomer(this.searchCustomer.value.dateOfBirthFrom, this.searchCustomer.value.dateOfBirthTo,
       this.searchCustomer.value.address, this.searchCustomer.value.name, pageNum).subscribe((data) => {
@@ -74,15 +74,17 @@ export class ListCustomerComponent implements OnInit {
 
   openDialogCreate() {
     this.customerService.customers = this.customers;
-    let dialogRef = this.dialog.open(CreateCustomerComponent, {
-      height: '680px',
-      width: '1000px',
-      disableClose: true,
-      autoFocus: false,
-      data: this.customers
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      this.getListCustomer();
+    this.customerService.getAllCustomer().subscribe(data => {
+      let dialogRef = this.dialog.open(CreateCustomerComponent, {
+        height: '680px',
+        width: '1000px',
+        disableClose: true,
+        autoFocus: false,
+        data: data
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.getListCustomer();
+      });
     });
   }
 

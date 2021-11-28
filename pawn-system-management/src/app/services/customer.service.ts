@@ -31,6 +31,10 @@ export class CustomerService {
     return this.http.get<any>(this.API_CUSTOMER+"/getCustomerList?page="+page);
   }
 
+  getAllCustomer(): Observable<Customer[]>{
+    return this.http.get<Customer[]>(this.API_CUSTOMER + '/get-all-customer')
+  }
+
   deleteCustomer(id: number | undefined): Observable<any> {
     return this.http.delete<any>(this.API_CUSTOMER +'/deleteCustomer/'+ id, this.httpOptions);
   }
@@ -45,7 +49,7 @@ export class CustomerService {
   }
 
   searchPageCustomer(dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string, page: number): Observable<any> {
-    return this.http.get<any>(this.API_CUSTOMER + '/searchCustomer?dateOfBirthFrom=' + dateOfBirthFrom +
+    return this.http.get<any>(this.API_CUSTOMER + '/search-customer?dateOfBirthFrom=' + dateOfBirthFrom +
       '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=' + page);
   }
 
@@ -82,9 +86,5 @@ export class CustomerService {
   getFiles(numberItems: number): AngularFireList<FileUpload> {
     return this.db.list(this.basePath, ref =>
       ref.limitToLast(numberItems));
-  }
-
-  getAllCustomer(): Observable<Customer[]>{
-    return this.http.get<Customer[]>(this.API_CUSTOMER + '/listCustomer')
   }
 }

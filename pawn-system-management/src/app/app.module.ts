@@ -22,7 +22,6 @@ import {MatIconModule} from "@angular/material/icon";
 import {PawnModule} from "./pawn/pawn.module";
 import {MaterialModule} from "./material-module";
 import {FinanceModule} from "./finance/finance.module";
-
 @NgModule({
   declarations: [
     AppComponent,
