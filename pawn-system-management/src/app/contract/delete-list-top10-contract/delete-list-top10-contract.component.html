@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Xác Nhận Xóa Hợp Đồng</h1>
+<mat-dialog-content>
+  <p>Bạn Có Muốn Xóa: <span class="text-danger">{{data.contractId}}</span></p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="btn btn-info" mat-button mat-dialog-close (click)="notDelete()" >Không</button>
+  <button class="bg-danger btn" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="deleteListTop10()">Xóa</button>
+</mat-dialog-actions>

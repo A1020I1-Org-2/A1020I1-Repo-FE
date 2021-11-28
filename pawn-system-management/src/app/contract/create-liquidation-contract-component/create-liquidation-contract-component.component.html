@@ -1,1 +1,512 @@
-<p>create-liquidation-contract-component works!</p>
+<!--content-->
+<div>
+  <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">TẠO HỢP ĐỒNG THANH LÝ</h2>
+  <!-- form create -->
+  <div>
+    <form class="w-75 mx-auto mt-3" [formGroup]="formCreate">
+      <div class="row  container mt-2 px-0">
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2 "></div>
+        <div class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8">
+          <div class="row">
+            <h5 class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4">Tên khách hàng:<span style="color: red">(*)</span></h5>
+            <div class="col-6 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+              <div class="row">
+                <input hidden type="text" formControlName="customer">
+                <input class="col col-sm col-lg col-md col-xl form-control" type="text" readonly [value]="customerName"
+                       formControlName="customer"
+                       [ngClass]="formCreate.controls.customer?.touched ?
+             (formCreate.controls.customer?.invalid ? 'is-invalid':'is-valid'):''">
+                <p *ngIf="formCreate.controls.customer.errors?.required &&
+              formCreate.controls.customer.touched" class="text-danger">
+                  Tên khách hàng không được để trống!!!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2 px-0">
+          <button type="button" class=" btn" style="background-color:#89E7F0;width: 190px" data-bs-toggle="modal"
+                  data-bs-target="#exampleModalCustomerList" (click)=resetModalCS()>
+            Chọn khách hàng
+          </button>
+        </div>
+      </div>
+      <div class="row container mt-2 px-0">
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2">
+        </div>
+        <div class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8">
+          <div class="row">
+            <h5 class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4 form-group">Tên nhân viên:<span
+              style="color: red">(*)</span></h5>
+            <div class="col-6 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+              <div class="row">
+                <input hidden type="text" formControlName="employee">
+                <input class="col col-sm col-lg col-md col-xl form-control" type="text" readonly [value]="employeeName"
+                       formControlName="employee"
+                       [ngClass]="formCreate.controls.employee?.touched ?
+             (formCreate.controls.employee?.invalid ? 'is-invalid':'is-valid'):''">
+                <p *ngIf="formCreate.controls.employee.errors?.required &&
+              formCreate.controls.employee.touched" class="text-danger">
+                  Tên nhân viên không được để trống!!!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2 px-0">
+          <button type="button" class=" btn" style="background-color:#89E7F0;width: 190px" data-bs-toggle="modal"
+                  data-bs-target="#exampleModalEmployeeList" (click)=resetModalEM()>
+            Chọn nhân viên
+          </button>
+        </div>
+      </div>
+      <div class="row container px-0 mt-2">
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2">
+        </div>
+        <div class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8">
+          <div class="row">
+            <h5 class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4 form-group">Tên đồ:<span style="color: red">(*)</span></h5>
+            <div class="col-6 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+              <div class="row">
+                <input class="col col-sm col-lg col-md col-xl form-control" type="text" readonly
+                       formControlName="productName"
+                       [ngClass]="formCreate.controls.productName?.touched ?
+             (formCreate.controls.productName?.invalid ? 'is-invalid':'is-valid'):''">
+                <p *ngIf="formCreate.controls.productName.errors?.required &&
+              formCreate.controls.productName.touched" class="text-danger">
+                  Tên đồ thanh lý không được để trống!!!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2 px-0">
+          <button type="button" class=" btn" style="background-color:#89E7F0;width: 190px" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal" (click)=resetModalPD()>
+            Chọn đồ thanh lý
+          </button>
+        </div>
+      </div>
+      <div class="row container px-0 mt-2">
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2">
+        </div>
+        <div class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8">
+          <div class="row">
+            <h5 class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4 form-group">Loại đồ:<span style="color: red">(*)</span></h5>
+            <div class="col-6 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+              <div class="row">
+                <input type="text" hidden formControlName="typeProduct">
+                <input class="col col-sm col-lg col-md col-xl form-control" type="text" readonly
+                       [value]="typeProductName"
+                       formControlName="typeProduct"
+                       [ngClass]="formCreate.controls.typeProduct?.touched ?
+             (formCreate.controls.typeProduct?.invalid ? 'is-invalid':'is-valid'):''">
+                <p *ngIf="formCreate.controls.typeProduct.errors?.required &&
+              formCreate.controls.typeProduct.touched" class="text-danger">
+                  Loại đồ thanh lý không được để trống!!!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row container px-0 mt-2">
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2">
+        </div>
+        <div class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8">
+          <div class="row">
+            <h5 class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4 form-group">Số lượng:<span style="color: red">(*)</span></h5>
+            <div class="col-6 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+              <div class="row">
+                <input class="col col-sm col-lg col-md col-xl form-control" type="te" readonly
+                       formControlName="quantity"
+                       [ngClass]="formCreate.controls.quantity?.touched ?
+             (formCreate.controls.quantity?.invalid ? 'is-invalid':'is-valid'):''">
+                <p *ngIf="formCreate.controls.quantity.errors?.required &&
+              formCreate.controls.quantity.touched" class="text-danger">
+                  Số lượng thanh lý không được để trống!!!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row container px-0 mt-2">
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2">
+        </div>
+        <div class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8">
+          <div class="row">
+            <h5 class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4 form-group">Tổng tiền:<span style="color: red">(*)</span></h5>
+            <div class="col-6 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+              <div class="row">
+                <input class="col col-sm col-lg col-md col-xl form-control " type="text" readonly
+                       formControlName="receiveMoney"
+                       [ngClass]="formCreate.controls.receiveMoney?.touched ?
+             (formCreate.controls.receiveMoney?.invalid ? 'is-invalid':'is-valid'):''">
+                <p *ngIf="formCreate.controls.receiveMoney.errors?.required &&
+              formCreate.controls.receiveMoney.touched" class="text-danger">
+                  Tiền thanh lý không được để trống!!!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row container px-0 mt-2">
+        <div class="col-2 col-sm-2 col-lg-2 col-md-2 col-xl-2">
+        </div>
+        <div class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8">
+          <div class="row form-group">
+            <h5 class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4">Ngày thanh lý:<span style="color: red">(*)</span></h5>
+            <div class="col-6 col-sm-6 col-lg-6 col-md-6 col-xl-6">
+              <div class="row">
+                <input class="col col-sm col-lg col-md col-xl form-control" type="date"
+                       formControlName="liquidationDate"
+                       [ngClass]="formCreate.controls.liquidationDate?.touched ?
+             (formCreate.controls.liquidationDate?.invalid ? 'is-invalid':'is-valid'):''">
+                <p *ngIf="formCreate.controls.liquidationDate.errors?.required &&
+              formCreate.controls.liquidationDate.touched" class="text-danger">
+                  Ngày thanh lý không được để trống!!!</p>
+                <p *ngIf="formCreate.controls.liquidationDate.errors?.checkLiquidationDate &&
+              formCreate.controls.liquidationDate.touched" class="text-danger">
+                  Ngày thanh lý phải là ngày hiện tại!!!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="mt-3 row d-flex justify-content-center">
+    <button class="col-1 col-sm-1 col-lg-1 col-md-1 col-xl-1 btn btn-primary me-5" [disabled]="formCreate.invalid"
+            (click)="createLiquidationContract()">Thêm mới
+    </button>
+    <button class="col-1 col-sm-1 col-lg-1 col-md-1 col-xl-1 btn btn-secondary " (click)="resetOfCancel()">Huỷ</button>
+  </div>
+</div>
+<!-- modal liquidation product-->
+<div class="modal fade" id="exampleModal" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class=" text-center">
+        <h5 class="text-center mt-3" id="exampleModalLabel" style="color: darkblue;font-size: 35px">CHỌN ĐỒ THANH
+          LÝ</h5>
+      </div>
+      <div class="modal-body">
+        <form class="container" [formGroup]="searchProduct" (ngSubmit)="search()">
+          <div class="row">
+            <table class="ms-5">
+              <tr class="row">
+                <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">Tên đồ:</th>
+                <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">Loại đồ:</th>
+                <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">Giá(VNĐ):</th>
+                <th class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3"></th>
+              </tr>
+              <tr class="row">
+                <td class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">
+                  <input type="text" class="form-control border-success" formControlName="productName">
+                </td>
+                <td class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">
+                  <select class="form-control border-success" type="text"
+                          formControlName="typeProduct">
+                    <option selected value="">Chọn loại đồ</option>
+                    <option selected *ngFor="let type of typeProductList" value="{{type.name}}">
+                      {{type.name}}
+                    </option>
+                  </select>
+                </td>
+                <td class="col-3 col-sm-3 col-lg-3 col-md-3 col-xl-3">
+                  <input type="text" class="form-control border-success" formControlName="receiveMoney">
+                </td>
+                <td class="col-1 col-sm-1 col-lg-1 col-md-1 col-xl-1">
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-search-plus mr-2 "></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </form>
+        <div class="mt-2 container-fluid">
+          <table class="table table-striped  col table-bordered " *ngIf="isFoundPd">
+            <thead class="table-primary text-center">
+            <tr>
+              <th>Tên đồ</th>
+              <th>Loại đồ</th>
+              <th>Số lượng</th>
+              <th>Giá (VNĐ)</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let list of liquidationProductList">
+              <td>{{list.productName}}</td>
+              <td>{{list.typeProduct.name}}</td>
+              <td class="text-center">{{list.quantity}}</td>
+              <td class="text-center text-danger">{{list.loanMoney |currency:"VND"}}</td>
+              <td class="text-center ">
+                <button class="text-center btn btn-outline-info" (click)="chooseProduct(list.contractId)"
+                        data-bs-dismiss="modal">Chọn
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <h2 class="text-center text-danger" *ngIf="isFoundPd == false">
+            Không tìm thấy kết quả muốn tìm kiếm!!!
+          </h2>
+          <div class="col-1"></div>
+        </div>
+        <!--Phân Trang-->
+        <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12 mt-3 " *ngIf="isFoundPd">
+          <nav aria-label="..." class="float-lg-end">
+            <ul class="pagination">
+              <li class="page-item">
+                <button class="page-link" (click)="getPageListProduct(0)"><<</button>
+              </li>
+              <li class="page-item">
+                <button class="page-link" tabindex="-1" *ngIf="(indexPagination-1)>0"
+                        (click)="getPageListProduct((indexPagination-2))">
+                  <
+                </button>
+              </li>
+              <li class="page-item">
+                <button class="page-link" *ngIf="(indexPagination-1)>0"
+                        (click)="getPageListProduct((indexPagination-2))">
+                  {{indexPagination - 1}}
+                </button>
+              </li>
+              <li class="page-item active" aria-current="page">
+                <button class="page-link" (click)="getPageListProduct((indexPagination-1))">
+                  {{indexPagination}}
+                </button>
+              </li>
+              <li class="page-item">
+                <button class="page-link" *ngIf="(indexPagination +1)< totalPagination"
+                        (click)="getPageListProduct((indexPagination))">
+                  {{indexPagination + 1}}
+                </button>
+              </li>
+              <li class="page-item">
+                <button class="page-link" *ngIf="(indexPagination +1)< totalPagination"
+                        (click)="getPageListProduct((indexPagination))">
+                  >
+                </button>
+              </li>
+              <li class="page-item">
+                <button class="page-link" (click)="getPageListProduct((totalPagination-1))">
+                  >>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="modal-footer justify-content-start">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal customer list-->
+<div class="modal fade" id="exampleModalCustomerList" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class=" text-center">
+        <h5 class="text-center mt-3" id="exampleModalLabelCustomerList" style="color: darkblue;font-size: 35px">
+          CHỌN KHÁCH HÀNG</h5>
+      </div>
+      <div class="modal-body">
+        <div class=" container">
+          <div class="row ms-1">
+            <div class="col-5 col-sm-5 col-lg-5 col-md-5 col-xl-5 me-5">
+              <button class="col-8 col-sm-8 col-lg-8 col-md-8 col-xl-8 btn btn-primary ">Thêm mới khách hàng</button>
+            </div>
+            <div class="col-4 col-sm-4 col-lg-4 col-md-4 col-xl-4 d-flex justify-content-end ms-5">
+              <input type="text" class="form-control border-success"
+                     placeholder="Tìm kiếm" [(ngModel)]="searchCus"/>
+            </div>
+            <button type="submit" class="col-1 col-sm-1 col-lg-1 col-md-1 col-xl-1 btn btn-success justify-content-end"
+                    (click)="searchCustomer()">
+              <i class="fas fa-search-plus mr-2 "></i>
+            </button>
+          </div>
+          <div class="mt-2 container-fluid">
+            <table class="table table-striped  col col-sm col-lg col-md col-xl table-bordered " *ngIf="isFoundCs">
+              <thead class="table-primary text-center">
+              <tr>
+                <th>Mã khách hàng</th>
+                <th>Tên khách hàng</th>
+                <th>CMND/CCCD</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let listCS of customerList">
+                <td>{{listCS.customerId}}</td>
+                <td>{{listCS.name}}</td>
+                <td class="text-center">{{listCS.idCard}}</td>
+                <td class="text-center ">
+                  <button class="text-center btn btn-outline-info" data-bs-dismiss="modal"
+                          (click)="chooseCustomer(listCS.customerId)">Chọn
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <h2 class="text-center text-danger" *ngIf="isFoundCs == false">
+              Kết quả tìm kiếm không tìm thấy!!!
+            </h2>
+            <div class="col-1"></div>
+          </div>
+          <!--Phân Trang-->
+          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12 mt-3" *ngIf="isFoundCs">
+            <nav aria-label="..." class="float-lg-end">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" (click)="getPageCustomer(0)"><<</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" tabindex="-1" *ngIf="(indexPagination-1)>0"
+                     (click)="getPageCustomer((indexPagination-2))">
+                    <
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" *ngIf="(indexPagination-1)>0"
+                     (click)="getPageCustomer((indexPagination-2))">
+                    {{indexPagination - 1}}
+                  </a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" (click)="getPageCustomer((indexPagination-1))">
+                    {{indexPagination}}
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" *ngIf="(indexPagination +1)<= totalPagination"
+                     (click)="getPageCustomer((indexPagination))">
+                    {{indexPagination + 1}}
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" *ngIf="(indexPagination +1)<= totalPagination"
+                     (click)="getPageCustomer((indexPagination))">
+                    >
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" (click)="getPageCustomer((totalPagination-1))">
+                    >>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="modal-footer justify-content-start">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal employee list-->
+<div class="modal fade" id="exampleModalEmployeeList" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class=" text-center">
+        <h5 class="text-center mt-3" id="exampleModalLabelEmployeeList" style="color: darkblue;font-size: 35px">
+          CHỌN NHÂN VIÊN</h5>
+      </div>
+      <div class="modal-body">
+        <div class=" container">
+          <div class="row ms-1">
+            <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 me-5">
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-end ms-5">
+              <input type="text" class="form-control border-success"
+                     placeholder="Tìm kiếm" [(ngModel)]="searchEm">
+            </div>
+            <button type="submit" class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 btn btn-success justify-content-end"
+                    (click)="searchEmployee()"><i class="fas fa-search-plus mr-2 "></i>
+            </button>
+          </div>
+          <div class="mt-2 container-fluid">
+            <table class="table table-striped  col col-sm col-lg col-md co-xl table-bordered " *ngIf="isFoundEm">
+              <thead class="table-primary text-center">
+              <tr>
+                <th>Mã nhân viên</th>
+                <th>Tên nhân viên</th>
+                <th>CMND/CCCD</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let listEM of employeeList ">
+                <td>{{listEM.employeeId}}</td>
+                <td>{{listEM.fullName}}</td>
+                <td class="text-center">{{listEM.idCard}}</td>
+                <td class="text-center ">
+                  <button class="text-center btn btn-outline-info" data-bs-dismiss="modal"
+                          (click)="chooseEmployee(listEM.employeeId)">Chọn
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <h2 class="text-center text-danger" *ngIf="isFoundEm == false">
+              Kết quả tìm kiếm không tìm thấy!!!
+            </h2>
+            <div class="col-1"></div>
+          </div>
+          <!--Phân Trang-->
+          <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 mt-3" *ngIf="isFoundEm">
+            <nav aria-label="..." class="float-lg-end">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" (click)="getPageEmployee(0)"><<</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" tabindex="-1" *ngIf="(indexPagination-1)>0"
+                     (click)="getPageEmployee((indexPagination-2))">
+                    <
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" *ngIf="(indexPagination-1)>0"
+                     (click)="getPageEmployee((indexPagination-2))">
+                    {{indexPagination - 1}}
+                  </a>
+                </li>
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link" (click)="getPageCustomer((indexPagination-1))">
+                    {{indexPagination}}
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" *ngIf="(indexPagination +1)<= totalPagination"
+                     (click)="getPageEmployee((indexPagination))">
+                    {{indexPagination + 1}}
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" *ngIf="(indexPagination +1)<= totalPagination"
+                     (click)="getPageEmployee((indexPagination))">
+                    >
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" (click)="getPageEmployee((totalPagination-1))">
+                    >>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div class="modal-footer justify-content-start">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
