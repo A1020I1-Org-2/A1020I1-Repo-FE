@@ -1,1 +1,97 @@
-<p>message-page works!</p>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 mt-md-3 mt-sm-3 mb-5">
+      <div id="frame" class="mx-auto mt-md-5 mt-sm-2">
+        <div id="sidepanel" [style.display]="booleanCustomer ? 'none' : ''">
+          <div id="profile">
+            <div class="wrap">
+              <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+              <p>Mike Ross</p>
+              <div id="status-options">
+                <ul>
+                  <li id="status-online" class="active"><span class="status-circle"></span>
+                    <p>Online</p>
+                  </li>
+                  <li id="status-away"><span class="status-circle"></span>
+                    <p>Away</p>
+                  </li>
+                  <li id="status-busy"><span class="status-circle"></span>
+                    <p>Busy</p>
+                  </li>
+                  <li id="status-offline"><span class="status-circle"></span>
+                    <p>Offline</p>
+                  </li>
+                </ul>
+              </div>
+              <div id="expanded">
+                <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                <input name="twitter" type="text" value="mikeross" />
+                <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                <input name="twitter" type="text" value="ross81" />
+                <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+                <input name="twitter" type="text" value="mike.ross" />
+              </div>
+            </div>
+          </div>
+          <div id="search">
+            <label><i class="fa fa-search" aria-hidden="true"></i></label>
+            <input type="text" placeholder="Search contacts..." />
+          </div>
+          <div id="contacts">
+            <ul>
+              <ng-container *ngFor="let item of tmpListIdCustomer, index as i">
+                <li class="contact" (click)="getMessageWithId(item)">
+                  <div class="wrap">
+                    <span class="contact-status online"></span>
+                    <div *ngIf="checkUnseen(item)" class="d-inline-block notification-sm">
+                      <i class="far fa-comment-dots text-warning"></i>
+                    </div>
+                    <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+                    <div class="meta">
+                      <p class="name">
+                        {{item}}
+                      </p>
+                      <p class="preview">{{i}} xx</p>
+                    </div>
+                  </div>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+        <div class="content" [style.width]="booleanCustomer ? widthClassContent : ''" (click)="seen()">
+          <div class="contact-profile">
+            <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+            <p>Harvey Specter</p>
+          </div>
+          <div #scrollMe class="messages">
+            <ul>
+              <ng-container *ngFor="let item of listContentMessage">
+                <li class="{{item.receiver == tmpIdUser ? 'sent' : 'replies'}}">
+                  <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
+                  <p>{{item.content}}
+                  </p>
+                </li>
+              </ng-container>
+            </ul>
+          </div>
+          <div class="message-input">
+            <form [formGroup]="formGroup">
+              <div class="wrap">
+                <input id="idInputContent" type="text" placeholder="Write your message..."
+                       formControlName="content"/>
+                <button class="submit" (click)="submitContent()">
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
