@@ -21,6 +21,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {PawnModule} from "./pawn/pawn.module";
 import {MaterialModule} from "./material-module";
+import {FinanceModule} from "./finance/finance.module";
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {MaterialModule} from "./material-module";
       MatDividerModule,
       MatButtonModule,
       MatIconModule,
+      FinanceModule
   ],
   providers: [],
   bootstrap: [AppComponent],

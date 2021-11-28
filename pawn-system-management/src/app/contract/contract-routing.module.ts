@@ -10,9 +10,9 @@ import {CreateLiquidationContractComponentComponent} from "./create-liquidation-
 import {CreatePawnContractComponent} from "./create-pawn-contract/create-pawn-contract.component";
 
 const routes: Routes = [
-  {path: 'listTop10Contract', component: ListTop10ContractComponent},
-  {path: 'listContract',component: ListContractComponent},
-  {path: 'editContract', component: UpdateContractComponent},
+  {path: 'list-top-10-contract', component: ListTop10ContractComponent},
+  {path: 'list-contract',component: ListContractComponent},
+  {path: 'edit-contract', component: UpdateContractComponent},
   {path: 'create-liquidation-contract', component:CreateLiquidationContractComponentComponent},
   {path:'create-pawn',component:CreatePawnContractComponent}
   ]

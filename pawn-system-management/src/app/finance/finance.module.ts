@@ -5,11 +5,14 @@ import { ShowFinanceComponent } from './show-finance/show-finance.component';
 
 
 @NgModule({
-  declarations: [
-    ShowFinanceComponent
-  ],
-  imports: [
-    CommonModule
-  ]
+    declarations: [
+        ShowFinanceComponent
+    ],
+    exports: [
+        ShowFinanceComponent
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class FinanceModule { }
