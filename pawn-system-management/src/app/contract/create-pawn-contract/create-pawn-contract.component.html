@@ -95,7 +95,7 @@
                 </div>
                 <div class="mb-3 mt-3 col-sm-6 col-lg-6">
                   <label for="type" class="form-label required">Loại đồ:</label>
-                  <select id="type" formControlName="productType" [class]="classProductType"
+                  <select id="type" formControlName="productType" class="form-select" [class]="classProductType"
                           aria-label="Default select example" (select)="changeClass()">
                     <option value=0>Chọn loại đồ</option>
                     <option *ngFor="let typeProduct of listTypeProduct"

@@ -236,7 +236,7 @@
             <tbody>
             <tr *ngFor="let list of liquidationProductList">
               <td>{{list.productName}}</td>
-              <td>{{list.typeProduct.name}}</td>
+              <td>{{list.typeProduct?.name}}</td>
               <td class="text-center">{{list.quantity}}</td>
               <td class="text-center text-danger">{{list.loanMoney |currency:"VND"}}</td>
               <td class="text-center ">

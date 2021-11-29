@@ -13,7 +13,7 @@ import { finalize } from "rxjs/operators";
 })
 export class CustomerService {
   private API_CUSTOMER: string = "http://localhost:8080/customer";
-  private basePath = '/imgCustomer';
+  private basePath = '/imgPawn';
   httpOptions: any;
   public customers: Customer[] = [];
 

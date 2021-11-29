@@ -250,6 +250,7 @@ export class CreatePawnContractComponent implements OnInit {
       this.typeProduct, this.typeContract, CONTROLS.employeeId, CONTROLS.customerId);
     this.contractService.saveNewContractPawn(this.contractPawn).subscribe(data => {
       this.alert.showAlertSuccess("Tạo mới hợp đồng thành công");
+      this.ngOnInit();
     }, error => {
       this.alert.showMessageErrors("Tạo mới hợp đồng không thành công")
     });
