@@ -30,7 +30,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
 
     this.tmpListIdCustomer = ['KH-0002', 'KH-0001', 'KH-0003', "KH-0004"];
-    this.tmpIdUser = "KH-0003";
+    this.tmpIdUser = "NV-0003";
 
     if (this.tmpIdUser.substring(0,2) == ('KH')){
       this.widthClassContent = '100%';
