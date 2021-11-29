@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Chat} from "../../interface/chat";
 import {ChatService} from "../../services/chat.service";
 import {map} from "rxjs/operators";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-message-page',
@@ -26,13 +27,14 @@ export class MessagePageComponent implements OnInit, AfterViewChecked {
 
   constructor(
     private formBuilder: FormBuilder,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private title: Title
   ) { }
 
   ngOnInit(): void {
-
+    this.title.setTitle("Nhắn tin");
     this.tmpListIdCustomer = ['KH-0002', 'KH-0001', 'KH-0003', "KH-0004"];
-    this.tmpIdUser = "KH-0003";
+    this.tmpIdUser = "NV-0003";
 
     if (this.tmpIdUser.substring(0,2) == ('KH')){
       this.widthClassContent = '100%';

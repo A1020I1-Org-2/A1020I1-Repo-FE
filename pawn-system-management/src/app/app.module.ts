@@ -27,6 +27,7 @@ import {MessagePageModule} from "./message-page/message-page.module";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../environments/environment";
+import {PageNotFoundModule} from "./page-not-found/page-not-found.module";
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import {environment} from "../environments/environment";
     MatIconModule,
     FinanceModule,
     MessagePageModule,
-
+    PageNotFoundModule
   ],
   providers: [],
   bootstrap: [AppComponent],
