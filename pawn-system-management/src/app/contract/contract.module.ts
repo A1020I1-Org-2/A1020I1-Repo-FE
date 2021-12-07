@@ -52,7 +52,7 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage";
     ContractRoutingModule,
     NgxTrimDirectiveModule,
     MatButtonModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfigNhanNH),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     ToastrModule.forRoot()

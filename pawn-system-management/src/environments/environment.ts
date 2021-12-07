@@ -20,7 +20,7 @@ export const environment = {
   //NhanNH
   production: false,
   DATE_FORMAT: undefined,
-  firebaseConfig : {
+  firebaseConfigNhanNH : {
     apiKey: "AIzaSyDY3tsOQEDE_-PfLZMjguX4mSWHjf8TrGI",
     authDomain: "angular-app-chat.firebaseapp.com",
     databaseURL: "https://angular-app-chat-default-rtdb.asia-southeast1.firebasedatabase.app",

@@ -37,7 +37,7 @@ import { ToastrModule } from "ngx-toastr";
     MatDialogModule,
     FormsModule,
     MatSnackBarModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfigNhanNH),
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     ToastrModule.forRoot(),
