@@ -130,6 +130,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
 
   getLiquidationProductList() {
     this.contractService.getLiquidationProductList().subscribe(data => {
+      console.log(data);
       this.liquidationProductList = data.content;
       this.totalPagination = data.totalPages;
     })

@@ -4,9 +4,9 @@
 
 export const environment = {
 
-  //DatNT
+  // DatNT
   // production: false,
-  // firebaseConfig: {
+  // firebaseConfigDatNT: {
   //   apiKey: "AIzaSyBZhTHG5ELjtKIW-kEuENWZ09PM8W8x7cE",
   //   authDomain: "pawn-project-3af93.firebaseapp.com",
   //   databaseURL: "https://pawn-project-3af93-default-rtdb.firebaseio.com/",
@@ -15,7 +15,7 @@ export const environment = {
   //   messagingSenderId: "14639515226",
   //   appId: "1:14639515226:web:6ea71ddd21ce3bcf1e7a63",
   //   measurementId: "G-3DTTTR3KCD"
-  // }
+  // },
 
   //NhanNH
   production: false,
@@ -29,15 +29,16 @@ export const environment = {
     messagingSenderId: "934114327129",
     appId: "1:934114327129:web:4365a8e6388fb470db4f48"
   },
-  firebaseConfigThanhNHM : {
-    apiKey: "AIzaSyDhUmxUXDJa1JWBBF7MIBb-Mx8g5i08nUY",
-    authDomain: "bezkoder-firebase-8a2d9.firebaseapp.com",
-    databaseURL: "https://bezkoder-firebase-8a2d9-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "bezkoder-firebase-8a2d9",
-    storageBucket: "bezkoder-firebase-8a2d9.appspot.com",
-    messagingSenderId: "1065103956130",
-    appId: "1:1065103956130:web:02a9d5fe658b0ab2491ffb"
-  }
+
+  // firebaseConfigThanhNHM : {
+  //   apiKey: "AIzaSyDhUmxUXDJa1JWBBF7MIBb-Mx8g5i08nUY",
+  //   authDomain: "bezkoder-firebase-8a2d9.firebaseapp.com",
+  //   databaseURL: "https://bezkoder-firebase-8a2d9-default-rtdb.asia-southeast1.firebasedatabase.app",
+  //   projectId: "bezkoder-firebase-8a2d9",
+  //   storageBucket: "bezkoder-firebase-8a2d9.appspot.com",
+  //   messagingSenderId: "1065103956130",
+  //   appId: "1:1065103956130:web:02a9d5fe658b0ab2491ffb"
+  // }
 };
 
 
