@@ -1,24 +1,23 @@
-import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {map} from "rxjs/operators";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Chat} from "../../interface/chat";
 import {ChatService} from "../../services/chat.service";
-import {map} from "rxjs/operators";
-import {Title} from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-message-page',
+  selector: 'app-chat',
   templateUrl: './message-page.component.html',
   styleUrls: ['./message-page.component.css']
 })
 export class MessagePageComponent implements OnInit {
 
-  @ViewChild('scrollMe') private myScrollContainer: ElementRef | any;
-
   listContentMessage: Chat[] = [];
   formGroup!: FormGroup;
+  idCustomer!: string;
   booleanCustomer!: boolean;
   widthClassContent!: any;
   idEmployee!: string;
+  idEmployeeChatWith!: string;
   tmpListIdUser: any;
   showNotification!: boolean;
   messageUnseenArr: any[] = [];
@@ -28,14 +27,12 @@ export class MessagePageComponent implements OnInit {
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    private chatService: ChatService,
-    private title: Title
+    private chatService: ChatService
   ) { }
 
   ngOnInit(): void {
-    this.title.setTitle("nhắn tin");
     this.tmpListIdUser = ['NV-0001', 'NV-0002', 'NV-0003', "NV-0004"];
-    this.idEmployee = "NV-0003";
+    this.idEmployee = "NV-0001";
 
     this.formGroup = this.formBuilder.group({
       sender: this.idEmployee,
@@ -60,11 +57,13 @@ export class MessagePageComponent implements OnInit {
         this.messageUnseenArr = [];
         for (let i = 0; i < data.length; i++){
           let messageLatest: any = Object.values(data[i])[Object.keys(data[i]).length-1];
+          console.log(messageLatest);
           if (messageLatest.receiver == this.idEmployee){
             if (messageLatest.status != "seen"){
               this.objForUpdateMessageLatest.push({id: data[i].key, key: Object.keys(data[i])[Object.keys(data[i]).length-1], status: "seen"});
               this.showNotification = true;
-              this.messageUnseenArr.push(Object.values(data[i])[1]);
+              this.messageUnseenArr.push(messageLatest);
+              console.log(this.messageUnseenArr);
             }else {
               this.objForUpdateMessageLatest.filter(
                 (obj) => {
@@ -119,6 +118,7 @@ export class MessagePageComponent implements OnInit {
   }
 
   checkUnseen(item: any) {
+    console.log(this.messageUnseenArr);
     if (this.messageUnseenArr.length > 0){
       for (let i = 0; i < this.messageUnseenArr.length; i++){
         if (this.messageUnseenArr[i].sender == item && this.messageUnseenArr[i].receiver == this.idEmployee){
@@ -166,3 +166,4 @@ export class MessagePageComponent implements OnInit {
     }
   }
 }
+

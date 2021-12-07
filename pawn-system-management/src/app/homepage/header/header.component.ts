@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.idEmployee = "NV-0003";
+    this.idEmployee = "NV-0001";
 
     this.formGroup = this.formBuilder.group({
       sender: this.idEmployee,
