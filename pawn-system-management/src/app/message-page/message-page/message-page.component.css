@@ -165,7 +165,7 @@ body {
 #frame #sidepanel {
   float: left;
   min-height: 90vh;
-  /*max-height: 720px;*/
+  max-height: 90vh;
   min-width: 280px;
   max-width: 340px;
   width: 40%;
@@ -741,8 +741,8 @@ body {
 @media screen and (min-width: 900px) {
   #frame .content {
     width: calc(100% - 340px);
-    min-height: 720px;
-    /*max-height: 720px;*/
+    min-height: 90vh;
+    max-height: 90vh;
   }
 }
 

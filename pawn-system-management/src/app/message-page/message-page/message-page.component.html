@@ -39,20 +39,20 @@
           </div>
           <div id="contacts">
             <ul>
-              <ng-container *ngFor="let item of tmpListIdUser, index as i">
-                <ng-container *ngIf="item != idEmployee">
-                  <li class="contact" (click)="getMessageWithId(item)">
+              <ng-container *ngFor="let item of attachmentEmployeeWithChat, index as i">
+                <ng-container *ngIf="item.obj.employeeId != idEmployee">
+                  <li class="contact" [class.active]="nameReceiver == item.obj.fullName" (click)="getMessageOnePerson(item.obj.employeeId, item.obj.fullName)">
                     <div class="wrap">
                       <span class="contact-status online"></span>
-                      <div *ngIf="checkUnseen(item)" class="d-inline-block notification-sm">
+                      <div *ngIf="checkUnseen(item.obj.employeeId)" class="d-inline-block notification-sm">
                         <i class="far fa-comment-dots text-warning"></i>
                       </div>
                       <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
                       <div class="meta">
                         <p class="name">
-                          {{item}}
+                          {{item.obj.fullName}}
                         </p>
-                        <p class="preview">{{i}} xx</p>
+                        <p class="preview">{{item.contentLatest}}</p>
                       </div>
                     </div>
                   </li>
@@ -64,9 +64,9 @@
         <div class="content" (click)="seen()" [style.width]="booleanCustomer ? widthClassContent : ''">
           <div class="contact-profile">
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-            <p>{{formGroup.get("receiver")?.value}}</p>
+            <p>{{nameReceiver}}</p>
           </div>
-          <div class="messages">
+          <div #scrollMe class="messages">
             <ul>
               <ng-container *ngFor="let item of listContentMessage">
                 <li class="{{item.receiver == idEmployee ? 'sent' : 'replies'}}">
@@ -92,6 +92,10 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngFor="let item of attachmentEmployeeWithChat">
+  <p>{{item.obj.employeeId}}</p>
 </div>
 
 

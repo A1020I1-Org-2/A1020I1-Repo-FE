@@ -1,38 +1,56 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {map} from "rxjs/operators";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Chat} from "../../interface/chat";
 import {ChatService} from "../../services/chat.service";
+import {EmployeeService} from "../../services/employee.service";
+import {IEmployee} from "../../employee/IEmployee";
+import {Title} from "@angular/platform-browser";
+import {Employee} from "../../interface/employee";
 
 @Component({
   selector: 'app-chat',
   templateUrl: './message-page.component.html',
   styleUrls: ['./message-page.component.css']
 })
-export class MessagePageComponent implements OnInit {
+export class MessagePageComponent implements OnInit, AfterViewChecked {
+
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef | any;
 
   listContentMessage: Chat[] = [];
   formGroup!: FormGroup;
-  idCustomer!: string;
   booleanCustomer!: boolean;
   widthClassContent!: any;
   idEmployee!: string;
-  idEmployeeChatWith!: string;
-  tmpListIdUser: any;
   showNotification!: boolean;
-  messageUnseenArr: any[] = [];
+  messageLatestUnseenArr: Chat[] = [];
   objForUpdateMessageLatest: any[] = [];
   idForGetMess! : any;
+  listEmployee!: IEmployee[];
+  nameReceiver!: string;
+  messageLatestArr: Chat[] = [];
+  attachmentEmployeeWithChat: any[] = [];
+
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private employeeService: EmployeeService,
+    private title: Title
   ) { }
 
   ngOnInit(): void {
-    this.tmpListIdUser = ['NV-0001', 'NV-0002', 'NV-0003', "NV-0004"];
     this.idEmployee = "NV-0001";
+    this.employeeService.getAllEmployee().subscribe(
+      (data) => {
+        this.listEmployee = data;
+      },error => {
+
+      },() => {
+        this.getMessageAllUser();
+      }
+    );
 
     this.formGroup = this.formBuilder.group({
       sender: this.idEmployee,
@@ -42,7 +60,16 @@ export class MessagePageComponent implements OnInit {
       status: "pending",
     });
 
-    this.getMessageAllUser();
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 
   private getMessageAllUser(){
@@ -54,16 +81,16 @@ export class MessagePageComponent implements OnInit {
       )
     ).subscribe(
       data => {
-        this.messageUnseenArr = [];
+        this.messageLatestUnseenArr = [];
+        this.messageLatestArr = [];
         for (let i = 0; i < data.length; i++){
           let messageLatest: any = Object.values(data[i])[Object.keys(data[i]).length-1];
-          console.log(messageLatest);
           if (messageLatest.receiver == this.idEmployee){
+            this.messageLatestArr.push(messageLatest);
             if (messageLatest.status != "seen"){
               this.objForUpdateMessageLatest.push({id: data[i].key, key: Object.keys(data[i])[Object.keys(data[i]).length-1], status: "seen"});
               this.showNotification = true;
-              this.messageUnseenArr.push(messageLatest);
-              console.log(this.messageUnseenArr);
+              this.messageLatestUnseenArr.push(messageLatest);
             }else {
               this.objForUpdateMessageLatest.filter(
                 (obj) => {
@@ -74,9 +101,17 @@ export class MessagePageComponent implements OnInit {
                 }
               )
             }
+          }else if (messageLatest.sender == this.idEmployee){
+            this.messageLatestArr.push(messageLatest);
           }
         }
 
+        this.messageLatestArr = this.messageLatestArr.filter((thing, index) => {
+          let _thing = JSON.stringify(thing);
+          return index === this.messageLatestArr.findIndex(obj => {
+            return JSON.stringify(obj) === _thing;
+          });
+        });
         this.objForUpdateMessageLatest = this.objForUpdateMessageLatest.filter((thing, index) => {
           let _thing = JSON.stringify(thing);
           return index === this.objForUpdateMessageLatest.findIndex(obj => {
@@ -84,17 +119,20 @@ export class MessagePageComponent implements OnInit {
           });
         });
 
-        if (this.messageUnseenArr.length > 0){
+        if (this.messageLatestUnseenArr.length > 0){
           this.showNotification = true;
         }else {
           this.showNotification = false;
         }
+
         this.changeDetectorRef.detectChanges();
+        this.AttachmentEmployeeChat();
       }
     );
   }
 
-  getMessageWithId(idPartner: any) {
+  getMessageOnePerson(idPartner: any, name: any) {
+    this.nameReceiver = name;
     this.formGroup.controls.receiver?.setValue(idPartner);
     let tmpIdEmployee = parseInt(this.idEmployee.substring(3));
     let tmpIdPartner = parseInt(idPartner.substring(3));
@@ -118,10 +156,9 @@ export class MessagePageComponent implements OnInit {
   }
 
   checkUnseen(item: any) {
-    console.log(this.messageUnseenArr);
-    if (this.messageUnseenArr.length > 0){
-      for (let i = 0; i < this.messageUnseenArr.length; i++){
-        if (this.messageUnseenArr[i].sender == item && this.messageUnseenArr[i].receiver == this.idEmployee){
+    if (this.messageLatestUnseenArr.length > 0){
+      for (let i = 0; i < this.messageLatestUnseenArr.length; i++){
+        if (this.messageLatestUnseenArr[i].sender == item && this.messageLatestUnseenArr[i].receiver == this.idEmployee){
           return true;
         }
       }
@@ -163,6 +200,31 @@ export class MessagePageComponent implements OnInit {
       };
       this.chatService.create(objChat, this.idForGetMess).then(()=>{});
       this.formGroup.get('content')?.setValue('');
+    }
+  }
+
+  private AttachmentEmployeeChat() {
+    this.attachmentEmployeeWithChat = [];
+    for (let i = 0; i < this.listEmployee.length; i++){
+      if (this.listEmployee[i].employeeId != this.idEmployee){
+        let obj:Employee = this.listEmployee[i];
+        let contentLatest: any = "";
+        let isNUll: boolean = false;
+        for (let j = 0; j < this.messageLatestArr.length; j++){
+          if (this.messageLatestArr[j].sender == this.listEmployee[i].employeeId || this.messageLatestArr[j].receiver == this.listEmployee[i].employeeId){
+            contentLatest = this.messageLatestArr[j].content;
+            this.attachmentEmployeeWithChat.push({obj, contentLatest});
+            isNUll = false;
+            break;
+          }else {
+            isNUll = true;
+          }
+        }
+        if (isNUll){
+          this.attachmentEmployeeWithChat.push({obj, contentLatest});
+          isNUll = false;
+        }
+      }
     }
   }
 }
