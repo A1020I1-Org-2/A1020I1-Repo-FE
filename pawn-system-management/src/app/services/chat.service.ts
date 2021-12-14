@@ -7,7 +7,7 @@ import {Chat} from "../interface/chat";
 })
 export class ChatService {
 
-  private dbUrlChat: string = "/chat-v3";
+  private dbUrlChat: string = "/chat-v4";
   angularFireList: AngularFireList<Chat>;
 
   constructor(
@@ -28,8 +28,8 @@ export class ChatService {
     return this.angularFireDatabase.list(this.dbUrlChat + `/${idCustomer}`).push(chat);
   }
 
-  update(idCustomer: string, key: any, value: any): Promise<void>{
-    return this.angularFireDatabase.list(this.dbUrlChat + `/${idCustomer}`).update(key, value);
+  update(idForUpdate: string, key: any, value: any): Promise<void>{
+    return this.angularFireDatabase.list(this.dbUrlChat + `/${idForUpdate}`).update(key, value);
   }
 
 }

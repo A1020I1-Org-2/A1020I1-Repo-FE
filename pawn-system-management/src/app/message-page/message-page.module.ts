@@ -20,7 +20,7 @@ import {AngularFireModule} from "@angular/fire/compat";
     ReactiveFormsModule,
     HttpClientModule,
     AngularFireDatabaseModule,
-    AngularFireModule.initializeApp(environment.firebaseConfigNhanNH),
+    AngularFireModule.initializeApp(environment.firebaseConfigThanhNHM),
     RouterModule.forRoot([
       {path: "chat", component: MessagePageComponent}
     ])

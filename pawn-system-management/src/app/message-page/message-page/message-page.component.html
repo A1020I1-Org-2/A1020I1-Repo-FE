@@ -1,14 +1,12 @@
-
-
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-12 mt-md-3 mt-sm-3 mb-5">
-      <div id="frame" class="mx-auto mt-md-5 mt-sm-2">
+    <div class="col-md-12">
+      <div id="frame" class="mx-auto">
         <div id="sidepanel" [style.display]="booleanCustomer ? 'none' : ''">
           <div id="profile">
             <div class="wrap">
               <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
-              <p>Mike Ross</p>
+              <p>{{idEmployee}}</p>
               <div id="status-options">
                 <ul>
                   <li id="status-online" class="active"><span class="status-circle"></span>
@@ -41,35 +39,37 @@
           </div>
           <div id="contacts">
             <ul>
-              <ng-container *ngFor="let item of tmpListIdCustomer, index as i">
-                <li class="contact" (click)="getMessageWithId(item)">
-                  <div class="wrap">
-                    <span class="contact-status online"></span>
-                    <div *ngIf="checkUnseen(item)" class="d-inline-block notification-sm">
-                      <i class="far fa-comment-dots text-warning"></i>
+              <ng-container *ngFor="let item of attachmentEmployeeWithChat, index as i">
+                <ng-container *ngIf="item.obj.employeeId != idEmployee">
+                  <li class="contact" [class.active]="nameReceiver == item.obj.fullName" (click)="getMessageOnePerson(item.obj.employeeId, item.obj.fullName)">
+                    <div class="wrap">
+                      <span class="contact-status online"></span>
+                      <div *ngIf="checkUnseen(item.obj.employeeId)" class="d-inline-block notification-sm">
+                        <i class="far fa-comment-dots text-warning"></i>
+                      </div>
+                      <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
+                      <div class="meta">
+                        <p class="name">
+                          {{item.obj.fullName}}
+                        </p>
+                        <p class="preview">{{item.contentLatest}}</p>
+                      </div>
                     </div>
-                    <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" />
-                    <div class="meta">
-                      <p class="name">
-                        {{item}}
-                      </p>
-                      <p class="preview">{{i}} xx</p>
-                    </div>
-                  </div>
-                </li>
+                  </li>
+                </ng-container>
               </ng-container>
             </ul>
           </div>
         </div>
-        <div class="content" [style.width]="booleanCustomer ? widthClassContent : ''" (click)="seen()">
+        <div class="content" (click)="seen()" [style.width]="booleanCustomer ? widthClassContent : ''">
           <div class="contact-profile">
             <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
-            <p>Harvey Specter</p>
+            <p>{{nameReceiver}}</p>
           </div>
           <div #scrollMe class="messages">
             <ul>
               <ng-container *ngFor="let item of listContentMessage">
-                <li class="{{item.receiver == tmpIdUser ? 'sent' : 'replies'}}">
+                <li class="{{item.receiver == idEmployee ? 'sent' : 'replies'}}">
                   <img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />
                   <p>{{item.content}}
                   </p>
@@ -83,7 +83,7 @@
                 <input id="idInputContent" type="text" placeholder="Write your message..."
                        formControlName="content"/>
                 <button class="submit" (click)="submitContent()">
-                  <i class="fab fa-telegram-plane"></i>
+                  <i class="fa fa-paper-plane" aria-hidden="true"></i>
                 </button>
               </div>
             </form>
@@ -92,6 +92,10 @@
       </div>
     </div>
   </div>
+</div>
+
+<div *ngFor="let item of attachmentEmployeeWithChat">
+  <p>{{item.obj.employeeId}}</p>
 </div>
 
 

@@ -54,4 +54,10 @@ export class EmployeeService {
   searchEmployee(searchValue:string,page:number):Observable<any>{
     return this.http.get<any>(this.URL+"searchEmployee?searchValue="+searchValue+"&page="+page);
   }
+
+  // ThanhNHM
+  getAllEmployee(): Observable<IEmployee[]>{
+    return this.http.get<IEmployee[]>(this.URL+"/get-all-employee");
+  }
+  // ThanhNHM
 }

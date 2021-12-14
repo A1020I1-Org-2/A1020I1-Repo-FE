@@ -144,12 +144,12 @@ body {
 }
 
 #frame {
-  width: 95%;
-  min-width: 360px;
-  max-width: 1000px;
+  /*width: 95%;*/
+  /*min-width: 360px;*/
+  /*max-width: 1000px;*/
   height: 100%;
-  min-height: 500px;
-  max-height: 720px;
+  /*min-height: 500px;*/
+  /*max-height: 720px;*/
   background: #E6EAEA;
 }
 
@@ -164,8 +164,8 @@ body {
 
 #frame #sidepanel {
   float: left;
-  min-height: 720px;
-  max-height: 720px;
+  min-height: 90vh;
+  max-height: 90vh;
   min-width: 280px;
   max-width: 340px;
   width: 40%;
@@ -741,8 +741,8 @@ body {
 @media screen and (min-width: 900px) {
   #frame .content {
     width: calc(100% - 340px);
-    min-height: 720px;
-    max-height: 720px;
+    min-height: 90vh;
+    max-height: 90vh;
   }
 }
 
@@ -791,8 +791,7 @@ body {
 
 @media screen and (max-width: 735px) {
   #frame .content .messages {
-    max-height: calc(100% - 125px);
-    min-height: calc(100% - 125px);
+    max-height: calc(100% - 105px);
   }
 }
 
