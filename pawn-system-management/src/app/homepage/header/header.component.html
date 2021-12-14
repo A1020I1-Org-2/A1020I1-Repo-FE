@@ -16,35 +16,60 @@
             <div class="col-2">
               <a href="#" class="text-light">Liên hệ</a>
             </div>
-            <div class="col-2">
-              <a href="#" class=""><i class="fa fa-facebook-square text-light"></i></a>
-              <a href="#" class=""><i class="fa fa-youtube text-light"></i></a>
-              <a href="#" class=""><i class="fa fa-instagram text-light"></i></a>
+            <div class="col">
+              <a href="#" class="ms-4"><i class="fab fa-facebook-square text-light"></i></a>
+              <a href="#" class="ms-4"><i class="fab fa-youtube text-light"></i></a>
+              <a href="#" class="ms-4"><i class="fab fa-instagram text-light"></i></a>
             </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <nav class="navbar navbar-expand-lg shadow-sm col-12" style="background-color: #272882">
-          <div class="container">
-            <a routerLink="/" class="navbar-brand w-25">
-              <img src="../../../assets/img/Codegym%20X.png" alt="" class="d-inline-block align-middle mr-2" style="width: 50%; height: 50%">
+        <nav class="navbar navbar-expand-lg navbar-light pt-0 pb-0" style="background-color: #272882">
+          <div class="container-fluid">
+            <a class="navbar-brand" routerLink="/home">
+              <img src="../../../assets/img/Codegym%20X.png" alt="" >
             </a>
-            <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
-            <div id="navbarSupportedContent" class="collapse navbar-collapse text-light">
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a routerLink="/create-pawn" class="nav-link text-light"><strong>Cầm đồ</strong></a></li>
-                <li class="nav-item"><a routerLink="/create-liquidation-contract" class="nav-link text-light"><strong>Thanh lý</strong></a></li>
-                <li class="nav-item"><a routerLink="/return-pawn" class="nav-link text-light"><strong>Trả đồ</strong></a></li>
-                <li class="nav-item"><a routerLink="/show-finance" class="nav-link text-light"><strong>Thông tin cửa hàng</strong></a></li>
-                <li class="nav-item"><a routerLink="/customer/list-customer" class="nav-link text-light"><strong>Quản lý khách hàng</strong></a></li>
-                <li class="nav-item"><a routerLink="/view-employee" class="nav-link text-light"><strong>Thông tin cá nhân</strong></a></li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+              <ul class="navbar-nav  mb-2 mb-lg-0 me-0 ms-auto">
+                <li class="nav-item">
+                  <a routerLink="/create-pawn" class="nav-link text-light"><strong>Cầm đồ</strong></a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/create-liquidation-contract" class="nav-link text-light"><strong>Thanh lý</strong></a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/return-pawn" class="nav-link text-light"><strong>Trả đồ</strong></a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/show-finance" class="nav-link text-light"><strong>Thông tin cửa hàng</strong></a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/customer/list-customer" class="nav-link text-light"><strong>Quản lý KH</strong></a>
+                </li>
+                <li class="nav-item" *ngIf="role === 'ROLE_ADMIN'">
+                  <a routerLink="/customer/list-customer" class="nav-link text-light"><strong>Quản lý NV</strong></a>
+                </li>
+                <li class="nav-item">
+                  <a routerLink="/view-employee" class="nav-link text-light"><strong>Thông tin cá nhân</strong></a>
+                </li>
                 <li class="nav-item">
                   <a routerLink="/chat" class="nav-link text-light">
-                    <strong>
-                      Nhắn tin <span *ngIf="showNotification" id="notification"></span>
-                    </strong>
+                    <strong>Nhắn tin <span *ngIf="showNotification" id="notification"></span></strong>
                   </a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link text-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                     aria-expanded="false">
+                    <strong>{{username}}</strong>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><button class="dropdown-item" (click)="logout()">Đăng xuất</button></li>
+                    <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+                  </ul>
                 </li>
               </ul>
             </div>

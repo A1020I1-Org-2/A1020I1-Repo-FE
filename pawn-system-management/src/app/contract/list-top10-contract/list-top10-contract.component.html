@@ -42,12 +42,12 @@
             <td class="text-center ">{{listContract.customer.name}}</td>
             <td class="text-center ">{{listContract.startDate | date: 'dd/MM/yyyy'}}</td>
             <td class="text-center ">{{listContract.typeContract.name}}</td>
-            <td *ngIf="listContract.statusContract.statusContractId === 1"
+            <td *ngIf="listContract.statusContract.statusContractId === 3"
                 [ngStyle]="{'color': 'green', 'font-size': '15px', 'font-weight': 'bold'}" class="text-center ">Thanh Lý</td>
-            <td *ngIf="listContract.statusContract.statusContractId === 2"
+            <td *ngIf="listContract.statusContract.statusContractId === 1"
                 [ngStyle]="{'color': 'gray', 'font-size': '15px', 'font-weight': 'bold'}" class="text-center ">Đang Cầm</td>
 
-            <td *ngIf="listContract.statusContract.statusContractId === 3"
+            <td *ngIf="listContract.statusContract.statusContractId === 2"
                 [ngStyle]="{'color': 'red', 'font-size': '15px', 'font-weight': 'bold'}" class="text-center ">Quá Hạn</td>
             <td>
               <button type="button" class="  border-0  btn btn-outline-warning " data-bs-toggle="modal"

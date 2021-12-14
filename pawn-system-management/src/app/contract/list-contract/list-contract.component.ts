@@ -135,6 +135,11 @@ export class ListContractComponent implements OnInit {
         this.searchContract.value.statusContract, this.searchContract.value.typeContract, this.searchContract.get('dateGroup.startDateFrom')?.value,
         this.searchContract.get('dateGroup.endDateTo')?.value).subscribe((data)=>{
         this.listContract = data.content;
+        this.pageNow = data.number;
+        this.totalPage = [];
+        for(let i=0; i<data.totalPages; i++){
+          this.totalPage.push(0)
+        }
         console.log(data)
       }, () =>{
         this.toast.showAlertError("Không tìm thấy kết quả như yêu cầu");
@@ -155,7 +160,7 @@ export class ListContractComponent implements OnInit {
   openDialogEdit(contractId: string) {
     this.contractService.getInfo(contractId).subscribe((data)=>{
       const  dialog = this.dialog.open(EditListTop10Component,{
-        width: '1000px',
+        width: '60%',
         data: data,
         disableClose: true,
         autoFocus: false

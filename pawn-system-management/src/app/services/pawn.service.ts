@@ -27,9 +27,11 @@ export class PawnService {
   getPawnById(id: String): Observable<any>{
     return this.http.get<any>(this.API+'/pawnView/' + id);
   }
+
   getSearchPawn(search: string, typeSearch: string,page: number): Observable<any> {
     return this.http.get<any>(this.API + '/pawnSearch?search=' + search +'&typeSearch=' +typeSearch  +'&page=' + page);
   }
+
   searchPawn(search: string, typeSearch: string): Observable<any> {
     return this.http.get<any>(this.API + '/pawnSearch?search=' + search +'&typeSearch=' +typeSearch );
   }

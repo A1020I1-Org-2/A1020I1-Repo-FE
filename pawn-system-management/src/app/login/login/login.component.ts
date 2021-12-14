@@ -78,8 +78,11 @@ export class LoginComponent implements OnInit {
         this.isOpenToast = true;
       }else{
         this.isOpenToast = false;
+        this.loginService.username = account.userName;
+        this.loginService.role = account.role;
         this.loginService.saveUserName(account.userName);
         this.loginService.saveToken(account.token);
+        this.loginService.saveRole(account.role);
         this.checkDateChangePassword(account.lastUpdate);
         if (this.formLogin.controls.rememberMe.value){
           this.loginService.setRememberMe(this.login.userName.value, this.login.password.value, 5);
@@ -124,7 +127,7 @@ export class LoginComponent implements OnInit {
         }
       })
     }else{
-      this.showMessage('Đăng nhập thành công', 2);
+      this.router.navigateByUrl("/home").then();
     }
   }
 }

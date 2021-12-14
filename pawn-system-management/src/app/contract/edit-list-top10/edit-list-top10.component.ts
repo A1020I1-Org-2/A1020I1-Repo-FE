@@ -52,8 +52,12 @@ export class EditListTop10Component implements OnInit {
   typeContract: any;
   contractEdit !: ContractEdit;
 
-  constructor(private fb: FormBuilder, private router: Router, private contractService: ContractService, private dialog: MatDialogRef<EditListTop10Component>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService) {
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private contractService: ContractService,
+              private dialog: MatDialogRef<EditListTop10Component>,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private alertService: AlertService) {
   }
 
   ngOnInit(): void {
@@ -66,8 +70,6 @@ export class EditListTop10Component implements OnInit {
     this.contractService.getListTypeContract().subscribe((data) => {
       this.typeContract = data;
     });
-
-
 
     this.editContract = new FormGroup({
       contractId: new FormControl(''),
@@ -98,7 +100,6 @@ export class EditListTop10Component implements OnInit {
         typeContract: data.typeContract.typeContractId,
         statusContract: data.statusContract.statusContractId
       });
-      console.log(new Date(this.editContract.value.startDate).toISOString())
     });
   }
 

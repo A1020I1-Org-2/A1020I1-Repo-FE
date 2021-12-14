@@ -90,7 +90,7 @@ export class ListTop10ContractComponent implements OnInit {
   openDialogEdit(contractId: string) {
     this.contractService.getInfo(contractId).subscribe((data)=>{
       const  dialog = this.dialog.open(EditListTop10Component,{
-        width: '1000px',
+        width: '60%',
         data: data,
         disableClose: true,
         autoFocus: false

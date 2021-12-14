@@ -22,7 +22,7 @@ import {AngularFireStorage} from "@angular/fire/compat/storage";
 })
 export class ContractService {
 
-  contract!: Contract[];
+  contract!: Contract;
 
   private API = "http://localhost:8080/contract";
   private API_SEARCH = "http://localhost:8080/contract/search";
@@ -38,7 +38,7 @@ export class ContractService {
   private APISearchEmployee: string = "http://localhost:8080/employee/searchEmployee";
   private APIProductList: string = "http://localhost:8080/contract/getListTypeProduct";
   private basePath = '/imgPawn';
-  private readonly API_TYPE_PRODUCT = "http://localhost:8080/typeProduct/listTypeProduct"
+  private readonly API_TYPE_PRODUCT = "http://localhost:8080/typeProduct/listTypeProduct";
 
   constructor(private httpClient: HttpClient,private db: AngularFireDatabase, private storage: AngularFireStorage) {
   }
@@ -121,7 +121,12 @@ export class ContractService {
     return this.httpClient.get<any>(this.APIGetEmployeeList)
   }
 
-  searchLiquidationProduct(productName: string, receiveMoney: number, name: string): Observable<any> {
+  searchLiquidationProduct(productName: string, receiveMoney: string, name: string): Observable<any> {
+    if(String(receiveMoney).match(/^[\d]*$/g) === null){
+      receiveMoney = '0';
+    }
+    // console.log(String(receiveMoney).match(/^[\d]*$/g));
+    // console.log(name);
     return this.httpClient.get<any>(this.APISearchLiquidationProduct +
       '?product_name=' + productName + '&receive_money=' + receiveMoney + '&name=' + name);
   }

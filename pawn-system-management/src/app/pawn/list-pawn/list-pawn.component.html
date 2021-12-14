@@ -1,4 +1,4 @@
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 pb-5">
   <div class="row px-0 mx-0" style="height: 80%;">
     <div class="col-lg-2 col-xl-2">
       <div class="list-group border border-primary rounded h-100">
@@ -43,16 +43,22 @@
           <tr *ngFor="let p of pawnList" >
             <td>{{p.productName}}</td>
             <td>{{p.typeProduct.name}}</td>
-            <td *ngIf="p.statusContract.statusContractId == 1"
-                [ngStyle]="{'color': 'green', 'font-size': '15px', 'font-weight': 'bold'}">Thanh Lý</td>
-            <td *ngIf="p.statusContract.statusContractId == 2"
-                [ngStyle]="{'color': 'yellow', 'font-size': '15px', 'font-weight': 'bold'}">Đang Cầm</td>
             <td *ngIf="p.statusContract.statusContractId == 3"
+                [ngStyle]="{'color': 'green', 'font-size': '15px', 'font-weight': 'bold'}">Thanh Lý</td>
+            <td *ngIf="p.statusContract.statusContractId == 1"
+                [ngStyle]="{'color': 'orange', 'font-size': '15px', 'font-weight': 'bold'}">Đang Cầm</td>
+            <td *ngIf="p.statusContract.statusContractId == 2"
                 [ngStyle]="{'color': 'red', 'font-size': '15px', 'font-weight': 'bold'}">Quá Hạn</td>
             <td class="text-danger">{{p.loanMoney | currency: "VND"}}</td>
             <td>
-              <button class="btn btn-outline-warning border-0" (click)="temp(p.contractId)" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-eye"></i></button> &nbsp;
-              <a routerLink="/create-liquidation-contract" class="btn btn-outline-danger border-0"><i class="fas fa-shipping-fast"></i></a>
+              <button class="btn btn-outline-warning border-0" (click)="temp(p.contractId)"
+                      data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa fa-eye"></i>
+              </button> &nbsp;
+              <button class="btn btn-outline-danger border-0" (click)="createLiquidation(p.contractId)"
+                      [disabled]="p.statusContract.statusContractId != 2">
+                <i class="fas fa-shipping-fast"></i>
+              </button>
             </td>
           </tr>
           </tbody>
@@ -71,9 +77,18 @@
                 <span aria-hidden="true">&lsaquo;</span>
               </button>
             </li>
-            <li class="page-item" *ngFor="let item of totalPage; let i = index" [attr.data-index]="i" [ngClass]="i==pageNow? 'active':''">
-              <button class="page-link" (click)="getPage(i)">{{i+1}}</button>
+            <li class="page-item"  *ngIf="pageNow-1>=0">
+              <button class="page-link" (click)="getPage(pageNow - 1)">{{pageNow}}</button>
             </li>
+            <li class="page-item active"  >
+              <button class="page-link">{{pageNow+1}}</button>
+            </li>
+            <li class="page-item "  *ngIf="pageNow < totalPage.length-1">
+              <button class="page-link" (click)="getPage(pageNow + 1)">{{pageNow+2}}</button>
+            </li>
+<!--            <li class="page-item" *ngFor="let item of totalPage; let i = index" [attr.data-index]="i" [ngClass]="i==pageNow? 'active':''">-->
+<!--              <button class="page-link" (click)="getPage(i)">{{i+1}}</button>-->
+<!--            </li>-->
             <li class="page-item" [ngClass]="pageNow == totalPage.length-1 ? 'disabled' : ''">
               <button class="page-link" aria-label="Next" (click)="getPage(pageNow+1)">
                 <span aria-hidden="true">&rsaquo;</span>

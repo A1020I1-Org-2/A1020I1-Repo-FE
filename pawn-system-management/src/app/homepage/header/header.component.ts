@@ -3,6 +3,8 @@ import {Chat} from "../../interface/chat";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ChatService} from "../../services/chat.service";
 import {map} from "rxjs/operators";
+import {LoginService} from "../../services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -21,13 +23,28 @@ export class HeaderComponent implements OnInit {
   showNotification!: boolean;
   messageUnseenArr: any[] = [];
   objForUpdateMessageLatest: any[] = [];
+  username: string = '';
+  role: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    if(this.loginService.username !== undefined){
+      this.username = this.loginService.username;
+      console.log(":))")
+    }else{
+      this.username = localStorage.getItem("username") + '';
+    }
+    if(this.loginService.role !== undefined){
+      this.role = this.loginService.role;
+    }else{
+      this.role = localStorage.getItem("role") + '';
+    }
 
     this.tmpListIdCustomer = ['KH-0002', 'KH-0001', 'KH-0003', "KH-0004"];
     this.tmpIdUser = "NV-0003";
@@ -139,5 +156,8 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  logout() {
+    this.router.navigateByUrl("/login").then();
+  }
 }
 

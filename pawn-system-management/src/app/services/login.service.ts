@@ -12,6 +12,8 @@ export class LoginService {
   FIRST_USERNAME: string = 'CTIwGGVDooOmNfUpvsFM';
   FIRST_PASSWORD: string = 'SxbaNxSguVlzGbNlsJep';
   message: string = '';
+  username: string | undefined;
+  role: string | undefined;
 
   constructor(private http: HttpClient) { }
 
@@ -57,6 +59,10 @@ export class LoginService {
 
   getMessage(): string{
     return this.message;
+  }
+
+  saveRole(role: string){
+    localStorage.setItem('role', role);
   }
 
   setRememberMe(username: string, password: string, days: number): void{

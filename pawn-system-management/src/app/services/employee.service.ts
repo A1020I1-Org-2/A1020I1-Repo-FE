@@ -52,6 +52,6 @@ export class EmployeeService {
   }
 
   searchEmployee(searchValue:string,page:number):Observable<any>{
-    return this.http.get<any>(this.URL+"/searchEmployee?searchValue="+searchValue+"&page="+page);
+    return this.http.get<any>(this.URL+"searchEmployee?searchValue="+searchValue+"&page="+page);
   }
 }

@@ -3,7 +3,7 @@ import {Employee} from 'src/app/interface/employee';
 import {CustomerService} from 'src/app/services/customer.service';
 import {EmployeeService} from 'src/app/services/employee.service';
 import {Customer} from "../../interface/customer";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {FileUpload} from "../../interface/FileUpload";
 import {ContractService} from "../../services/contract.service";
 import {validSelectValidators} from 'src/app/share/valid-select.validators';
@@ -18,6 +18,13 @@ import {AlertService} from "../../services/alert.service";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateCustomerComponent} from "../../customer/create-customer/create-customer.component";
 import {Title} from "@angular/platform-browser";
+
+function checkDate(control: AbstractControl): ValidationErrors | null {
+  const now = new Date();
+  const endDate = new Date(control.value);
+  let between = (endDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24);
+  return between <= 0 ? {checkDate: true} : null;
+}
 
 @Component({
   selector: 'app-create-pawn-contract',
@@ -80,7 +87,7 @@ export class CreatePawnContractComponent implements OnInit {
         loanMoney: new FormControl(0, [Validators.required, Validators.min(500000)]),
         interestMoney: new FormControl(0),
         startDate: new FormControl(this.dateCurrent, [Validators.required]),
-        endDate: new FormControl('', [Validators.required]),
+        endDate: new FormControl('', [Validators.required, checkDate]),
         imgProduct: new FormControl('', [Validators.required])
       }, {validators: [validDateCheckoutValidators('startDate', 'endDate')]}
     );
@@ -109,6 +116,22 @@ export class CreatePawnContractComponent implements OnInit {
       this.searchCustomer(this.searchValueCus, (this.pageCurrentCus - 1));
     } else {
       this.getListCustomer((this.pageCurrentCus - 1));
+    }
+  }
+
+  firstPage(){
+    if (this.searchValueCus != "") {
+      this.searchCustomer(this.searchValueCus, 0);
+    } else {
+      this.getListCustomer(0);
+    }
+  }
+
+  lastPage(){
+    if (this.searchValueCus != "") {
+      this.searchCustomer(this.searchValueCus, this.totalPageCus-1);
+    } else {
+      this.getListCustomer(this.totalPageCus-1);
     }
   }
 
@@ -151,24 +174,41 @@ export class CreatePawnContractComponent implements OnInit {
       data => {
         this.employeeList = data.content;
         this.totalPageEmployee = data.totalPages;
-        this.totalPageEmployee = data.pageable.pageNumber;
+        this.pageCurrentEmployee = data.pageable.pageNumber;
       }
     );
   }
 
   nextPageEmployee() {
     if (this.searchValueCus != "") {
-      this.searchEmployee(this.searchValueCus, (this.pageCurrentCus + 1));
+      this.searchEmployee(this.searchValueCus, (this.pageCurrentEmployee + 1));
     } else {
-      this.getListEmployee((this.pageCurrentCus + 1));
+      this.getListEmployee((this.pageCurrentEmployee + 1));
     }
   }
 
   prevPageEmployee() {
     if (this.searchValueCus != "") {
-      this.searchEmployee(this.searchValueCus, (this.pageCurrentCus - 1));
+      this.searchEmployee(this.searchValueCus, (this.pageCurrentEmployee - 1));
     } else {
-      this.getListEmployee((this.pageCurrentCus - 1));
+      this.getListEmployee((this.pageCurrentEmployee - 1));
+    }
+  }
+
+  firstPageEmployee(){
+    if (this.searchValueCus != "") {
+      this.searchEmployee(this.searchValueCus, 0);
+    } else {
+      this.getListEmployee(0);
+    }
+  }
+
+
+  lastPageEmployee(){
+    if (this.searchValueCus != "") {
+      this.searchEmployee(this.searchValueCus, this.totalPageEmployee-1);
+    } else {
+      this.getListEmployee(this.totalPageEmployee-1);
     }
   }
 
@@ -183,6 +223,7 @@ export class CreatePawnContractComponent implements OnInit {
 
   selectFile(event: any): void {
     this.selectedFiles = event.target.files;
+    this.upload();
   }
 
   changeValueLoan() {
@@ -266,11 +307,14 @@ export class CreatePawnContractComponent implements OnInit {
 
   eventSearchCustomer(event: any) {
     this.searchValueCus = event.target.value;
+  }
+
+  search(){
     this.customerService.searchCustomer1(this.searchValueCus, 0).subscribe(data => {
       this.customerList = data.content;
       this.totalPageCus = data.totalPages;
       this.pageCurrentCus = data.pageable.pageNumber;
-      console.log(this.customerList);
+      // console.log(this.customerList);
     });
   }
 
@@ -284,6 +328,9 @@ export class CreatePawnContractComponent implements OnInit {
 
   eventSearchEmployee(event: any) {
     this.searchValueEmployee = event.target.value;
+  }
+
+  searchEmpl(){
     this.employeeService.searchEmployee(this.searchValueEmployee, 0).subscribe(data => {
       this.employeeList = data.content;
       this.totalPageEmployee = data.totalPages;

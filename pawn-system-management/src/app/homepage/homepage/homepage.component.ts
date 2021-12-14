@@ -4,6 +4,7 @@ import {PawnType} from "./PawnType";
 import {RegisterService} from "../register.service";
 import {Register} from "../Register";
 import {Title} from "@angular/platform-browser";
+import {AlertService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-homepage',
@@ -13,10 +14,10 @@ import {Title} from "@angular/platform-browser";
 export class HomepageComponent implements OnInit {
   form!: FormGroup;
   pawnTypes!: PawnType[];
-  createSuccess: boolean = false;
 
   constructor(public registerService: RegisterService,
-              private titleService: Title) { }
+              private titleService: Title,
+              private alert: AlertService) { }
 
   ngOnInit(): void {
     this.titleService.setTitle("Trang chủ");
@@ -36,7 +37,7 @@ export class HomepageComponent implements OnInit {
   getAllType() {
     this.registerService.getAllType().subscribe(res => {
       this.pawnTypes = res;
-      this.form.controls.pawnTypeId.setValue(res[0].pawnTypeId)
+      // this.form.controls.pawnTypeId.setValue(res[0].pawnTypeId)
     });
   }
 
@@ -48,18 +49,12 @@ export class HomepageComponent implements OnInit {
     return c1 && c2 ? c1.registerId === c2.registerId : c1 === c2;
   }
 
-  fadeOutLink() {
-    setTimeout( () => {
-      this.createSuccess = false;
-    }, 2000);
-  }
-
-
   submit(){
     if (this.form.valid){
       this.registerService.create(this.form.value).subscribe(res => {
-        this.createSuccess = true;
-        this.fadeOutLink();
+        this.alert.showAlertSuccess("Đăng kí thành công");
+      }, error => {
+        this.alert.showMessageErrors("Đăng kí không thành công");
       })
     }
   }

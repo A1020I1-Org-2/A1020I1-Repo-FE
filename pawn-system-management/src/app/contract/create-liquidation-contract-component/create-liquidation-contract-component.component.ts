@@ -93,6 +93,9 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       receiveMoney: new FormControl(0),
       typeProduct: new FormControl('')
     });
+    if(this.contractService.contract !== undefined){
+      this.chooseProduct(this.contractService.contract.contractId);
+    }
   };
 
   createLiquidationContract() {
@@ -130,7 +133,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
 
   getLiquidationProductList() {
     this.contractService.getLiquidationProductList().subscribe(data => {
-      console.log(data);
+      // console.log(data);
       this.liquidationProductList = data.content;
       this.totalPagination = data.totalPages;
     })
@@ -200,6 +203,8 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       (data) => {
         this.isFoundPd = true;
         this.liquidationProductList = data.content;
+        this.indexPagination = data.pageable.pageNumber + 1;
+        this.totalPagination = data.totalPages;
       }, error => {
         this.isFoundPd = false;
       }
@@ -227,6 +232,8 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
     this.contractService.searchCustomer(this.searchCus).subscribe(data => {
         this.isFoundCs = true;
         this.customerList = data.content;
+        this.indexPagination = data.pageable.pageNumber + 1;
+        this.totalPagination = data.totalPages;
       },
       () => {
         this.isFoundCs = false;
@@ -237,6 +244,8 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
     this.contractService.searchEmployee(this.searchEm).subscribe(data => {
         this.isFoundEm = true;
         this.employeeList = data.content;
+        this.indexPagination = data.pageable.pageNumber + 1;
+        this.totalPagination = data.totalPages;
       },
       error => {
         this.isFoundEm = false;
@@ -244,17 +253,26 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   }
 
   chooseProduct(contractId: string) {
-    for (let i = 0; i < this.liquidationProductList.length; i++) {
-      if (this.liquidationProductList[i].contractId === contractId) {
-        this.formCreate.controls.contractId.setValue(contractId);
-        this.formCreate.controls.productName.setValue(this.liquidationProductList[i].productName);
-        this.formCreate.controls.receiveMoney.setValue(((this.liquidationProductList[i].loanMoney +
-          this.liquidationProductList[i].interestMoney) * 0.5));
-        this.formCreate.controls.quantity.setValue(this.liquidationProductList[i].quantity);
-        this.formCreate.controls.typeProduct.setValue(this.liquidationProductList[i].typeProduct);
-        this.typeProductName = this.liquidationProductList[i].typeProduct.name;
-      }
-    }
+    this.contractService.getInfo(contractId).subscribe(contract => {
+      this.formCreate.controls.contractId.setValue(contractId);
+      this.formCreate.controls.productName.setValue(contract.productName);
+      this.formCreate.controls.receiveMoney.setValue(((contract.loanMoney +
+        contract.interestMoney) * 1.5));
+      this.formCreate.controls.quantity.setValue(contract.quantity);
+      this.formCreate.controls.typeProduct.setValue(contract.typeProduct);
+      this.typeProductName = contract.typeProduct.name;
+    });
+    // for (let i = 0; i < this.liquidationProductList.length; i++) {
+    //   if (this.liquidationProductList[i].contractId === contractId) {
+    //     this.formCreate.controls.contractId.setValue(contractId);
+    //     this.formCreate.controls.productName.setValue(this.liquidationProductList[i].productName);
+    //     this.formCreate.controls.receiveMoney.setValue(((this.liquidationProductList[i].loanMoney +
+    //       this.liquidationProductList[i].interestMoney) * 1.5));
+    //     this.formCreate.controls.quantity.setValue(this.liquidationProductList[i].quantity);
+    //     this.formCreate.controls.typeProduct.setValue(this.liquidationProductList[i].typeProduct);
+    //     this.typeProductName = this.liquidationProductList[i].typeProduct.name;
+    //   }
+    // }
   }
 
   chooseCustomer(customerId: string) {
@@ -292,16 +310,19 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   }
 
   resetModalEM() {
+    this.indexPagination = 1;
     this.searchEm = '';
     this.searchEmployee();
   }
 
   resetModalCS() {
+    this.indexPagination = 1;
     this.searchCus = '';
     this.searchCustomer();
   }
 
   resetModalPD() {
+    this.indexPagination = 1;
     this.searchProduct.controls.productName.setValue("");
     this.searchProduct.controls.receiveMoney.setValue(0);
     this.searchProduct.controls.typeProduct.setValue("");

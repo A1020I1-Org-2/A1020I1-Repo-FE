@@ -4,16 +4,13 @@
       <h2 mat-dialog-title class="text-center mt-3" style="color: darkblue; font-size: 35px">CHỈNH SỬA HỢP ĐỒNG</h2>
 
       <div class="row mt-3">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
-
+        <div class="col-lg col-sm">
           <form class="row g-3 was-validated" [formGroup]="editContract" (ngSubmit)="onEditContract()">
             <mat-dialog-content>
               <div class="row">
                 <div class="mb-3 mt-3">
                   <label for="name" class="form-label">Mã Hợp Đồng: </label>
-                  <input type="text" class="form-control" id="name" formControlName="contractId"
-                         placeholder="Nhập hợp đồng"
+                  <input type="text" class="form-control" id="name" formControlName="contractId" placeholder="Nhập hợp đồng"
                          readonly>
                 </div>
                 <div class="mb-3">
@@ -23,34 +20,34 @@
                   <input type="text" class="form-control" id="nameCustomer" formControlName="customer"
                          placeholder="Nhập tên khách hàng" maxlength=255
                          required>
-                  <div class="alert alert-danger" *ngIf="editContract.get('customer')?.invalid && editContract.get('customer')?.touched &&
-           editContract.get('customer')?.errors?.required">Tên khách hàng không được để trống.
+                  <div class="alert alert-danger" *ngIf="editContract.get('customer')?.invalid &&
+                  editContract.get('customer')?.touched &&editContract.get('customer')?.errors?.required">
+                    Tên khách hàng không được để trống.
                   </div>
                 </div>
-
                 <div class="mb-3">
                   <label class="form-label">Tên đồ: <span style="color: red">(*)</span></label>
-                  <input type="text" class="form-control" formControlName="productName"
-                         placeholder="Nhập tên đồ" maxlength=255 required>
-                  <div class="alert alert-danger" *ngIf="editContract.get('productName')?.invalid && editContract.get('productName')?.touched &&
-         editContract.get('productName')?.errors?.required">Tên đồ không được để trống.
+                  <input type="text" class="form-control" formControlName="productName" placeholder="Nhập tên đồ"
+                         maxlength=255 required>
+                  <div class="alert alert-danger" *ngIf="editContract.get('productName')?.invalid &&
+                  editContract.get('productName')?.touched &&editContract.get('productName')?.errors?.required">
+                    Tên đồ không được để trống.
                   </div>
                 </div>
-                <label class="form-label">Loại đồ: <span style="color: red">(*)</span></label>
-                <div class="input-group mb-3">
-                  <select class="form-control" formControlName="typeProduct">
+                <div class="mb-3">
+                  <label class="form-label">Loại đồ: <span style="color: red">(*)</span></label>
+                  <select class="form-select" formControlName="typeProduct">
                     <option value=0>Chọn loại đồ</option>
-                    <option *ngFor="let typeProduct of typeProductList"
-                            [ngValue]="typeProduct.typeProductId">{{typeProduct?.name}}</option>
+                    <option *ngFor="let typeProduct of typeProductList" [ngValue]="typeProduct.typeProductId">
+                      {{typeProduct?.name}}
+                    </option>
                   </select>
                 </div>
                 <fieldset formGroupName="dateGroup">
                   <div class="row">
                   <div class="col-md-6">
                     <label for="startDate" class="form-label">Ngày bắt đầu:</label><span style="color: red">(*)</span>
-                    <input type="date" class="form-control" id="startDate" formControlName="startDate"
-                           required>
-
+                    <input type="date" class="form-control" id="startDate" formControlName="startDate" required>
                     <div class="alert alert-danger" *ngIf="editContract.controls.dateGroup?.errors?.checkDate">
                       Ngày bắt đầu phải bé hơn ngày kết thúc.
                     </div>
@@ -67,11 +64,13 @@
                 <div class="col-md-6">
                   <label class="form-label mt-2">Loại hợp đồng: <span style="color: red">(*)</span></label>
                   <div class="input-group mb-3">
-                    <select class="form-control" formControlName="typeContract" readonly>
-                      <option value=0>Chọn loại hợp đồng</option>
-                      <option *ngFor="let typeContract of typeContract"
-                              [ngValue]="typeContract.typeContractId">{{typeContract?.name}}</option>
+                    <select class="form-select" formControlName="typeContract" style="display: none">
+                      <option value="">Chọn loại hợp đồng</option>
+                      <option *ngFor="let typeContract of typeContract" [ngValue]="typeContract.typeContractId">
+                        {{typeContract?.name}}
+                      </option>
                     </select>
+                    <input type="text" class="form-control" [value]="data.typeContract.name" readonly>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -79,13 +78,13 @@
                   <div class="input-group mb-3">
                     <select class="form-control" formControlName="statusContract">
                       <option value=0>Chọn trạng thái</option>
-                      <option *ngFor=" let statusContract of statusContract"
-                              [ngValue]="statusContract.statusContractId">{{statusContract?.name}}</option>
+                      <option *ngFor=" let statusContract of statusContract" [ngValue]="statusContract.statusContractId">
+                        {{statusContract?.name}}
+                      </option>
                     </select>
                   </div>
                 </div>
               </div>
-
             </mat-dialog-content>
             <mat-dialog-actions align="center">
               <div class="row">
@@ -93,16 +92,14 @@
                   <button type="reset" class="btn btn-secondary" mat-button mat-dialog-close>Hủy</button>
                 </div>
                 <div class="col-md-9 mb-3">
-                  <button type="submit" class="btn btn-success" [mat-dialog-close]="true" cdkFocusInitial
-                          >Lưu hợp đồng
+                  <button type="submit" class="btn btn-success" [mat-dialog-close]="true" cdkFocusInitial>
+                    Lưu hợp đồng
                   </button>
                 </div>
               </div>
             </mat-dialog-actions>
           </form>
-
         </div>
-        <div class="col-lg-2"></div>
       </div>
 
 

@@ -6,6 +6,8 @@ import {TypeProduct} from "../../interface/type-product";
 import {FormControl, FormGroup} from "@angular/forms";
 import {AlertService} from "../../services/alert.service";
 import {Title} from "@angular/platform-browser";
+import {ContractService} from "../../services/contract.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-list-pawn',
@@ -23,6 +25,8 @@ export class ListPawnComponent implements OnInit {
   constructor(private pawnService: PawnService,
               private typeProductService: TypeProductService,
               private alertService: AlertService,
+              private contractService: ContractService,
+              private router: Router,
               private title: Title) { }
 
   ngOnInit(): void {
@@ -33,8 +37,10 @@ export class ListPawnComponent implements OnInit {
       typeSearch: new FormControl(''),
     })
   }
+
   getList(){
     this.pawnService.getAllPawn().subscribe((data)=> {
+      console.log(data);
       this.pawnList = data.content;
       this.pageNow = data.number;
       this.totalPage = [];
@@ -46,10 +52,11 @@ export class ListPawnComponent implements OnInit {
       this.typeProductList = data;
     })
   }
+
   temp(contractId: String) {
     this.idSelect = contractId;
     this.pawnService.getPawnById(this.idSelect).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       this.pawnInfo = data;
     });
   }
@@ -87,5 +94,15 @@ export class ListPawnComponent implements OnInit {
         this.totalPage.push(0)
       }
     })
+  }
+
+  createLiquidation(id: string){
+    for (let i=0; i<this.pawnList.length; i++){
+      if(id === this.pawnList[i].contractId){
+        this.contractService.contract = this.pawnList[i];
+        this.router.navigateByUrl('/create-liquidation-contract').then();
+        break;
+      }
+    }
   }
 }
