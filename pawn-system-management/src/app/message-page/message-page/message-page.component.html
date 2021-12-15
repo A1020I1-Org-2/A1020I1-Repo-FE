@@ -52,7 +52,7 @@
                         <p class="name">
                           {{item.obj.fullName}}
                         </p>
-                        <p class="preview">{{item.contentLatest}}</p>
+                        <p class="preview">{{item.contentLatest == '' ? '&nbsp;' : item.contentLatest}}</p>
                       </div>
                     </div>
                   </li>

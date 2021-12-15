@@ -40,6 +40,7 @@ export class HeaderComponent implements OnInit {
     }else{
       this.role = localStorage.getItem("role") + '';
     }
+    this.idEmployee = "NV-0001";
 
     this.formGroup = this.formBuilder.group({
       sender: this.idEmployee,
