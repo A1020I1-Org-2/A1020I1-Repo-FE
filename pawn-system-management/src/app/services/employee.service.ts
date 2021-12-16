@@ -57,7 +57,7 @@ export class EmployeeService {
 
   // ThanhNHM
   getAllEmployee(): Observable<IEmployee[]>{
-    return this.http.get<IEmployee[]>(this.URL+"/get-all-employee");
+    return this.http.get<IEmployee[]>(this.URL+"get-all-employee");
   }
   // ThanhNHM
 }

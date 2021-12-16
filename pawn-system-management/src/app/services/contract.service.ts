@@ -37,6 +37,7 @@ export class ContractService {
   private APISearchCustomer: string = "http://localhost:8080/customer/searchCustomer";
   private APISearchEmployee: string = "http://localhost:8080/employee/searchEmployee";
   private APIProductList: string = "http://localhost:8080/contract/getListTypeProduct";
+  private APIContractOpen: string = "http://localhost:8080/contract/get-list-contract-open";
   private basePath = '/imgPawn';
   private readonly API_TYPE_PRODUCT = "http://localhost:8080/typeProduct/listTypeProduct";
 
@@ -186,5 +187,9 @@ export class ContractService {
   private saveFileData(fileUpload: FileUpload): void {
     this.db.list(this.basePath).push(fileUpload);
   }
-  //nhân
+
+  getListContractOpen(keyword: string, page: number): Observable<any>{
+    console.log(page);
+    return this.httpClient.get<any>(this.APIContractOpen + "?page=" + page + "&keyword=" + keyword );
+  }
 }
