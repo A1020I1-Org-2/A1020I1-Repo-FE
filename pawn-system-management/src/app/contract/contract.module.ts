@@ -20,6 +20,7 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {environment} from "../../environments/environment";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {HomepageModule} from "../homepage/homepage.module";
 
 
 
@@ -44,19 +45,20 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage";
       UpdateContractComponent,
       CreateLiquidationContractComponentComponent
     ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    ContractRoutingModule,
-    NgxTrimDirectiveModule,
-    MatButtonModule,
-    AngularFireModule.initializeApp(environment.firebaseConfigNhanNH),
-    AngularFireDatabaseModule,
-    AngularFireStorageModule,
-    ToastrModule.forRoot()
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        ContractRoutingModule,
+        NgxTrimDirectiveModule,
+        MatButtonModule,
+        AngularFireModule.initializeApp(environment.firebaseConfigNhanNH),
+        AngularFireDatabaseModule,
+        AngularFireStorageModule,
+        ToastrModule.forRoot(),
+        HomepageModule
+    ]
 })
 export class ContractModule {
 }

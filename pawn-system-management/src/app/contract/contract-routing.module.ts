@@ -8,12 +8,13 @@ import {ListTop10ContractComponent} from "./list-top10-contract/list-top10-contr
 import {UpdateContractComponent} from "./update-contract/update-contract.component";
 import {CreateLiquidationContractComponentComponent} from "./create-liquidation-contract-component/create-liquidation-contract-component.component";
 import {CreatePawnContractComponent} from "./create-pawn-contract/create-pawn-contract.component";
+import {AuthGuard} from "../services/auth.guard";
 
 const routes: Routes = [
   {path: 'list-top-10-contract', component: ListTop10ContractComponent},
   {path: 'list-contract',component: ListContractComponent},
   {path: 'edit-contract', component: UpdateContractComponent},
-  {path: 'create-liquidation-contract', component:CreateLiquidationContractComponentComponent},
+  {path: 'create-liquidation-contract', canActivate: [AuthGuard], component:CreateLiquidationContractComponentComponent},
   {path:'create-pawn',component:CreatePawnContractComponent}
   ]
 
@@ -21,6 +22,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class ContractRoutingModule { }

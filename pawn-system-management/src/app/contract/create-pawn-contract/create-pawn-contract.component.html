@@ -1,7 +1,8 @@
+<app-header></app-header>
 <div class="container-fluid bg-light">
   <div class="row">
     <div class="col-lg-12 col-sm-12">
-      <div class="container bg-white mt-5 mb-5" style="border-radius: 2%">
+      <div class="container bg-white mt-5 mb-5 pb-4" style="border-radius: 2%">
         <div class="row">
           <div class="col-lg-12 col-sm-12">
             <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">THÊM MỚI HỢP ĐỒNG</h2>
@@ -239,12 +240,12 @@
         <nav aria-label="...">
           <ul class="pagination">
             <li class="page-item " [class]="(pageCurrentCus-1)<0 ? 'disabled' : ''">
-              <button class="btn page-link" (click)="firstPage()">
+              <button class="page-link" (click)="firstPage()">
                 <span aria-hidden="true">&laquo;</span>
               </button>
             </li>
             <li class="page-item" [class]="(pageCurrentCus-1)<0 ? 'disabled' : ''">
-              <button class="btn page-link" tabindex="-1" (click)="prevPageCus()">&lsaquo;</button>
+              <button class="page-link" tabindex="-1" (click)="prevPageCus()">&lsaquo;</button>
             </li>
             <li class="page-item">
               <button class="page-link" *ngIf="(pageCurrentCus-1)>=0"  (click)="prevPageCus()">{{pageCurrentCus}}</button>
@@ -256,10 +257,10 @@
               <button class="page-link" (click)="nextPageCus()" *ngIf="(pageCurrentCus+1)<totalPageCus">{{pageCurrentCus+2}}</button>
             </li>
             <li class="page-item" [class]="(pageCurrentCus+1)>=totalPageCus ? 'disabled' : ''">
-              <button class="btn page-link"  (click)="nextPageCus()">&rsaquo;</button>
+              <button class="page-link"  (click)="nextPageCus()">&rsaquo;</button>
             </li>
             <li class="page-item" [class]="(pageCurrentCus+1)>=totalPageCus ? 'disabled' : ''">
-              <button class="btn page-link" (click)="lastPage()">
+              <button class="page-link" (click)="lastPage()">
                 <span aria-hidden="true">&raquo;</span>
               </button>
             </li>
@@ -328,12 +329,12 @@
         <nav aria-label="...">
           <ul class="pagination">
             <li class="page-item " [class]="(pageCurrentEmployee-1)<0 ? 'disabled' : ''">
-              <button class="btn page-link" (click)="firstPageEmployee()">
+              <button class="page-link" (click)="firstPageEmployee()">
                 <span aria-hidden="true">&laquo;</span>
               </button>
             </li>
             <li class="page-item" [class]="(pageCurrentEmployee-1)<0 ? 'disabled' : ''">
-              <button class="btn page-link" tabindex="-1" (click)="prevPageEmployee()">&lsaquo;</button>
+              <button class="page-link" tabindex="-1" (click)="prevPageEmployee()">&lsaquo;</button>
             </li>
             <li class="page-item">
               <button class="page-link" *ngIf="(pageCurrentEmployee-1)>=0"  (click)="prevPageEmployee()">{{pageCurrentEmployee}}</button>
@@ -347,10 +348,10 @@
               </button>
             </li>
             <li class="page-item" [class]="(pageCurrentEmployee+1)>=totalPageEmployee ? 'disabled' : ''">
-              <button class="btn page-link"  (click)="nextPageEmployee()">&rsaquo;</button>
+              <button class="page-link"  (click)="nextPageEmployee()">&rsaquo;</button>
             </li>
             <li class="page-item" [class]="(pageCurrentEmployee+1)>=totalPageEmployee ? 'disabled' : ''">
-              <button class="btn page-link" (click)="lastPageEmployee()">
+              <button class="page-link" (click)="lastPageEmployee()">
                 <span aria-hidden="true">&raquo;</span>
               </button>
             </li>
@@ -360,3 +361,4 @@
     </div>
   </div>
 </div>
+<app-footer></app-footer>

@@ -14,6 +14,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MatButtonModule} from "@angular/material/button";
 import {EmployeeRoutingModule} from "./employee-routing.module";
+import {HomepageModule} from "../homepage/homepage.module";
 
 
 
@@ -28,17 +29,18 @@ import {EmployeeRoutingModule} from "./employee-routing.module";
     EditInfomationEmmployeeComponent,
     DialogDeleteAll
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    HttpClientModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    EmployeeRoutingModule
-  ]
+    imports: [
+        CommonModule,
+        BrowserModule,
+        HttpClientModule,
+        RouterModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        MatButtonModule,
+        EmployeeRoutingModule,
+        HomepageModule
+    ]
 })
 export class EmployeeModule { }

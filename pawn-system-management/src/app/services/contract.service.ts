@@ -22,7 +22,7 @@ import {AngularFireStorage} from "@angular/fire/compat/storage";
 })
 export class ContractService {
 
-  contract!: Contract;
+  contract: Contract | undefined = undefined ;
 
   private API = "http://localhost:8080/contract";
   private API_SEARCH = "http://localhost:8080/contract/search";
@@ -38,6 +38,7 @@ export class ContractService {
   private APISearchEmployee: string = "http://localhost:8080/employee/searchEmployee";
   private APIProductList: string = "http://localhost:8080/contract/getListTypeProduct";
   private APIContractOpen: string = "http://localhost:8080/contract/get-list-contract-open";
+  private APIPaymentContract: string = "http://localhost:8080/contract/payment-contract";
   private basePath = '/imgPawn';
   private readonly API_TYPE_PRODUCT = "http://localhost:8080/typeProduct/listTypeProduct";
 
@@ -141,12 +142,12 @@ export class ContractService {
   }
 
   getPageListCustomer(pageNum: number, searchName: string): Observable<any> {
-    const url = this.APISearchCustomer + '?page=' + pageNum + '&searchName=' + searchName;
+    const url = this.APISearchCustomer + '?page=' + pageNum + '&searchValue=' + searchName;
     return this.httpClient.get<any>(url);
   }
 
   getPageListEmployee(pageNum: number, searchName: string): Observable<any> {
-    const url = this.APISearchEmployee + '?page=' + pageNum + '&searchName=' + searchName;
+    const url = this.APISearchEmployee + '?page=' + pageNum + '&searchValue=' + searchName;
     return this.httpClient.get<any>(url);
   }
 
@@ -189,7 +190,10 @@ export class ContractService {
   }
 
   getListContractOpen(keyword: string, page: number): Observable<any>{
-    console.log(page);
     return this.httpClient.get<any>(this.APIContractOpen + "?page=" + page + "&keyword=" + keyword );
+  }
+
+  paymentContract(contract: Contract): Observable<any>{
+    return this.httpClient.post<any>(this.APIPaymentContract, contract)
   }
 }

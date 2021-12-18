@@ -1,103 +1,123 @@
-<div class="container mb-5">
+<app-header></app-header>
+<div class="container-fluid bg-light">
   <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center mt-5" style="color: darkblue">CHỈNH SỬA NHÂN VIÊN</h1>
-    </div>
-  </div>
-  <div>
-    <div class="container mb-5">
-      <div class="card row" style="border-color: white">
-        <form [formGroup]="editForm" (ngSubmit)="update()">
-          <div class="row mt-3">
-            <div class="col-6">
-              <label for="name">Mã NV <span class="text-danger"> *</span></label>
-              <input type="text" class="form-control border-dark" id="idNV"
-                     formControlName="employeeId" readonly>
-            </div>
-            <div class="col-6">
-              <label for="name">Tên NV <span class="text-danger"> *</span></label>
-              <input type="text" class="form-control border-dark" id="name"
-                     formControlName="fullName"
-                     [ngClass]="form.fullName?.touched || isSubmit ? (form.fullName?.invalid ? 'is-invalid' : 'is-valid') : ''">
-              <p class="invalid-feedback" *ngIf="form.fullName?.errors?.required">Tên NV không được để trống</p>
-            </div>
+    <div class="col-lg-12 col-sm-12">
+      <div class="container bg-white mt-5 mb-5 pb-4" style="border-radius: 2%">
+        <div class="row">
+          <div class="col-lg-12 col-sm-12">
+            <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">CHỈNH SỬA NHÂN VIÊN</h2>
           </div>
-          <div class="row mt-3">
-            <div class="col-6">
-              <label for="email">Email<span class="text-danger"> *</span></label>
-              <input type="text" class="form-control border-dark" id="email"
-                     placeholder="abc@example.com" formControlName="email"
-                     [ngClass]="form.email?.touched || isSubmit ? (form.email?.invalid ? 'is-invalid' : 'is-valid') : ''">
-              <p class="invalid-feedback" *ngIf="form.email?.errors?.required">Email không được để trống</p>
-            </div>
-            <div class="col-6">
-              <label for="dateOfBirth">Ngày Sinh</label><span
-              class="text-danger"> *</span>
-              <input type="date" class="form-control border-dark date" id="dateOfBirth"
-                     formControlName="dateOfBirth"
-                     [ngClass]="form.dateOfBirth?.touched || isSubmit ? (form.dateOfBirth?.invalid ? 'is-invalid' : 'is-valid') : ''">
-              <p class="invalid-feedback" *ngIf="form.dateOfBirth?.errors?.required">Ngày sinh không được để trống</p>
-            </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col">
-              <label for="phone">Địa chỉ</label><span class="text-danger"> *</span>
-              <input type="text" class="form-control border-dark" id="address"
-                     formControlName="address"
-                     [ngClass]="form.address?.touched || isSubmit ? (form.address?.invalid ? 'is-invalid' : 'is-valid') : ''">
-              <p class="invalid-feedback" *ngIf="form.address?.errors?.required">Địa chỉ không được để trống</p>
-            </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col-6">
-              <label for="phone">Số điện thoại</label><span class="text-danger"> *</span>
-              <input type="text" class="form-control border-dark" id="phone"
-                     formControlName="phone"
-                     [ngClass]="form.phone?.touched || isSubmit ? (form.phone?.invalid ? 'is-invalid' : 'is-valid') : ''">
-              <p class="invalid-feedback" *ngIf="form.phone?.errors?.required">Số điện thoại không được để trống</p>
-            </div>
-            <div class="col-6">
-              <label for="">Giới tính</label><span class="text-danger"> *</span><br>
-              <div class="form-check form-check-inline mt-1">
-                <input class="form-check-input" type="radio" name="gender" id="gender1" value="false"
-                       formControlName="gender">
-                <label class="form-check-label" for="gender1">Nam</label>
+        </div>
+        <div class="card row" style="border-color: white">
+          <form [formGroup]="editForm" (ngSubmit)="update()">
+            <div class="row mt-3">
+              <div class="col-sm-2 col-lg-2"></div>
+              <div class="col-4">
+                <label for="name">Mã NV</label>
+                <input type="text" class="form-control" id="idNV" formControlName="employeeId" readonly>
               </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="gender" id="gender2" value="true"
-                       formControlName="gender">
-                <label class="form-check-label" for="gender2">Nữ</label>
+              <div class="col-4">
+                <label for="name">Tên NV <span class="text-danger">(*)</span></label>
+                <input type="text" class="form-control" id="name" formControlName="fullName"
+                       [ngClass]="form.fullName?.touched || isSubmit ? (form.fullName?.invalid ? 'is-invalid' : 'is-valid') : ''">
+                <p class="invalid-feedback" *ngIf="form.fullName?.errors?.required">Tên NV không được để trống</p>
               </div>
+              <div class="col-sm-2 col-lg-2"></div>
             </div>
-          </div>
-          <div class="row mt-3">
-            <div class="col-6">
-              <label for="password">CMND/Hộ chiếu</label><span
-              class="text-danger"> *</span>
-              <input type="number" class="form-control border-dark" id="password"
-                     formControlName="idCard"
-                     [ngClass]="form.idCard?.touched || isSubmit ? (form.idCard?.invalid ? 'is-invalid' : 'is-valid') : ''">
-              <p class="invalid-feedback" *ngIf="form.idCard?.errors?.required">CMND/Hộ chiếu không được để trống</p>
+            <div class="row mt-3">
+              <div class="col-sm-2 col-lg-2"></div>
+              <div class="col-4">
+                <label for="email">Email<span class="text-danger">(*)</span></label>
+                <input type="text" class="form-control" id="email" placeholder="abc@example.com" formControlName="email"
+                       [ngClass]="form.email?.touched || isSubmit ? (form.email?.invalid ? 'is-invalid' : 'is-valid') : ''">
+                <p class="invalid-feedback" *ngIf="form.email?.errors?.required">Email không được để trống</p>
+              </div>
+              <div class="col-4">
+                <label for="dateOfBirth">Ngày Sinh</label><span
+                class="text-danger">(*)</span>
+                <input type="date" class="form-control date" id="dateOfBirth" formControlName="dateOfBirth"
+                       [ngClass]="form.dateOfBirth?.touched || isSubmit ? (form.dateOfBirth?.invalid ? 'is-invalid' : 'is-valid') : ''">
+                <p class="invalid-feedback" *ngIf="form.dateOfBirth?.errors?.required">Ngày sinh không được để trống</p>
+              </div>
+              <div class="col-sm-2 col-lg-2"></div>
             </div>
-            <div class="col-6">
-              <label for="passwordRetype">Lương</label><span class="text-danger"> *</span>
-              <input type="text" class="form-control border-dark" id="passwordRetype"
-                     formControlName="salary"
-                     [ngClass]="form.salary?.touched || isSubmit ? (form.salary?.invalid ? 'is-invalid' : 'is-valid') : ''">
-              <p class="invalid-feedback" *ngIf="form.salary?.errors?.required">Lương không được để trống</p>
+            <div class="row mt-3">
+              <div class="col-sm-2 col-lg-2"></div>
+              <div class="col-8">
+                <label for="phone">Địa chỉ</label><span class="text-danger">(*)</span>
+                <input type="text" class="form-control" id="address" formControlName="address"
+                       [ngClass]="form.address?.touched || isSubmit ? (form.address?.invalid ? 'is-invalid' : 'is-valid') : ''">
+                <p class="invalid-feedback" *ngIf="form.address?.errors?.required">Địa chỉ không được để trống</p>
+              </div>
+              <div class="col-sm-2 col-lg-2"></div>
             </div>
-          </div>
-<!--          <div class="row mt-3">-->
-<!--            <label>Tải ảnh</label>-->
-<!--            <input type="file" name="uploadfile" id="img" formControlName="img"/>-->
-<!--          </div>-->
-          <div class="row mt-3 justify-content-center">
-            <div class="col-3 text-center">
-              <a class="btn close btn-secondary me-3" routerLink="/employee">Hủy</a>
-              <button class="btn close btn-primary " type="submit" >Cập nhập</button>
+            <div class="row mt-3">
+              <div class="col-sm-2 col-lg-2"></div>
+              <div class="col-4">
+                <label for="phone">Số điện thoại</label><span class="text-danger">(*)</span>
+                <input type="text" class="form-control" id="phone" formControlName="phone"
+                       [ngClass]="form.phone?.touched || isSubmit ? (form.phone?.invalid ? 'is-invalid' : 'is-valid') : ''">
+                <p class="invalid-feedback" *ngIf="form.phone?.errors?.required">Số điện thoại không được để trống</p>
+              </div>
+              <div class="col-4">
+                <label for="">Giới tính</label><br>
+                <div class="form-check form-check-inline mt-1">
+                  <input class="form-check-input" type="radio" name="gender" id="gender1" value="false"
+                         formControlName="gender">
+                  <label class="form-check-label" for="gender1">Nam</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="gender" id="gender2" value="true"
+                         formControlName="gender">
+                  <label class="form-check-label" for="gender2">Nữ</label>
+                </div>
+              </div>
+              <div class="col-sm-2 col-lg-2"></div>
             </div>
-          </div>
-        </form>
+            <div class="row mt-3">
+              <div class="col-sm-2 col-lg-2"></div>
+              <div class="col-4">
+                <label for="password">CMND/Hộ chiếu</label><span
+                class="text-danger">(*)</span>
+                <input type="number" class="form-control" id="password" formControlName="idCard"
+                       [ngClass]="form.idCard?.touched || isSubmit ? (form.idCard?.invalid ? 'is-invalid' : 'is-valid') : ''">
+                <p class="invalid-feedback" *ngIf="form.idCard?.errors?.required">CMND/Hộ chiếu không được để trống</p>
+              </div>
+              <div class="col-4">
+                <label for="passwordRetype">Lương</label><span class="text-danger">(*)</span>
+                <input type="text" class="form-control" id="passwordRetype" formControlName="salary"
+                       [ngClass]="form.salary?.touched || isSubmit ? (form.salary?.invalid ? 'is-invalid' : 'is-valid') : ''">
+                <p class="invalid-feedback" *ngIf="form.salary?.errors?.required">Lương không được để trống</p>
+              </div>
+              <div class="col-sm-2 col-lg-2"></div>
+            </div>
+            <!--          <div class="row mt-3">-->
+            <!--            <label>Tải ảnh</label>-->
+            <!--            <input type="file" name="uploadfile" id="img" formControlName="img"/>-->
+            <!--          </div>-->
+            <div class="row mt-3">
+              <div class="col-md-2"></div>
+              <div class="col-sm-8 col-lg-8">
+                <div class="row">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-3">
+                    <a class="btn btn-secondary w-100" routerLink="/employee">Huỷ</a>
+                  </div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-3">
+                    <button class="btn btn-success w-100" [disabled]="editForm.invalid" type="submit">
+                      Thêm mới
+                    </button>
+                  </div>
+                  <div class="col-md-2"></div>
+                </div>
+              </div>
+              <div class="col-md-2"></div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
+</div>
+<app-footer></app-footer>

@@ -7,6 +7,7 @@ import {EmployeeService} from "../../services/employee.service";
 import {IEmployee} from "../../employee/IEmployee";
 import {Title} from "@angular/platform-browser";
 import {Employee} from "../../interface/employee";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'app-chat',
@@ -41,7 +42,12 @@ export class MessagePageComponent implements OnInit, AfterViewChecked {
   ) { }
 
   ngOnInit(): void {
-    this.idEmployee = "NV-0001";
+    this.title.setTitle('Nhắn tin');
+    if(localStorage.getItem('username') !== null){
+      this.employeeService.findByAccount(localStorage.getItem('username')).subscribe(employee => {
+        this.idEmployee = employee.employeeId;
+      })
+    }
     this.employeeService.getAllEmployee().subscribe(
       (data) => {
         this.listEmployee = data;

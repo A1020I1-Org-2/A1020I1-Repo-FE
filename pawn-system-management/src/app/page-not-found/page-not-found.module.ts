@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {PageNotFoundRoutingModule} from "./page-not-found-routing.module";
 import {RouterModule} from "@angular/router";
+import {HomepageModule} from "../homepage/homepage.module";
 
 
 
@@ -10,10 +11,11 @@ import {RouterModule} from "@angular/router";
   declarations: [
     PageNotFoundComponent
   ],
-  imports: [
-    CommonModule,
-    PageNotFoundRoutingModule,
-    RouterModule
-  ]
+    imports: [
+        CommonModule,
+        PageNotFoundRoutingModule,
+        RouterModule,
+        HomepageModule
+    ]
 })
 export class PageNotFoundModule { }

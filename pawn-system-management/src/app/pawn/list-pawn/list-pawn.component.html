@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container-fluid mt-5 pb-5">
   <div class="row px-0 mx-0" style="height: 80%;">
     <div class="col-lg-2 col-xl-2">
@@ -56,7 +57,11 @@
                 <i class="fa fa-eye"></i>
               </button> &nbsp;
               <button class="btn btn-outline-danger border-0" (click)="createLiquidation(p.contractId)"
-                      [disabled]="p.statusContract.statusContractId != 2">
+                      *ngIf="p.statusContract.statusContractId == 2">
+                <i class="fas fa-shipping-fast"></i>
+              </button>
+              <button class="btn btn-outline-danger border-0" (click)="returnPawn(p.contractId)"
+                      *ngIf="p.statusContract.statusContractId == 1">
                 <i class="fas fa-shipping-fast"></i>
               </button>
             </td>
@@ -105,6 +110,7 @@
     </div>
   </div>
 </div>
+<app-footer></app-footer>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

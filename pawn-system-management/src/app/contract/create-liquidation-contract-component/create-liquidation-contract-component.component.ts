@@ -46,7 +46,7 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   searchEm: string = '';
   productName: string = '';
   typeProduct: string = '';
-  receiveMoney: number = 0;
+  receiveMoney: number = 10;
   Contract!: ContractDTO;
   contractID!: string;
   productImg: string = "";
@@ -84,17 +84,18 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       receiveMoney: ['', [Validators.required]],
       quantity: ['', [Validators.required]],
     });
-    this.getLiquidationProductList();
-    this.getCustomerList();
-    this.getEmployeeList();
-    this.getListTypeProduct();
     this.searchProduct = new FormGroup({
       productName: new FormControl(''),
-      receiveMoney: new FormControl(0),
+      receiveMoney: new FormControl(''),
       typeProduct: new FormControl('')
     });
+    this.getPageListProduct(0);
+    this.getPageCustomer(0);
+    this.getPageEmployee(0);
+    this.getListTypeProduct();
     if(this.contractService.contract !== undefined){
       this.chooseProduct(this.contractService.contract.contractId);
+      this.contractService.contract = undefined;
     }
   };
 
@@ -131,13 +132,13 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
     }
   }
 
-  getLiquidationProductList() {
-    this.contractService.getLiquidationProductList().subscribe(data => {
-      // console.log(data);
-      this.liquidationProductList = data.content;
-      this.totalPagination = data.totalPages;
-    })
-  }
+  // getLiquidationProductList() {
+  //   this.contractService.getLiquidationProductList().subscribe(data => {
+  //     // console.log(data);
+  //     this.liquidationProductList = data.content;
+  //     this.totalPagination = data.totalPages;
+  //   })
+  // }
 
   getListTypeProduct() {
     this.contractService.getTypeProductList().subscribe(data => {
@@ -146,14 +147,31 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   }
 
   getPageListProduct(pageNum: number) {
-    this.contractService.getPageListProduct(pageNum, this.productName, this.receiveMoney, this.typeProduct).subscribe(
+    this.contractService.getPageListProduct(pageNum, this.searchProduct.value.productName,
+      this.searchProduct.value.receiveMoney, this.searchProduct.value.typeProduct).subscribe(
       data => {
+        this.isFoundPd = true;
         this.liquidationProductList = data.content;
-        this.indexPagination = data.pageable.pageNumber + 1;
+        this.indexPagination = data.number + 1;
         this.totalPagination = data.totalPages;
-      }
-    )
+      }, error => {
+        this.isFoundPd = false;
+      })
   }
+
+  // search() {
+  //   this.contractService.searchLiquidationProduct(this.searchProduct.value.productName,
+  //     this.searchProduct.value.receiveMoney, this.searchProduct.value.typeProduct).subscribe(
+  //     (data) => {
+  //       this.isFoundPd = true;
+  //       this.liquidationProductList = data.content;
+  //       this.indexPagination = data.pageable.pageNumber + 1;
+  //       this.totalPagination = data.totalPages;
+  //     }, error => {
+  //       this.isFoundPd = false;
+  //     }
+  //   )
+  // }
 
   getCustomerList() {
     this.contractService.getCustomerList().subscribe(data => {
@@ -165,11 +183,14 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   getPageCustomer(pageNum: number) {
     this.contractService.getPageListCustomer(pageNum, this.searchCus).subscribe(
       data => {
+        this.isFoundCs = true;
         this.customerList = data.content;
-        this.indexPagination = data.pageable.pageNumber + 1;
+        this.indexPagination = data.number + 1;
         this.totalPagination = data.totalPages;
-      }
-    )
+      },
+      () => {
+        this.isFoundCs = false;
+      })
   }
 
   getEmployeeList() {
@@ -181,35 +202,27 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   getPageEmployee(pageNum: number) {
     this.contractService.getPageListEmployee(pageNum, this.searchEm).subscribe(
       data => {
+        this.isFoundEm = true;
         this.employeeList = data.content;
-        this.indexPagination = data.pageable.pageNumber + 1;
+        this.indexPagination = data.number + 1;
         this.totalPagination = data.totalPages;
-      }
-    )
+      },
+      error => {
+        this.isFoundEm = false;
+      })
   }
 
-  search() {
-    if (this.searchProduct.value.productName == '') {
-      this.searchProduct.value.productName = "";
-    }
-    if (this.searchProduct.value.receiveMoney == 0) {
-      this.searchProduct.value.receiveMoney = 0;
-    }
-    if (this.searchProduct.value.typeProduct == '') {
-      this.searchProduct.value.typeProduct = "";
-    }
-    this.contractService.searchLiquidationProduct(this.searchProduct.value.productName,
-      this.searchProduct.value.receiveMoney, this.searchProduct.value.typeProduct).subscribe(
-      (data) => {
-        this.isFoundPd = true;
-        this.liquidationProductList = data.content;
-        this.indexPagination = data.pageable.pageNumber + 1;
-        this.totalPagination = data.totalPages;
-      }, error => {
-        this.isFoundPd = false;
-      }
-    )
-  }
+  // searchEmployee() {
+  //   this.contractService.searchEmployee(this.searchEm).subscribe(data => {
+  //       this.isFoundEm = true;
+  //       this.employeeList = data.content;
+  //       this.indexPagination = data.pageable.pageNumber + 1;
+  //       this.totalPagination = data.totalPages;
+  //     },
+  //     error => {
+  //       this.isFoundEm = false;
+  //     })
+  // }
 
   searchEnter($event: KeyboardEvent) {
     if (this.searchProduct.value.productName == '') {
@@ -226,30 +239,6 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       this.searchProduct.value.typeProduct.name,).subscribe((data) => {
       this.liquidationProductList = data.content;
     })
-  }
-
-  searchCustomer() {
-    this.contractService.searchCustomer(this.searchCus).subscribe(data => {
-        this.isFoundCs = true;
-        this.customerList = data.content;
-        this.indexPagination = data.pageable.pageNumber + 1;
-        this.totalPagination = data.totalPages;
-      },
-      () => {
-        this.isFoundCs = false;
-      })
-  }
-
-  searchEmployee() {
-    this.contractService.searchEmployee(this.searchEm).subscribe(data => {
-        this.isFoundEm = true;
-        this.employeeList = data.content;
-        this.indexPagination = data.pageable.pageNumber + 1;
-        this.totalPagination = data.totalPages;
-      },
-      error => {
-        this.isFoundEm = false;
-      })
   }
 
   chooseProduct(contractId: string) {
@@ -306,19 +295,20 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   resetOfCancel() {
     this.ngOnInit();
     this.reset();
+    this.formCreate.reset();
     this.alertService.showAlertSuccess("Đã huỷ thành công!")
   }
 
   resetModalEM() {
     this.indexPagination = 1;
     this.searchEm = '';
-    this.searchEmployee();
+    this.getPageEmployee(0);
   }
 
   resetModalCS() {
     this.indexPagination = 1;
     this.searchCus = '';
-    this.searchCustomer();
+    this.getPageCustomer(0);
   }
 
   resetModalPD() {
@@ -326,6 +316,6 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
     this.searchProduct.controls.productName.setValue("");
     this.searchProduct.controls.receiveMoney.setValue(0);
     this.searchProduct.controls.typeProduct.setValue("");
-    this.search();
+    this.getPageListProduct(0);
   }
 }

@@ -55,9 +55,16 @@ export class EmployeeService {
     return this.http.get<any>(this.URL+"searchEmployee?searchValue="+searchValue+"&page="+page);
   }
 
+  findByAccount(username: string|null): Observable<any>{
+    return this.http.get(this.URL + 'find-by-account?username=' + username);
+  }
+
   // ThanhNHM
   getAllEmployee(): Observable<IEmployee[]>{
     return this.http.get<IEmployee[]>(this.URL+"get-all-employee");
   }
   // ThanhNHM
+  existIdCard(idCard: string): Observable<any> {
+    return this.http.get<any>(this.URL+'exist-id-card' + '?idCard='+idCard)
+  }
 }

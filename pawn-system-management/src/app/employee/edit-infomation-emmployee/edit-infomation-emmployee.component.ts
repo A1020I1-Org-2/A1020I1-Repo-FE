@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IEmployee} from "../IEmployee";
 import {EmployeeService} from "../../services/employee.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-edit-infomation-emmployee',
@@ -26,9 +27,13 @@ export class EditInfomationEmmployeeComponent implements OnInit {
   employee!: IEmployee;
   empId!: string;
 
-  constructor(private service: EmployeeService, public router: ActivatedRoute, public route: Router) { }
+  constructor(private service: EmployeeService,
+              public router: ActivatedRoute,
+              public route: Router,
+              private title: Title) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Chỉnh sửa nhân viên');
     this.empId = this.router.snapshot.params['id'];
     this.service.finById(this.empId).subscribe(data =>{
       this.editForm.controls.employeeId.setValue(data.employeeId);

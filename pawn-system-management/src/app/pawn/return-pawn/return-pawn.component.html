@@ -1,7 +1,8 @@
+<app-header></app-header>
 <div class="container-fluid bg-light">
   <div class="row">
     <div class="col">
-      <div class="container bg-white mt-5 mb-5" style="border-radius: 2%">
+      <div class="container bg-white mt-5 mb-5 pb-4" style="border-radius: 2%">
         <div class="row">
           <div class="col-lg-12 col-sm-12">
             <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">THANH TOÁN HỢP ĐỒNG</h2>
@@ -10,7 +11,7 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col-8">
-            <form class="">
+            <form class="" [formGroup]="formContract" (ngSubmit)="doSubmit()">
               <div class="mb-3 d-flex justify-content-start">
                 <button type="button" class="btn btn-primary" (click)="openListContract()">
                   Chọn Hợp Đồng
@@ -19,50 +20,51 @@
               <div class="mb-3 row">
                 <div class="col-sm-6 col-lg-6">
                   <label >Mã Hợp Đồng: </label>
-                  <input type="text" class="form-control"  value="HD-001" readonly>
+                  <input type="text" class="form-control"  formControlName="idContract" readonly>
                 </div>
                 <div class="col-sm-6 col-lg-6">
                   <label >Tên Khách Hàng: </label>
-                  <input type="text" class="form-control"  value="Nguyễn Văn A" readonly>
+                  <input type="text" class="form-control"  formControlName="customerName" readonly>
                 </div>
               </div>
               <div class="mb-3 row">
                 <div class="col-sm-6 col-lg-6">
                   <label >Đồ Cầm: </label>
-                  <input type="text" class="form-control"  value="Iphone X" readonly>
+                  <input type="text" class="form-control"  formControlName="productName" readonly>
                 </div>
                 <div class="col-sm-6 col-lg-6">
                   <label class="">Tiền Cho Vay: </label>
-                  <input type="text" class="form-control"  value="10 000 000 VND" readonly>
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <div class="col-sm-6 col-lg-6">
-                  <label class="">Tiền Lãi: </label>
-                  <input type="text" class="form-control"  value="5%" readonly>
-                </div>
-                <div class="col-sm-6 col-lg-6">
-                  <label class="">Ngày Làm HD: </label>
-                  <input type="text" class="form-control"  value="10/05/2020" readonly>
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <div class="col-sm-6 col-lg-6">
-                  <label class="">Ngày Kết Thúc: </label>
-                  <input type="text" class="form-control"  value="20/05/2020" readonly>
-                </div>
-                <div class="col-sm-6 col-lg-6">
-                  <label class="">Ngày Trả Đồ:<span style="color: red;">*</span></label>
-                  <input type="date" class="form-control" readonly>
+                  <input type="text" class="form-control"  formControlName="loanMoney" readonly>
                 </div>
               </div>
               <div class="mb-3 row">
                 <div class="col-sm-6 col-lg-6">
                   <label class="">Số Tiền Thanh Toán: </label>
-                  <input type="text" class="form-control"  value="12 000 000 VND" readonly>
+                  <input type="text" class="form-control"  formControlName="interestMoney" readonly>
                 </div>
-                <div class="col-sm-6 col-lg-6"></div>
+                <div class="col-sm-6 col-lg-6">
+                  <label class="">Ngày Làm HD: </label>
+                  <input type="date" class="form-control"  formControlName="startDate" readonly>
+                </div>
               </div>
+              <div class="mb-3 row">
+                <div class="col-sm-6 col-lg-6">
+                  <label class="">Ngày Kết Thúc: </label>
+                  <input type="date" class="form-control"  formControlName="endDate" readonly>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                  <label class="">Ngày Trả Đồ:<span style="color: red;">*</span></label>
+                  <input type="date" class="form-control" formControlName="returnPawn"
+                         [class]="formContract.controls.returnPawn?.touched ? (formContract.controls.returnPawn?.invalid ? 'is-invalid' : '') : ''">
+                  <p class="invalid-feedback" *ngIf="formContract.controls.returnPawn?.errors?.checkDate">
+                    Ngày trả đồ phải lớn hoặc bằng ngày hiện tại
+                  </p>
+                  <p class="invalid-feedback" *ngIf="formContract.controls.returnPawn?.errors?.required">
+                    Ngày trả đồ không được để trống
+                  </p>
+                </div>
+              </div>
+
               <div class="row mt-3">
                 <div class="col-md-2"></div>
                 <div class="col-md-3">
@@ -70,7 +72,7 @@
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-3">
-                  <button type="button" class="btn btn-success w-100">Thanh Toán</button>
+                  <button type="submit" class="btn btn-success w-100" [disabled]="formContract.invalid" >Thanh Toán</button>
                 </div>
                 <div class="col-md-2"></div>
               </div>
@@ -80,58 +82,6 @@
         </div>
       </div>
     </div>
-<!--    <div class="modal fade" id="hopdongModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--      <div class="modal-dialog modal-xl">-->
-<!--        <div class="modal-content">-->
-<!--          <div class="modal-header ">-->
-<!--            <h2 class="modal-title title-content" style="margin-left: auto;" id="exampleModalLabel">Chọn Hợp Đồng</h2>-->
-<!--            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--          </div>-->
-<!--          <div class="modal-body">-->
-<!--            <div class="modal-body-head">-->
-<!--              <form novalidate>-->
-<!--                <div class="mb-3">-->
-<!--                  <label class="col-1 col-form-control">Mã HD</label>-->
-<!--                  <label>-->
-<!--                    <input type="text" class="form-control">-->
-<!--                  </label>-->
-<!--                  <label class="col-2 col-form-label">-->
-<!--                    Tên Khách Hàng-->
-<!--                  </label>-->
-<!--                  <label>-->
-<!--                    <input type="text" class="form-control">-->
-<!--                  </label>-->
-<!--                </div>-->
-<!--                <div class="mb-3">-->
-<!--                  <label class="col-1 col-form-label">Đồ Cầm</label>-->
-<!--                  <label>-->
-<!--                    <input type="text" class="form-control" value="Iphone X">-->
-<!--                  </label>-->
-<!--                  <label class="col-2 col-form-label">-->
-<!--                    Ngày Làm Hợp Đồng-->
-<!--                  </label>-->
-<!--                  <label>-->
-<!--                    <input type="date" class="form-control" style="width: 220px;height: 39px;">-->
-<!--                  </label>-->
-<!--                  <label>-->
-<!--                    <button type="submit" class="search btn btn-primary" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">-->
-<!--                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>-->
-<!--                    </svg>-->
-<!--                    </button>-->
-<!--                  </label>-->
-<!--                </div>-->
-<!--              </form>-->
-<!--            </div>-->
-<!--            <div class="modal-body-table mt-5">-->
-
-<!--            </div>-->
-<!--          </div>-->
-<!--          <div class=" text-center">-->
-<!--            <button type="button" class="btn btn-secondary mb-2" data-bs-dismiss="modal" style="width: 150px;">Đóng-->
-<!--            </button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
   </div>
 </div>
+<app-footer></app-footer>

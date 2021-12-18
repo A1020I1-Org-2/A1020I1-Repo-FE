@@ -1,8 +1,9 @@
+<app-header></app-header>
 <!--content-->
 <div class="container-fluid bg-light">
   <div class="row">
     <div class="col-lg-12 col-sm-12">
-      <div class="container bg-white mt-5 mb-5 pb-3" style="border-radius: 2%">
+      <div class="container bg-white mt-5 mb-5 pb-4" style="border-radius: 2%">
         <div class="row">
           <div class="col-lg-12 col-sm-12">
             <h2 class="text-center mt-3 mb-5" style="color: darkblue; font-size: 35px">TẠO HỢP ĐỒNG THANH LÝ</h2>
@@ -162,19 +163,18 @@
       </div>
     </div>
   </div>
-
 </div>
+<app-footer></app-footer>
 <!-- modal liquidation product-->
 <div class="modal fade" id="exampleModal" tabindex="2" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class=" text-center">
-        <h5 class="text-center mt-3" id="exampleModalLabel" style="color: darkblue;font-size: 35px">CHỌN ĐỒ THANH
-          LÝ</h5>
+        <h5 class="text-center mt-3" id="exampleModalLabel" style="color: darkblue;font-size: 35px">CHỌN ĐỒ THANH LÝ</h5>
       </div>
       <div class="modal-body">
-        <form class="container" [formGroup]="searchProduct" (ngSubmit)="search()">
+        <form class="container" [formGroup]="searchProduct" (ngSubmit)="getPageListProduct(0)">
           <div class="row">
             <table class="ms-5">
               <tr class="row">
@@ -238,42 +238,42 @@
           <div class="col-1"></div>
         </div>
         <!--Phân Trang-->
-        <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12 mt-3 " *ngIf="isFoundPd">
-          <nav aria-label="..." class="float-lg-end">
-            <ul class="pagination">
-              <li class="page-item" [class]="(indexPagination-1)>0 ? '' : 'disable'">
-                <button class="page-link" (click)="getPageListProduct(0)">&laquo;</button>
-              </li>
-              <li class="page-item" [class]="(indexPagination-1)>0 ? '' : 'disable'">
-                <button class="page-link" (click)="getPageListProduct((indexPagination-2))">&lsaquo;</button>
-              </li>
-              <li class="page-item">
-                <button class="page-link" *ngIf="(indexPagination-1)>0"
-                        (click)="getPageListProduct((indexPagination-2))">
-                  {{indexPagination - 1}}
-                </button>
-              </li>
-              <li class="page-item active" aria-current="page">
-                <button class="page-link">{{indexPagination}}</button>
-              </li>
-              <li class="page-item">
-                <button class="page-link" *ngIf="(indexPagination +1)< totalPagination"
-                        (click)="getPageListProduct((indexPagination))">
-                  {{indexPagination + 1}}
-                </button>
-              </li>
-              <li class="page-item" [class]="(indexPagination +1)< totalPagination ? '' : 'disabled'">
-                <button class="page-link" (click)="getPageListProduct((indexPagination))">&rsaquo;</button>
-              </li>
-              <li class="page-item" [class]="(indexPagination +1)< totalPagination ? '' : 'disabled'">
-                <button class="page-link" (click)="getPageListProduct((totalPagination-1))">&raquo;</button>
-              </li>
-            </ul>
-          </nav>
-        </div>
-        <div class="modal-footer justify-content-start">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        </div>
+<!--        <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12 mt-3 " >-->
+          <div class="modal-footer justify-content-start ">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <nav aria-label="..." class="ms-auto me-0 d-flex align-items-center" *ngIf="isFoundPd">
+              <ul class="pagination m-0">
+                <li class="page-item" [class]="indexPagination <= 1 ? 'disabled' : ''">
+                  <button class="page-link" (click)="getPageListProduct(0)">&laquo;</button>
+                </li>
+                <li class="page-item" [class]="indexPagination <= 1 ? 'disabled' : ''">
+                  <button class="page-link" (click)="getPageListProduct((indexPagination-2))">&lsaquo;</button>
+                </li>
+                <li class="page-item">
+                  <button class="page-link" *ngIf="indexPagination > 1"
+                          (click)="getPageListProduct((indexPagination-2))">
+                    {{indexPagination - 1}}
+                  </button>
+                </li>
+                <li class="page-item active" aria-current="page">
+                  <button class="page-link">{{indexPagination}}</button>
+                </li>
+                <li class="page-item">
+                  <button class="page-link" *ngIf="indexPagination < totalPagination"
+                          (click)="getPageListProduct((indexPagination))">
+                    {{indexPagination + 1}}
+                  </button>
+                </li>
+                <li class="page-item" [class]="indexPagination >= totalPagination ? 'disabled' : ''">
+                  <button class="page-link" (click)="getPageListProduct((indexPagination))">&rsaquo;</button>
+                </li>
+                <li class="page-item" [class]="indexPagination >= totalPagination ? 'disabled' : ''">
+                  <button class="page-link" (click)="getPageListProduct((totalPagination-1))">&raquo;</button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+<!--        </div>-->
       </div>
     </div>
   </div>
@@ -296,7 +296,7 @@
               <input type="text" class="form-control border-success" placeholder="Tìm kiếm" [(ngModel)]="searchCus"/>
             </div>
             <button type="submit" class="col-1 col-sm-1 col-lg-1 col-md-1 col-xl-1 btn btn-success justify-content-end"
-                    (click)="searchCustomer()">
+                    (click)="getPageCustomer(0)">
               <i class="fas fa-search-plus mr-2 "></i>
             </button>
           </div>
@@ -324,14 +324,15 @@
               </tbody>
             </table>
             <h2 class="text-center text-danger" *ngIf="isFoundCs == false">
-              Kết quả tìm kiếm không tìm thấy!!!
+              Không tìm thấy kết quả muốn tìm kiếm!!!
             </h2>
             <div class="col-1"></div>
           </div>
           <!--Phân Trang-->
-          <div class="col-12 col-sm-12 col-lg-12 col-xl-12 col-md-12 mt-3" *ngIf="isFoundCs">
-            <nav aria-label="..." class="float-lg-end">
-              <ul class="pagination">
+          <div class="modal-footer justify-content-start">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <nav aria-label="..." class="ms-auto me-0 d-flex align-items-center" *ngIf="isFoundCs">
+              <ul class="pagination m-0">
                 <li class="page-item" [class]="(indexPagination-1)>0 ? '' : 'disabled'">
                   <button class="page-link" (click)="getPageCustomer(0)">&laquo;</button>
                 </li>
@@ -350,7 +351,7 @@
                 </li>
                 <li class="page-item">
                   <button class="page-link" *ngIf="(indexPagination +1)<= totalPagination"
-                     (click)="getPageCustomer((indexPagination))">
+                          (click)="getPageCustomer((indexPagination))">
                     {{indexPagination + 1}}
                   </button>
                 </li>
@@ -362,9 +363,6 @@
                 </li>
               </ul>
             </nav>
-          </div>
-          <div class="modal-footer justify-content-start">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
           </div>
         </div>
       </div>
@@ -390,7 +388,7 @@
                      placeholder="Tìm kiếm" [(ngModel)]="searchEm">
             </div>
             <button type="submit" class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 btn btn-success justify-content-end"
-                    (click)="searchEmployee()"><i class="fas fa-search-plus mr-2 "></i>
+                    (click)="getPageEmployee(0)"><i class="fas fa-search-plus mr-2 "></i>
             </button>
           </div>
           <div class="mt-2 container-fluid">
@@ -417,14 +415,15 @@
               </tbody>
             </table>
             <h2 class="text-center text-danger" *ngIf="isFoundEm == false">
-              Kết quả tìm kiếm không tìm thấy!!!
+              Không tìm thấy kết quả muốn tìm kiếm!!!
             </h2>
             <div class="col-1"></div>
           </div>
           <!--Phân Trang-->
-          <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 mt-3" *ngIf="isFoundEm">
-            <nav aria-label="..." class="float-lg-end">
-              <ul class="pagination">
+          <div class="modal-footer justify-content-start">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <nav aria-label="..." class="ms-auto me-0 d-flex align-items-center" *ngIf="isFoundEm">
+              <ul class="pagination m-0">
                 <li class="page-item" [class]="(indexPagination-1)>0 ? '' : 'disabled'">
                   <button class="page-link" (click)="getPageEmployee(0)">&laquo;</button>
                 </li>
@@ -453,9 +452,6 @@
                 </li>
               </ul>
             </nav>
-          </div>
-          <div class="modal-footer justify-content-start">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
@@ -79,9 +80,18 @@
             <span aria-hidden="true">&lsaquo;</span>
           </button>
         </li>
-        <li class="page-item" *ngFor="let item of totalPage; let i = index" [attr.data-index]="i" [ngClass]="i==pageNow? 'active':''">
-          <button class="page-link" (click)="getPage(i)">{{i+1}}</button>
+        <li class="page-item" *ngIf="pageNow > 0">
+          <button class="page-link" (click)="getPage(pageNow - 1)">{{pageNow}}</button>
         </li>
+        <li class="page-item active">
+          <button class="page-link">{{pageNow+1}}</button>
+        </li>
+        <li class="page-item" *ngIf="(pageNow+1) < totalPage.length">
+          <button class="page-link" (click)="getPage(pageNow + 1)">{{pageNow+2}}</button>
+        </li>
+<!--        <li class="page-item" *ngFor="let item of totalPage; let i = index" [attr.data-index]="i" [ngClass]="i==pageNow? 'active':''">-->
+<!--          <button class="page-link" (click)="getPage(i)">{{i+1}}</button>-->
+<!--        </li>-->
         <li class="page-item" [ngClass]="pageNow == totalPage.length-1 ? 'disabled' : ''">
           <button class="page-link" aria-label="Next" (click)="getPage(pageNow+1)">
             <span aria-hidden="true">&rsaquo;</span>
@@ -96,3 +106,4 @@
     </nav>
   </div>
 </div>
+<app-footer></app-footer>

@@ -19,6 +19,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
 import { ToastrModule } from "ngx-toastr";
+import {HomepageModule} from "../homepage/homepage.module";
 
 @NgModule({
   declarations: [
@@ -27,21 +28,22 @@ import { ToastrModule } from "ngx-toastr";
     ListCustomerComponent,
     DeleteCustomerComponent
   ],
-  imports: [
-    CommonModule,
-    CustomerRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    MatDialogModule,
-    FormsModule,
-    MatSnackBarModule,
-    AngularFireModule.initializeApp(environment.firebaseConfigNhanNH),
-    AngularFireDatabaseModule,
-    AngularFireStorageModule,
-    ToastrModule.forRoot(),
-  ],
+    imports: [
+        CommonModule,
+        CustomerRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        MatDialogModule,
+        FormsModule,
+        MatSnackBarModule,
+        AngularFireModule.initializeApp(environment.firebaseConfigNhanNH),
+        AngularFireDatabaseModule,
+        AngularFireStorageModule,
+        ToastrModule.forRoot(),
+        HomepageModule,
+    ],
   entryComponents:[DeleteCustomerComponent]
 })
 export class CustomerModule { }

@@ -8,6 +8,7 @@ import { StatisticExpectedComponent } from './statistic-expected/statistic-expec
 import {RouterModule} from '@angular/router';
 import {StatisticRoutingModule} from './statistic-routing.module';
 import {StatisticService} from "../services/statistic.service";
+import {HomepageModule} from "../homepage/homepage.module";
 
 @NgModule({
   declarations: [ StatisticLiquidationComponent, StatisticInterestComponent, StatisticExpectedComponent],
@@ -16,14 +17,15 @@ import {StatisticService} from "../services/statistic.service";
     StatisticExpectedComponent,
     StatisticInterestComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    NgApexchartsModule,
-    RouterModule,
-    StatisticRoutingModule,
-    FormsModule
-  ],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NgApexchartsModule,
+        RouterModule,
+        StatisticRoutingModule,
+        FormsModule,
+        HomepageModule
+    ],
   providers: [DatePipe, StatisticService]
 
 })
