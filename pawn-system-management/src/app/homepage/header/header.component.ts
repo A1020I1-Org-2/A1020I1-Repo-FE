@@ -4,6 +4,8 @@ import {map} from "rxjs/operators";
 import {LoginService} from "../../services/login.service";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {CookieService} from "ngx-cookie-service";
+import {EmployeeService} from "../../services/employee.service";
 
 
 @Component({
@@ -14,7 +16,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class HeaderComponent implements OnInit {
   formGroup!: FormGroup;
   idEmployee!: string;
-  showNotification!: boolean;
+  showNotification: boolean = false;
   messageUnseenArr: any[] = [];
   objForUpdateMessageLatest: any[] = [];
   username: string = '';
@@ -25,23 +27,20 @@ export class HeaderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private chatService: ChatService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private employeeService: EmployeeService
   ) { }
 
   ngOnInit(): void {
-    if(this.loginService.username !== undefined){
-      this.username = this.loginService.username;
-      console.log(":))")
-    }else{
-      this.username = localStorage.getItem("username") + '';
+    this.username = this.loginService.getUserName();
+    this.role = this.loginService.getRole();
+    if(this.username !== ''){
+      this.employeeService.findByAccount(this.username).subscribe(employee => {
+        this.idEmployee = employee.employeeId;
+      });
+      this.showNotification = true;
+      this.getMessageAllUser();
     }
-    if(this.loginService.role !== undefined){
-      this.role = this.loginService.role;
-    }else{
-      this.role = localStorage.getItem("role") + '';
-    }
-    this.idEmployee = "NV-0001";
-
     this.formGroup = this.formBuilder.group({
       sender: this.idEmployee,
       receiver: ['',Validators.required],
@@ -49,8 +48,6 @@ export class HeaderComponent implements OnInit {
       time: [''],
       status: "pending",
     });
-
-    this.getMessageAllUser();
   }
 
   private getMessageAllUser(){
@@ -101,6 +98,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
+    this.loginService.removeRole();
+    this.loginService.removeToken();
+    this.loginService.removeUserName();
     this.router.navigateByUrl("/login").then();
   }
 }

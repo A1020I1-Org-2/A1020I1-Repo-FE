@@ -14,7 +14,7 @@ import {MatButtonModule} from "@angular/material/button";
   declarations: [
     LoginComponent,
     DialogMessage,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
   exports: [
     LoginComponent

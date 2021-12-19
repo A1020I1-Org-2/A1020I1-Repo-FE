@@ -11,11 +11,11 @@ import {CreatePawnContractComponent} from "./create-pawn-contract/create-pawn-co
 import {AuthGuard} from "../services/auth.guard";
 
 const routes: Routes = [
-  {path: 'list-top-10-contract', component: ListTop10ContractComponent},
-  {path: 'list-contract',component: ListContractComponent},
-  {path: 'edit-contract', component: UpdateContractComponent},
+  {path: 'list-top-10-contract', canActivate: [AuthGuard], component: ListTop10ContractComponent},
+  {path: 'list-contract', canActivate: [AuthGuard],component: ListContractComponent},
+  {path: 'edit-contract', canActivate: [AuthGuard], component: UpdateContractComponent},
   {path: 'create-liquidation-contract', canActivate: [AuthGuard], component:CreateLiquidationContractComponentComponent},
-  {path:'create-pawn',component:CreatePawnContractComponent}
+  {path:'create-pawn', canActivate: [AuthGuard],component:CreatePawnContractComponent}
   ]
 
 @NgModule({

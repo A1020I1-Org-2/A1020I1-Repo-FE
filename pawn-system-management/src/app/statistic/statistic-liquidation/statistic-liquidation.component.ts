@@ -13,7 +13,7 @@ import {
 } from 'ng-apexcharts';
 import {FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
-import {DatePipe} from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import {Statistic} from "../../interface/statistic";
 import {StatisticService} from "../../services/statistic.service";
 
@@ -49,6 +49,10 @@ export class StatisticLiquidationComponent implements OnInit {
   contract: Statistic[] = [];
   isCheckStatistic = false;
   totalMoney = 0;
+  label: string[] = [];
+  loanMoney: number[] = [];
+  interestMoney: number[] = [];
+  receiveMoney: number[] = [];
   constructor(private statisticService: StatisticService,
               private titleService: Title,
               private datePipe: DatePipe) {
@@ -115,13 +119,20 @@ export class StatisticLiquidationComponent implements OnInit {
   getContractId() {
     this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
-      this.chartOptions.labels[0] = this.contract[0].contractId;
-      this.totalMoney += Number(this.contract[0].interestMoney);
-      for (let i = 1; i < this.contract.length; i++) {
-        this.totalMoney += Number(this.contract[i].interestMoney);
-        this.chartOptions.labels.push(this.contract[i].contractId);
-        console.log(this.contract[i].contractId);
-      }
+      this.contract.forEach(item => {
+        this.label.push(item.contractId);
+        this.interestMoney.push(item.interestMoney);
+        this.loanMoney.push(item.loanMoney);
+        this.receiveMoney.push(item.receiveMoney);
+      });
+      this.statisticLiquidation();
+      // this.chartOptions.labels[0] = this.contract[0].contractId;
+      // this.totalMoney += Number(this.contract[0].interestMoney);
+      // for (let i = 1; i < this.contract.length; i++) {
+      //   this.totalMoney += Number(this.contract[i].interestMoney);
+      //   this.chartOptions.labels.push(this.contract[i].contractId);
+      //   console.log(this.contract[i].contractId);
+      // }
     }, error => {
       console.log(error);
     });
@@ -132,15 +143,14 @@ export class StatisticLiquidationComponent implements OnInit {
     this.isCheckStatistic = true;
     if (this.isCheckStatistic) {
       this.totalMoney=0;
-      // @ts-ignore
-      this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
-      // @ts-ignore
-      this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
-      this.statisticLiquidation();
+      this.startDate = formatDate(this.checkDateForm.controls.checkStartDate.value, 'dd/MM/yyyy', 'en-US');
+      // this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
+      this.endDate = formatDate(this.checkDateForm.controls.checkEndDate.value, 'dd/MM/yyyy', 'en-US');
+      // this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
       this.getContractId();
-      this.getLoanMoney();
-      this.getInterestMoney();
-      this.getReceiveMoney();
+      // this.getLoanMoney();
+      // this.getInterestMoney();
+      // this.getReceiveMoney();
     }
   }
 
@@ -150,17 +160,17 @@ export class StatisticLiquidationComponent implements OnInit {
         {
           name: 'Tổng tiền cho vay',
           type: 'column',
-          data: []
+          data: this.loanMoney
         },
         {
           name: 'Tiền lãi',
           type: 'line',
-          data: []
+          data: this.interestMoney
         },
         {
           name: 'Tiền thanh lí',
           type: 'column',
-          data: []
+          data: this.receiveMoney
         }
       ],
       chart: {
@@ -193,7 +203,7 @@ export class StatisticLiquidationComponent implements OnInit {
         labels: {
           trim: false
         },
-        categories: []
+        categories: this.label
       },
       labels: [''],
 
@@ -220,14 +230,14 @@ export class StatisticLiquidationComponent implements OnInit {
       }
     };
   }
-  formatDate(date:any) {
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [day, month, year].join('/');
-  }
+  // formatDate(date:any) {
+  //   const d = new Date(date);
+  //   let month = '' + (d.getMonth() + 1);
+  //   let day = '' + d.getDate();
+  //   const year = d.getFullYear();
+  //   if (month.length < 2) month = '0' + month;
+  //   if (day.length < 2) day = '0' + day;
+  //   return [day, month, year].join('/');
+  // }
 
 }

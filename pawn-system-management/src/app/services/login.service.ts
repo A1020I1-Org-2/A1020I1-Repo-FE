@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
 
 
 @Injectable({
@@ -11,11 +12,14 @@ export class LoginService {
   API: string = 'http://localhost:8080/';
   FIRST_USERNAME: string = 'CTIwGGVDooOmNfUpvsFM';
   FIRST_PASSWORD: string = 'SxbaNxSguVlzGbNlsJep';
+  USER_NAME: string = 'bD9EdCjnZHOsH1Wkop4r';
+  ROLE: string = 'tSUJTZyGodr7kbSb9Lo8';
   message: string = '';
   username: string | undefined;
   role: string | undefined;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private cookieService: CookieService) { }
 
   doLogin(userName: string, password: string): Observable<any>{
     return this.http.post<any>(this.API + 'login', {
@@ -33,24 +37,34 @@ export class LoginService {
   }
 
   saveToken(token: string): void{
-    localStorage.setItem("Token", btoa(token));
+    this.cookieService.set('Token', btoa(token), {expires: 0});
+    // localStorage.setItem("Token", btoa(token));
   }
 
   getToken(): string{
-    let token: string|null = localStorage.getItem('Token');
-    return token == null ? '' : 'Token ' + atob(token);
+    // let token: string|null = localStorage.getItem('Token');
+    let token: string = this.cookieService.get('Token');
+    return token === '' ? '' : 'Token ' + atob(token);
   }
 
   removeToken(): void{
-    localStorage.removeItem("Token");
+    // localStorage.removeItem("Token");
+    this.cookieService.delete('Token');
   }
 
   saveUserName(username: string): void{
-    localStorage.setItem('username', username);
+    this.cookieService.set(this.USER_NAME, btoa(username), {expires: 0});
+    // localStorage.setItem('username', username);
   }
 
-  getUserName(): string | null{
-    return localStorage.getItem('username');
+  getUserName(): string{
+    let temp = this.cookieService.get(this.USER_NAME);
+    return temp === '' ? '' : atob(temp);
+    // return localStorage.getItem('username');
+  }
+
+  removeUserName(){
+    this.cookieService.delete(this.USER_NAME);
   }
 
   setMessage(message: string): void{
@@ -62,7 +76,17 @@ export class LoginService {
   }
 
   saveRole(role: string){
-    localStorage.setItem('role', role);
+    // localStorage.setItem('role', role);
+    this.cookieService.set(this.ROLE, btoa(role), {expires: 0});
+  }
+
+  getRole(): string{
+    let temp = this.cookieService.get(this.ROLE);
+    return temp === '' ? '' : atob(temp);
+  }
+
+  removeRole(){
+    this.cookieService.delete(this.ROLE);
   }
 
   setRememberMe(username: string, password: string, days: number): void{

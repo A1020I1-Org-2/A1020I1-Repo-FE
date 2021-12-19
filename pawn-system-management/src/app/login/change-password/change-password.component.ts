@@ -26,7 +26,7 @@ function checkEqualsPassword(input: AbstractControl): ValidationErrors | null {
 export class ChangePasswordComponent implements OnInit {
   isOpenToast: boolean = false;
   isSubmit: boolean = false;
-  username: string | null = '';
+  username: string = '';
   formChangePassword: FormGroup = new FormGroup({
     password: new FormControl('', [Validators.required]),
     passwordGroup: new FormGroup({
@@ -43,7 +43,7 @@ export class ChangePasswordComponent implements OnInit {
   ngOnInit(): void {
     this.setFocus();
     this.titleService.setTitle("Đổi mật khẩu");
-    if (this.loginService.getUserName() !== null){
+    if (this.loginService.getUserName() !== ''){
       this.username = this.loginService.getUserName();
     }else{
       this.router.navigateByUrl("/login").then();
@@ -99,6 +99,6 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   cancel(){
-    this.router.navigateByUrl("/login").then();
+    this.router.navigateByUrl("/home").then();
   }
 }

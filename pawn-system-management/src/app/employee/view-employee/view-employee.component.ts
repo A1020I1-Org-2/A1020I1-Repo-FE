@@ -6,6 +6,7 @@ import {formatDate} from "@angular/common";
 import {Customer} from "../../interface/customer";
 import {Employee} from "../../interface/employee";
 import {AlertService} from "../../services/alert.service";
+import {LoginService} from "../../services/login.service";
 
 function checkDate(control: AbstractControl): ValidationErrors | null {
   let now = new Date();
@@ -34,12 +35,13 @@ export class ViewEmployeeComponent implements OnInit {
   employeeCurrent!: Employee;
   constructor(private title: Title,
               private employeeService: EmployeeService,
-              private alert: AlertService) { }
+              private alert: AlertService,
+              private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.title.setTitle("Thông tin cá nhân");
-    if(localStorage.getItem('username') !== null){
-      this.employeeService.findByAccount(localStorage.getItem('username')).subscribe(employee => {
+    if(this.loginService.getUserName() !== ''){
+      this.employeeService.findByAccount(this.loginService.getUserName()).subscribe(employee => {
         this.employeeCurrent = employee;
         this.formEdit.patchValue({
           username: employee.account.userName,

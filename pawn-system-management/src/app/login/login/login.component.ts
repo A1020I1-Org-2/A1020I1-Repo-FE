@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit {
       this.login.password.setValue(remember.password);
       this.doLogin(remember.username, remember.password);
     }
-    if(this.loginService.getUserName() !== null){
-      this.login.userName.setValue(this.loginService.getUserName());
+    if(localStorage.getItem('username') !== null){
+      this.login.userName.setValue(localStorage.getItem('username'));
     }
     if(this.loginService.message === 'success'){
       setTimeout(() => {
@@ -78,8 +78,7 @@ export class LoginComponent implements OnInit {
         this.isOpenToast = true;
       }else{
         this.isOpenToast = false;
-        this.loginService.username = account.userName;
-        this.loginService.role = account.role;
+        localStorage.setItem('username', account.userName);
         this.loginService.saveUserName(account.userName);
         this.loginService.saveToken(account.token);
         this.loginService.saveRole(account.role);

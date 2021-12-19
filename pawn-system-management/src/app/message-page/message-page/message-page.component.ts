@@ -8,6 +8,7 @@ import {IEmployee} from "../../employee/IEmployee";
 import {Title} from "@angular/platform-browser";
 import {Employee} from "../../interface/employee";
 import {formatDate} from "@angular/common";
+import {LoginService} from "../../services/login.service";
 
 @Component({
   selector: 'app-chat',
@@ -38,13 +39,14 @@ export class MessagePageComponent implements OnInit, AfterViewChecked {
     private formBuilder: FormBuilder,
     private chatService: ChatService,
     private employeeService: EmployeeService,
-    private title: Title
+    private title: Title,
+    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
     this.title.setTitle('Nhắn tin');
-    if(localStorage.getItem('username') !== null){
-      this.employeeService.findByAccount(localStorage.getItem('username')).subscribe(employee => {
+    if(this.loginService.getUserName() !== ''){
+      this.employeeService.findByAccount(this.loginService.getUserName()).subscribe(employee => {
         this.idEmployee = employee.employeeId;
       })
     }

@@ -13,7 +13,7 @@ import {
 } from 'ng-apexcharts';
 import {FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
-import {DatePipe} from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import {Statistic} from "../../interface/statistic";
 import {StatisticService} from "../../services/statistic.service";
 
@@ -44,12 +44,15 @@ export class StatisticInterestComponent implements OnInit {
   check = false;
   checkStartDate = this.pastDay;
   checkEndDate = this.today;
-  startDate!: string;
-  endDate!: string;
+  startDate: string = '01/01/2021';
+  endDate: string = '30/12/2021';
   checkDateForm!: FormGroup;
   contract: Statistic[] = [];
   isCheckStatistic = false;
   totalMoney = 0;
+  label: string[] = [];
+  interestMoney: string[] = [];
+  loanMoney: string[] = [];
   constructor(private statisticService: StatisticService,
               private titleService: Title,
               private datePipe: DatePipe) {
@@ -58,6 +61,7 @@ export class StatisticInterestComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.statisticInterest();
   }
   private checkDate(check: AbstractControl): any {
     const fromDate = check.get('checkStartDate');
@@ -78,7 +82,6 @@ export class StatisticInterestComponent implements OnInit {
       this.contract = value;
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.contract.length; i++) {
-        // @ts-ignore
         this.chartOptions.series[0].data.push(Number(this.contract[i].loanMoney));
       }
     }, error => {
@@ -91,7 +94,6 @@ export class StatisticInterestComponent implements OnInit {
       this.contract = value;
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.contract.length; i++) {
-        // @ts-ignore
         this.chartOptions.series[1].data.push(Number(this.contract[i].interestMoney));
       }
 
@@ -103,13 +105,19 @@ export class StatisticInterestComponent implements OnInit {
   getContractCode() {
     this.statisticService.getStatisticInterest(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
-      this.chartOptions.labels[0] = this.contract[0].contractId;
-      this.totalMoney += Number(this.contract[0].interestMoney);
-      for (let i = 1; i < this.contract.length; i++) {
-        this.totalMoney += Number(this.contract[i].interestMoney);
-        this.chartOptions.labels.push(this.contract[i].contractId);
-        console.log(this.contract[i].contractId);
-      }
+      this.contract.forEach(item => {
+        this.label.push(item.contractId);
+        this.interestMoney.push(item.interestMoney+'');
+        this.loanMoney.push(item.loanMoney+'');
+      });
+      this.statisticInterest();
+      // this.chartOptions.labels[0] = this.contract[0].contractId;
+      // this.totalMoney += Number(this.contract[0].interestMoney);
+      // for (let i = 1; i < this.contract.length; i++) {
+      //   this.totalMoney += Number(this.contract[i].interestMoney);
+      //   this.chartOptions.labels.push(this.contract[i].contractId);
+      //   console.log(this.contract[i].contractId);
+      // }
     }, error => {
       console.log(error);
     });
@@ -120,29 +128,29 @@ export class StatisticInterestComponent implements OnInit {
     this.isCheckStatistic = true;
     if (this.isCheckStatistic) {
       this.totalMoney=0;
-      // @ts-ignore
-      this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
-      // @ts-ignore
-      this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
-      this.statisticInterest();
+      this.startDate = formatDate(this.checkDateForm.controls.checkStartDate.value, 'dd/MM/yyyy', 'en-US');
+      // this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
+      this.endDate = formatDate(this.checkDateForm.controls.checkEndDate.value, 'dd/MM/yyyy', 'en-US');
+      // this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
       this.getContractCode();
-      this.getContract();
-      this.getProfit();
+      // this.getContract();
+      // this.getProfit();
     }
   }
 
   statisticInterest() {
     this.chartOptions = {
+      label:'',
       series: [
         {
           name: 'Tổng tiền cho vay',
           type: 'column',
-          data: []
+          data: this.loanMoney
         },
         {
           name: 'Tiền lãi',
           type: 'area',
-          data: []
+          data: this.interestMoney
         }
       ],
       chart: {
@@ -159,7 +167,6 @@ export class StatisticInterestComponent implements OnInit {
           columnWidth: '50%'
         }
       },
-
       fill: {
         opacity: [0.85, 0.25, 1],
         gradient: {
@@ -175,7 +182,7 @@ export class StatisticInterestComponent implements OnInit {
         labels: {
           trim: false
         },
-        categories: []
+        categories: this.label
       },
       labels: [''],
 
@@ -202,14 +209,15 @@ export class StatisticInterestComponent implements OnInit {
       }
     };
   }
-  formatDate(date:any) {
-    const d = new Date(date);
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    const year = d.getFullYear();
-    if (month.length < 2) month = '0' + month;
-    if (day.length < 2) day = '0' + day;
-    return [day, month, year].join('/');
-  }
+
+  // formatDate(date:any) {
+  //   const d = new Date(date);
+  //   let month = '' + (d.getMonth() + 1);
+  //   let day = '' + d.getDate();
+  //   const year = d.getFullYear();
+  //   if (month.length < 2) month = '0' + month;
+  //   if (day.length < 2) day = '0' + day;
+  //   return [day, month, year].join('/');
+  // }
 
 }

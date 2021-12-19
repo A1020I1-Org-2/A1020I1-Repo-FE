@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {LoginService} from "./login.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import {Observable} from "rxjs";
 export class PawnService {
   httpOptions: any;
   public API: string = "http://localhost:8080/pawn";
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loginService: LoginService) {
     // this.httpOptions = {
     //   headers: new HttpHeaders({
     //     'Content-Type': 'application/json',
@@ -19,20 +20,28 @@ export class PawnService {
     // };
   }
   getAllPawn(): Observable<any>{
-    return this.http.get<any>(this.API + '/pawnList');
+    return this.http.get<any>(this.API + '/pawnList',{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
   // getAllPawn(): Observable<any>{
   //   return this.http.get<any>(this.API + '/pawnList',this.httpOptions);
   // }
   getPawnById(id: String): Observable<any>{
-    return this.http.get<any>(this.API+'/pawnView/' + id);
+    return this.http.get<any>(this.API+'/pawnView/' + id,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   getSearchPawn(search: string, typeSearch: string,page: number): Observable<any> {
-    return this.http.get<any>(this.API + '/pawnSearch?search=' + search +'&typeSearch=' +typeSearch  +'&page=' + page);
+    return this.http.get<any>(this.API + '/pawnSearch?search=' + search +'&typeSearch=' +typeSearch  +'&page=' + page,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   searchPawn(search: string, typeSearch: string): Observable<any> {
-    return this.http.get<any>(this.API + '/pawnSearch?search=' + search +'&typeSearch=' +typeSearch );
+    return this.http.get<any>(this.API + '/pawnSearch?search=' + search +'&typeSearch=' +typeSearch,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    } );
   }
 }

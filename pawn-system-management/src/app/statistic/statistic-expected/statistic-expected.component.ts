@@ -13,7 +13,7 @@ import {
 } from 'ng-apexcharts';
 import {FormControl, FormGroup, Validators, AbstractControl} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
-import {DatePipe} from '@angular/common';
+import {DatePipe, formatDate} from '@angular/common';
 import {Statistic} from "../../interface/statistic";
 import {StatisticService} from "../../services/statistic.service";
 
@@ -52,6 +52,10 @@ export class StatisticExpectedComponent implements OnInit {
   contract: Statistic[] = [];
   isCheckStatistic = false;
   totalMoney = 0;
+  label: string[] = [];
+  loanMoney: number[] = [];
+  interestMoney: number[] = [];
+  receiveMoney: number[] = [];
   constructor(private statisticService: StatisticService,
               private titleService: Title,
               private datePipe: DatePipe) {
@@ -121,16 +125,23 @@ export class StatisticExpectedComponent implements OnInit {
   getInterestDay() {
     this.statisticService.getStatisticExpected(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
-      // @ts-ignore
-      this.eDate = this.checkDateForm.get('checkEndDate').value;
-      this.interestDays=this.dateDifference(this.contract[0].endDate,this.eDate);
-      this.totalMoney += Number((this.contract[0].receiveMoney-this.contract[0].loanMoney)+this.interestDays*100000);
-      this.chartOptions.series[2].data.push(Number(this.totalMoney));
-      for (let i = 1; i < this.contract.length; i++) {
-        this.interestDays=this.dateDifference(this.contract[i].endDate,this.eDate);
-        this.totalMoney += Number((this.contract[i].receiveMoney-this.contract[i].loanMoney)+this.interestDays*100000);
-        this.chartOptions.series[2].data.push(Number(this.contract[i].receiveMoney-this.contract[i].loanMoney)+this.interestDays*100000);
-      }
+      this.contract.forEach(item => {
+        this.label.push(item.contractId);
+        this.interestMoney.push(item.interestMoney);
+        this.loanMoney.push(item.loanMoney);
+        this.receiveMoney.push(item.receiveMoney);
+      });
+      this.statisticExpected();
+      // // @ts-ignore
+      // this.eDate = this.checkDateForm.get('checkEndDate').value;
+      // this.interestDays=this.dateDifference(this.contract[0].endDate,this.eDate);
+      // this.totalMoney += Number((this.contract[0].receiveMoney-this.contract[0].loanMoney)+this.interestDays*100000);
+      // this.chartOptions.series[2].data.push(Number(this.totalMoney));
+      // for (let i = 1; i < this.contract.length; i++) {
+      //   this.interestDays=this.dateDifference(this.contract[i].endDate,this.eDate);
+      //   this.totalMoney += Number((this.contract[i].receiveMoney-this.contract[i].loanMoney)+this.interestDays*100000);
+      //   this.chartOptions.series[2].data.push(Number(this.contract[i].receiveMoney-this.contract[i].loanMoney)+this.interestDays*100000);
+      // }
     }, error => {
       console.log(error);
     });
@@ -140,14 +151,14 @@ export class StatisticExpectedComponent implements OnInit {
     this.isCheckStatistic = true;
     if (this.isCheckStatistic) {
       this.totalMoney=0;
-      // @ts-ignore
-      this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
-      // @ts-ignore
-      this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
-      this.statisticExpected();
-      this.getContractId();
-      this.getLoanMoney();
-      this.getInterestMoney();
+      this.startDate = formatDate(this.checkDateForm.controls.checkStartDate.value, 'dd/MM/yyyy', 'en-US');
+      // this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
+      this.endDate = formatDate(this.checkDateForm.controls.checkEndDate.value, 'dd/MM/yyyy', 'en-US');
+      // this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
+
+      // this.getContractId();
+      // this.getLoanMoney();
+      // this.getInterestMoney();
       this.getInterestDay()
     }
   }
@@ -158,17 +169,17 @@ export class StatisticExpectedComponent implements OnInit {
         {
           name: 'Tổng tiền cho vay',
           type: 'column',
-          data: []
+          data: this.loanMoney
         },
         {
           name: 'Tiền lãi',
           type: 'line',
-          data: []
+          data: this.interestMoney
         },
         {
           name: 'Tiền lãi dự kiến',
           type: 'column',
-          data: []
+          data: this.receiveMoney
         }
       ],
       chart: {
@@ -201,7 +212,7 @@ export class StatisticExpectedComponent implements OnInit {
         labels: {
           trim: false
         },
-        categories: []
+        categories: this.label
       },
       labels: [''],
 

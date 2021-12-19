@@ -8,6 +8,7 @@ import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {environment} from "../../environments/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {HomepageModule} from "../homepage/homepage.module";
+import {AuthGuard} from "../services/auth.guard";
 
 
 
@@ -23,9 +24,10 @@ import {HomepageModule} from "../homepage/homepage.module";
         AngularFireDatabaseModule,
         AngularFireModule.initializeApp(environment.firebaseConfigThanhNHM),
         RouterModule.forRoot([
-            {path: "chat", component: MessagePageComponent}
+            {path: "chat", canActivate: [AuthGuard], component: MessagePageComponent}
         ]),
         HomepageModule
-    ]
+    ],
+  providers: [AuthGuard]
 })
 export class MessagePageModule { }

@@ -4,17 +4,18 @@ import {RouterModule, Routes} from '@angular/router';
 import {StatisticLiquidationComponent} from './statistic-liquidation/statistic-liquidation.component';
 import {StatisticInterestComponent} from './statistic-interest/statistic-interest.component';
 import {StatisticExpectedComponent} from './statistic-expected/statistic-expected.component';
+import {AuthGuard} from "../services/auth.guard";
 const routes: Routes = [
   {
-    path: 'statistic-liquidation',
+    path: 'statistic-liquidation', canActivate: [AuthGuard],
     component: StatisticLiquidationComponent
   },
   {
-    path: 'statistic-interest',
+    path: 'statistic-interest', canActivate: [AuthGuard],
     component: StatisticInterestComponent
   },
   {
-    path: 'statistic-expected',
+    path: 'statistic-expected', canActivate: [AuthGuard],
     component: StatisticExpectedComponent
   }
 ];
@@ -23,6 +24,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-  ]
+  ],
+  providers: [AuthGuard]
 })
 export class StatisticRoutingModule { }

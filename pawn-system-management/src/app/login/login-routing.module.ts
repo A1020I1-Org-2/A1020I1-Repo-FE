@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
 import {LoginComponent} from "./login/login.component";
+import {AuthGuard} from "../services/auth.guard";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: 'change-password', component: ChangePasswordComponent}
+  {path: 'change-password', canActivate: [AuthGuard], component: ChangePasswordComponent},
 ];
 
 @NgModule({
@@ -14,6 +15,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: [AuthGuard]
 })
 export class LoginRoutingModule { }

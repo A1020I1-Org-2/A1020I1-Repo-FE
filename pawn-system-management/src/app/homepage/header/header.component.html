@@ -61,14 +61,17 @@
                     <strong>Nhắn tin <span *ngIf="showNotification" id="notification"></span></strong>
                   </a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item" *ngIf="username === ''">
+                    <a routerLink="/login" class="nav-link text-light"><strong>Đăng nhập</strong></a>
+                </li>
+                <li class="nav-item dropdown" *ngIf="username !== ''">
                   <a class="nav-link text-info dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                      aria-expanded="false">
                     <strong>{{username}}</strong>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><button class="dropdown-item" (click)="logout()">Đăng xuất</button></li>
-                    <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+                    <li><a class="dropdown-item" routerLink="/change-password">Đổi mật khẩu</a></li>
                   </ul>
                 </li>
               </ul>

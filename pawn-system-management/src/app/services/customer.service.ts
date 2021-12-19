@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Customer } from '../interface/customer';
 import { FileUpload } from '../interface/FileUpload';
 import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { finalize } from "rxjs/operators";
+import {LoginService} from "./login.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,47 +21,66 @@ export class CustomerService {
   constructor(
     public http: HttpClient,
     private db: AngularFireDatabase,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private loginService: LoginService
   ) { }
 
   getListCustomer(): Observable<any> {
-    return this.http.get<any>(this.API_CUSTOMER + '/list-customer');
+    return this.http.get<any>(this.API_CUSTOMER + '/list-customer',{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   getListCustomer1(page:number):Observable<any>{
-    return this.http.get<any>(this.API_CUSTOMER+"/getCustomerList?page="+page);
+    return this.http.get<any>(this.API_CUSTOMER+"/getCustomerList?page="+page,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   getAllCustomer(): Observable<Customer[]>{
-    return this.http.get<Customer[]>(this.API_CUSTOMER + '/get-all-customer')
+    return this.http.get<Customer[]>(this.API_CUSTOMER + '/get-all-customer',{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    })
   }
 
   deleteCustomer(id: number | undefined): Observable<any> {
-    return this.http.delete<any>(this.API_CUSTOMER +'/deleteCustomer/'+ id, this.httpOptions);
+    return this.http.delete<any>(this.API_CUSTOMER +'/deleteCustomer/'+ id,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   searchCustomer(dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string): Observable<any> {
     return this.http.get<any>(this.API_CUSTOMER + '/search-customer?dateOfBirthFrom=' + dateOfBirthFrom +
-      '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=0');
+      '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=0',{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   searchCustomer1(searchValue:string,page:number):Observable<any>{
-    return this.http.get<any>(this.API_CUSTOMER+"/searchCustomer?searchValue="+searchValue+"&page="+page);
+    return this.http.get<any>(this.API_CUSTOMER+"/searchCustomer?searchValue="+searchValue+"&page="+page,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   searchPageCustomer(dateOfBirthFrom: string, dateOfBirthTo: string, address: string, name: string, page: number): Observable<any> {
     return this.http.get<any>(this.API_CUSTOMER + '/search-customer?dateOfBirthFrom=' + dateOfBirthFrom +
-      '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=' + page);
+      '&dateOfBirthTo=' + dateOfBirthTo + '&address=' + address + '&name=' + name + '&page=' + page,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
 
   create(customer: Customer): Observable<Customer> {
     console.log(customer);
-    return this.http.post<any>(this.API_CUSTOMER + '/create', customer);
+    return this.http.post<any>(this.API_CUSTOMER + '/create', customer,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
 
   update(customer: Customer): Observable<Customer> {
-    return this.http.put<Customer>(this.API_CUSTOMER + "/update", customer);
+    return this.http.put<Customer>(this.API_CUSTOMER + "/update", customer,{
+      headers: new HttpHeaders({'Authorization': this.loginService.getToken()})
+    });
   }
   pushFileToStorage(fileUpload: FileUpload): Observable<string> {
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
