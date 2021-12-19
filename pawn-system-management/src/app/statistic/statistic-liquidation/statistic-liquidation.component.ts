@@ -56,11 +56,14 @@ export class StatisticLiquidationComponent implements OnInit {
   constructor(private statisticService: StatisticService,
               private titleService: Title,
               private datePipe: DatePipe) {
-    this.titleService.setTitle('Thống kê');
-    this.getEndDateStartDate();
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Thống kê');
+    this.checkDateForm = new FormGroup({
+      checkStartDate: new FormControl('', [Validators.required]),
+      checkEndDate: new FormControl('',[Validators.required])
+    }, this.checkDate);
   }
   private checkDate(check: AbstractControl): any {
     const fromDate = check.get('checkStartDate');
@@ -69,57 +72,51 @@ export class StatisticLiquidationComponent implements OnInit {
     return fromDate.value <= toDate.value ? null : {errorDateTo: true};
   }
 
-  getEndDateStartDate() {
-    this.checkDateForm = new FormGroup({
-      checkStartDate: new FormControl('', [Validators.required]),
-      checkEndDate: new FormControl('',[Validators.required])
-    }, this.checkDate);
-  }
-
-  getLoanMoney() {
-    this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
-      this.contract = value;
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.contract.length; i++) {
-        // @ts-ignore
-        this.chartOptions.series[0].data.push(Number(this.contract[i].loanMoney));
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
-
-  getInterestMoney() {
-    this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
-      this.contract = value;
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.contract.length; i++) {
-        // @ts-ignore
-        this.chartOptions.series[1].data.push(Number(this.contract[i].interestMoney));
-      }
-
-    }, error => {
-      console.log(error);
-    });
-  }
-  getReceiveMoney() {
-    this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
-      this.contract = value;
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.contract.length; i++) {
-        // @ts-ignore
-        this.chartOptions.series[2].data.push(Number(this.contract[i].receiveMoney));
-      }
-
-    }, error => {
-      console.log(error);
-    });
-  }
+  // getLoanMoney() {
+  //   this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
+  //     this.contract = value;
+  //     // tslint:disable-next-line:prefer-for-of
+  //     for (let i = 0; i < this.contract.length; i++) {
+  //       // @ts-ignore
+  //       this.chartOptions.series[0].data.push(Number(this.contract[i].loanMoney));
+  //     }
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
+  //
+  // getInterestMoney() {
+  //   this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
+  //     this.contract = value;
+  //     // tslint:disable-next-line:prefer-for-of
+  //     for (let i = 0; i < this.contract.length; i++) {
+  //       // @ts-ignore
+  //       this.chartOptions.series[1].data.push(Number(this.contract[i].interestMoney));
+  //     }
+  //
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
+  // getReceiveMoney() {
+  //   this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
+  //     this.contract = value;
+  //     // tslint:disable-next-line:prefer-for-of
+  //     for (let i = 0; i < this.contract.length; i++) {
+  //       // @ts-ignore
+  //       this.chartOptions.series[2].data.push(Number(this.contract[i].receiveMoney));
+  //     }
+  //
+  //   }, error => {
+  //     console.log(error);
+  //   });
+  // }
 
   getContractId() {
     this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
       this.contract.forEach(item => {
+        this.totalMoney  += (item.receiveMoney - item.loanMoney);
         this.label.push(item.contractId);
         this.interestMoney.push(item.interestMoney);
         this.loanMoney.push(item.loanMoney);
@@ -142,15 +139,14 @@ export class StatisticLiquidationComponent implements OnInit {
     this.check = true;
     this.isCheckStatistic = true;
     if (this.isCheckStatistic) {
+      this.label = [];
+      this.interestMoney = [];
+      this.receiveMoney = [];
+      this.loanMoney = [];
       this.totalMoney=0;
       this.startDate = formatDate(this.checkDateForm.controls.checkStartDate.value, 'dd/MM/yyyy', 'en-US');
-      // this.startDate = this.formatDate(this.checkDateForm.get('checkStartDate').value);
       this.endDate = formatDate(this.checkDateForm.controls.checkEndDate.value, 'dd/MM/yyyy', 'en-US');
-      // this.endDate = this.formatDate(this.checkDateForm.get('checkEndDate').value);
       this.getContractId();
-      // this.getLoanMoney();
-      // this.getInterestMoney();
-      // this.getReceiveMoney();
     }
   }
 
@@ -158,7 +154,7 @@ export class StatisticLiquidationComponent implements OnInit {
     this.chartOptions = {
       series: [
         {
-          name: 'Tổng tiền cho vay',
+          name: 'Tiền cho vay',
           type: 'column',
           data: this.loanMoney
         },

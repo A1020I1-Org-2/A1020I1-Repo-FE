@@ -88,7 +88,7 @@ export class CreatePawnContractComponent implements OnInit {
         interestMoney: new FormControl(0),
         startDate: new FormControl(this.dateCurrent, [Validators.required]),
         endDate: new FormControl('', [Validators.required, checkDate]),
-        imgProduct: new FormControl('', [Validators.required])
+        imgProduct: new FormControl('', [])
       }, {validators: [validDateCheckoutValidators('startDate', 'endDate')]}
     );
   }
@@ -286,6 +286,7 @@ export class CreatePawnContractComponent implements OnInit {
   create() {
     this.contractID = "HD-" + Math.floor(Math.random() * 10000);
     const CONTROLS = this.formCreate.value;
+    this.chooseTypeProduct(this.formCreate.controls.productType.value);
     this.contractPawn = new ContractDto(this.contractID, CONTROLS.imgProduct, CONTROLS.productName, CONTROLS.interestMoney
       , 0, CONTROLS.loanMoney, '', CONTROLS.startDate, CONTROLS.endDate, 1, this.statusContract,
       this.typeProduct, this.typeContract, CONTROLS.employeeId, CONTROLS.customerId);
@@ -298,9 +299,11 @@ export class CreatePawnContractComponent implements OnInit {
   }
 
   chooseTypeProduct(typeProductId: number) {
+    console.log(typeProductId);
     for (let i = 0; i < this.listTypeProduct.length; i++) {
       if (typeProductId == this.listTypeProduct[i].typeProductId) {
         this.typeProduct = this.listTypeProduct[i];
+        console.log(this.typeProduct);
       }
     }
   }

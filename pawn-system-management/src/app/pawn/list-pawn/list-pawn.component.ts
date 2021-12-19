@@ -107,12 +107,16 @@ export class ListPawnComponent implements OnInit {
   }
 
   returnPawn(id: string){
-    for (let i=0; i<this.pawnList.length; i++){
-      if(id === this.pawnList[i].contractId){
-        this.contractService.contract = this.pawnList[i];
-        this.router.navigateByUrl('/return-pawn').then();
-        break;
-      }
-    }
+    this.contractService.getInfo(id).subscribe(contract => {
+      this.contractService.contract = contract;
+      this.router.navigateByUrl('/return-pawn').then();
+    })
+    // for (let i=0; i<this.pawnList.length; i++){
+    //   if(id === this.pawnList[i].contractId){
+    //     this.contractService.contract = this.pawnList[i];
+    //     this.router.navigateByUrl('/return-pawn').then();
+    //     break;
+    //   }
+    // }
   }
 }

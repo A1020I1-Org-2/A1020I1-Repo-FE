@@ -61,6 +61,8 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
   isFoundCs: boolean = true;
   isFoundEm: boolean = true;
   isFoundPd: boolean = true;
+  loanMoney: number = 0;
+  interestMoney: number = 0;
 
   constructor(
     public contractService: ContractService,
@@ -111,8 +113,8 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
       }
       this.statusContract = {statusContractId: 3, name: "Close"};
 
-      this.Contract = new ContractDTO(this.contractID, this.productImg, value.productName, 0
-        , value.receiveMoney, 0, value.liquidationDate, "", "", value.quantity, this.statusContract,
+      this.Contract = new ContractDTO(this.contractID, this.productImg, value.productName, this.interestMoney
+        , value.receiveMoney, this.loanMoney, value.liquidationDate, "", "", value.quantity, this.statusContract,
         value.customer, this.typeContract, value.typeProduct, value.employee);
 
       this.contractService.updateStatusContractPawn(this.formCreate.value.contractId).subscribe(
@@ -243,6 +245,8 @@ export class CreateLiquidationContractComponentComponent implements OnInit {
 
   chooseProduct(contractId: string) {
     this.contractService.getInfo(contractId).subscribe(contract => {
+      this.loanMoney = contract.loanMoney;
+      this.interestMoney = contract.interestMoney;
       this.formCreate.controls.contractId.setValue(contractId);
       this.formCreate.controls.productName.setValue(contract.productName);
       this.formCreate.controls.receiveMoney.setValue(((contract.loanMoney +

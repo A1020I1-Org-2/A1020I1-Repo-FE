@@ -23,6 +23,7 @@ function checkDate(control: AbstractControl): ValidationErrors | null {
 export class ReturnPawnComponent implements OnInit {
   formContract!: FormGroup;
   contract!: Contract;
+  totalMoney: number = 0;
   constructor(private title: Title,
               private alert: AlertService,
               private dialog: MatDialog,
@@ -39,7 +40,7 @@ export class ReturnPawnComponent implements OnInit {
       startDate: new FormControl('', [Validators.required]),
       endDate: new FormControl('', [Validators.required]),
       returnPawn: new FormControl('', [checkDate, Validators.required]),
-    })
+    });
     if(this.contractService.contract !== undefined){
       this.chooseContract(this.contractService.contract);
       this.contractService.contract = undefined;
@@ -74,6 +75,7 @@ export class ReturnPawnComponent implements OnInit {
   }
 
   private chooseContract(contract: Contract) {
+    this.totalMoney = contract.loanMoney+contract.interestMoney;
     this.formContract.patchValue({
       idContract: contract.contractId,
       customerName: contract.customer.name,

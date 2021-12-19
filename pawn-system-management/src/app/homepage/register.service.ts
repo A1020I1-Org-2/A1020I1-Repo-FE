@@ -8,7 +8,7 @@ import {PawnType} from "./homepage/PawnType";
   providedIn: 'root'
 })
 export class RegisterService {
-  private API_URL = 'http://localhost:8080';
+  private API_URL = 'http://localhost:8080/home';
 
   constructor(private httpClient: HttpClient) { }
 

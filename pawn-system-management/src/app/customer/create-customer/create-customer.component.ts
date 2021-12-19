@@ -75,7 +75,7 @@ export class CreateCustomerComponent implements OnInit {
       phone: ['', [Validators.required, Validators.pattern('^(\\d{10,12})$')]],
       gender: ['true', [Validators.required]],
       idCard: ['', [Validators.required, Validators.pattern('^(\\d{9}|\\d{11})$'), checkExistIdCard(this.data)]],
-      img: ['', [Validators.required]]
+      img: ['', []]
     })
   }
 

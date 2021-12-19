@@ -40,7 +40,8 @@
               <div class="mb-3 row">
                 <div class="col-sm-6 col-lg-6">
                   <label class="">Số Tiền Thanh Toán: </label>
-                  <input type="text" class="form-control"  formControlName="interestMoney" readonly>
+                  <input type="hidden" class="form-control"  formControlName="interestMoney" readonly>
+                  <input type="text" class="form-control" [value]="totalMoney" readonly>
                 </div>
                 <div class="col-sm-6 col-lg-6">
                   <label class="">Ngày Làm HD: </label>
