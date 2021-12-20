@@ -121,13 +121,37 @@ export class StatisticExpectedComponent implements OnInit {
   getInterestDay() {
     this.statisticService.getStatisticExpected(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
-      this.contract.forEach(item => {
-        this.totalMoney += item.interestMoney;
-        this.label.push(item.contractId);
-        this.interestMoney.push(item.interestMoney);
-        this.loanMoney.push(item.loanMoney);
-        this.expectedMoney.push(item.interestMoney);
-      });
+      let month = new Date(this.contract[0].startDate);
+      let tempLoanMoney = 0;
+      let tempInterestMoney = 0;
+      for(let i=0; i<this.contract.length; i++){
+        this.totalMoney += this.contract[i].interestMoney;
+        let startMonth = new Date(this.contract[i].startDate);
+        if(month.getMonth() == startMonth.getMonth()){
+          tempLoanMoney += this.contract[i].loanMoney;
+          tempInterestMoney += this.contract[i].interestMoney;
+        }
+        else {
+          this.interestMoney.push(tempInterestMoney);
+          this.expectedMoney.push(tempInterestMoney);
+          this.loanMoney.push(tempLoanMoney);
+          this.label.push("Tháng " + (month.getMonth()+1));
+          tempLoanMoney = this.contract[i].loanMoney;
+          tempInterestMoney = this.contract[i].interestMoney;
+          month = startMonth;
+        }
+      }
+      this.interestMoney.push(tempInterestMoney);
+      this.expectedMoney.push(tempInterestMoney);
+      this.loanMoney.push(tempLoanMoney);
+      this.label.push("Tháng " + (month.getMonth()+1));
+      // this.contract.forEach(item => {
+      //   this.totalMoney += item.interestMoney;
+      //   this.label.push(item.contractId);
+      //   this.interestMoney.push(item.interestMoney);
+      //   this.loanMoney.push(item.loanMoney);
+      //   this.expectedMoney.push(item.interestMoney);
+      // });
       this.statisticExpected();
       // // @ts-ignore
       // this.eDate = this.checkDateForm.get('checkEndDate').value;

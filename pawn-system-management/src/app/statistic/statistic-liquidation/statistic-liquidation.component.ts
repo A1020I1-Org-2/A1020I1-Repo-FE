@@ -115,21 +115,39 @@ export class StatisticLiquidationComponent implements OnInit {
   getContractId() {
     this.statisticService.getStatisticLiquidation(this.startDate, this.endDate).subscribe(value => {
       this.contract = value;
-      this.contract.forEach(item => {
-        this.totalMoney  += (item.receiveMoney - item.loanMoney);
-        this.label.push(item.contractId);
-        this.interestMoney.push(item.interestMoney);
-        this.loanMoney.push(item.loanMoney);
-        this.receiveMoney.push(item.receiveMoney);
-      });
+      let month = new Date(this.contract[0].startDate);
+      let tempLoanMoney = 0;
+      let tempReceiveMoney = 0;
+      for(let i=0; i<this.contract.length; i++){
+        this.totalMoney += (this.contract[i].receiveMoney - this.contract[i].loanMoney);
+        let startMonth = new Date(this.contract[i].startDate);
+        if(month.getMonth() == startMonth.getMonth()){
+          tempLoanMoney += this.contract[i].loanMoney;
+          tempReceiveMoney += this.contract[i].receiveMoney;
+        }
+        else {
+          this.receiveMoney.push(tempReceiveMoney);
+          this.loanMoney.push(tempLoanMoney);
+          this.interestMoney.push(tempReceiveMoney - tempLoanMoney);
+          this.label.push("Tháng " + (month.getMonth()+1));
+          tempLoanMoney = this.contract[i].loanMoney;
+          tempReceiveMoney = this.contract[i].receiveMoney;
+          month = startMonth;
+        }
+      }
+      this.receiveMoney.push(tempReceiveMoney);
+      this.loanMoney.push(tempLoanMoney);
+      this.interestMoney.push(tempReceiveMoney - tempLoanMoney);
+      this.label.push("Tháng " + (month.getMonth()+1));
+      // this.contract.forEach(item => {
+      //   this.totalMoney += (item.receiveMoney - item.loanMoney);
+      //   this.label.push(item.contractId);
+      //   this.interestMoney.push(item.interestMoney);
+      //   this.loanMoney.push(item.loanMoney);
+      //   this.receiveMoney.push(item.receiveMoney);
+      // });
       this.statisticLiquidation();
-      // this.chartOptions.labels[0] = this.contract[0].contractId;
-      // this.totalMoney += Number(this.contract[0].interestMoney);
-      // for (let i = 1; i < this.contract.length; i++) {
-      //   this.totalMoney += Number(this.contract[i].interestMoney);
-      //   this.chartOptions.labels.push(this.contract[i].contractId);
-      //   console.log(this.contract[i].contractId);
-      // }
+
     }, error => {
       console.log(error);
     });

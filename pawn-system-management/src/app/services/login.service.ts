@@ -33,6 +33,8 @@ export class LoginService {
       username: username,
       password: password,
       newPassword: newPassword
+    },{
+      headers: new HttpHeaders({'Authorization': this.getToken()})
     })
   }
 

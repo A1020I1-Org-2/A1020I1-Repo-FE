@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
       setTimeout(() => {
         this.showMessage('Cập nhập mật khẩu thành công', 2)
       }, 400);
+      this.loginService.message = '';
     }
   }
 
