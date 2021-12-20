@@ -40,7 +40,7 @@ export class ListPawnComponent implements OnInit {
 
   getList(){
     this.pawnService.getAllPawn().subscribe((data)=> {
-      console.log(data);
+      // console.log(data);
       this.pawnList = data.content;
       this.pageNow = data.number;
       this.totalPage = [];

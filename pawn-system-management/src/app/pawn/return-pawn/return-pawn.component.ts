@@ -42,6 +42,7 @@ export class ReturnPawnComponent implements OnInit {
       returnPawn: new FormControl('', [checkDate, Validators.required]),
     });
     if(this.contractService.contract !== undefined){
+      this.contract = this.contractService.contract;
       this.chooseContract(this.contractService.contract);
       this.contractService.contract = undefined;
     }
